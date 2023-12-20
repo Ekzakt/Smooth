@@ -10,9 +10,6 @@ namespace Smooth.Client.Flaunt.Pages;
 public partial class Weather
 {
     [Inject]
-    public FunctionAppApiHttpClient _functionAppHttpClient { get; set; }
-
-    [Inject]
     public WebAppApiHttpClient _webAppHttpClient { get; set; }
 
     [Inject]
@@ -31,54 +28,26 @@ public partial class Weather
     }
 
     private List<WeatherForecastResponseDto>? forecasts = new();
-    private string? elapsedTime1;
-    private string? elapsedTime2;
-
-    private long elapsedMs1;
-    private long elapsedMs2;
+    private string? elapsedTime;
+    private long elapsedMs;
 
     public async Task GetWeartherForecasts()
     {
         var endpoint = WeatherForecastEndpoints.GET_BY_ROWCOUNT(R);
 
-        //Task<List<WeatherForecastResponseDto>?> task1 = _functionAppHttpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
-        Task<List<WeatherForecastResponseDto>?> task2 = _webAppHttpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
-
         var sw = new Stopwatch();
+        sw.Start();
 
-        //if (task1 is not null)
-        //{
-        //    sw.Start();
+        var result = await _webAppHttpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
 
-        //    var result = await _functionAppHttpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
-
-        //    if (result is not null)
-        //    {
-        //        forecasts = result;
-        //    }
-
-        //    sw.Stop();
-
-        //    elapsedMs1 = sw.ElapsedMilliseconds;
-        //    elapsedTime1 = sw.Elapsed.ToString();
-        //}
-
-
-        if (task2 is not null)
+        if (result is not null)
         {
-            sw.Restart();
-
-            var result = await _webAppHttpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
-
-            if (result is not null)
-            {
-                forecasts?.AddRange(result);
-            }
-
-            sw.Stop();
-
-            elapsedMs2 = sw.ElapsedMilliseconds;
-            elapsedTime2 = sw.Elapsed.ToString();
+            forecasts?.AddRange(result);
         }
+
+        sw.Stop();
+
+        elapsedMs = sw.ElapsedMilliseconds;
+        elapsedTime = sw.Elapsed.ToString();
     }
 }

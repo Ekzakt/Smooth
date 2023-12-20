@@ -12,10 +12,6 @@ var functionAppApiPrefix = builder.Configuration.GetValue<string>("FunctionAppAp
 var webAppApiPrefix = builder.Configuration.GetValue<string>("WebAppApiPrefix");
 
 builder.Services
-            .AddHttpClient<FunctionAppApiHttpClient>(client =>
-                client.BaseAddress = new Uri(functionAppApiPrefix!));
-
-builder.Services
             .AddHttpClient<WebAppApiHttpClient>(client =>
                 client.BaseAddress = new Uri(webAppApiPrefix!));
 

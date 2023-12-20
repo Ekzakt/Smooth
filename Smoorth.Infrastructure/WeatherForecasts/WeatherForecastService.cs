@@ -15,7 +15,7 @@ public class WeatherForecastService(
         var randomNumber = new Random();
         var temp = 0;
         
-        var result = Enumerable.Range(1, rowCount.GetValueOrDefault(10)).Select(index => new WeatherForecast
+        var result = Enumerable.Range(1, CheckRowcount(rowCount)).Select(index => new WeatherForecast
         {
             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
             TemperatureC = temp = randomNumber.Next(-20, 55),
@@ -46,6 +46,15 @@ public class WeatherForecastService(
             summary = "Freezing";
         }
         return summary;
+    }
+
+    private int CheckRowcount(int? rowCount)
+    {
+        var output = rowCount.GetValueOrDefault(10);
+
+        output = output <= 1 ? 10 : output;
+
+        return output;
     }
 
     #endregion Helpers

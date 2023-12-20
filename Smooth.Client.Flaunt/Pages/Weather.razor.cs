@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Smooth.Client.Application.Endpoints;
 using Smooth.Client.Application.WeaterForcasts;
-using Smooth.Client.Flaunt.HttpClients;
 using System.Diagnostics;
 using System.Net.Http.Json;
 
@@ -10,7 +9,7 @@ namespace Smooth.Client.Flaunt.Pages;
 public partial class Weather
 {
     [Inject]
-    public WebAppApiHttpClient _webAppHttpClient { get; set; }
+    public ApiHttpClient _httpClient { get; set; }
 
     [Inject]
     public NavigationManager _navigationManager { get; set; }
@@ -38,11 +37,11 @@ public partial class Weather
         var sw = new Stopwatch();
         sw.Start();
 
-        var result = await _webAppHttpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
+        var result = await _httpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
 
         if (result is not null)
         {
-            forecasts?.AddRange(result);
+            forecasts = result;
         }
 
         sw.Stop();

@@ -1,9 +1,7 @@
-﻿using Ekzakt.TaskAuditor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Smooth.Client.Application.Endpoints;
 using Smooth.Client.Application.WeaterForcasts;
 using Smooth.Client.Flaunt.HttpClients;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http.Json;
 
@@ -42,7 +40,6 @@ public partial class Weather
     public async Task GetWeartherForecasts()
     {
         var endpoint = WeatherForecastEndpoints.GET_BY_ROWCOUNT(R);
-        var taskAuditor = new TaskAuditor<List<WeatherForecastResponseDto>?>();
 
         Task<List<WeatherForecastResponseDto>?> task1 = _functionAppHttpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
         Task<List<WeatherForecastResponseDto>?> task2 = _webAppHttpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);

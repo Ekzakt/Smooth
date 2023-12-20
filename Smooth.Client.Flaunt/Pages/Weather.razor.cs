@@ -41,27 +41,27 @@ public partial class Weather
     {
         var endpoint = WeatherForecastEndpoints.GET_BY_ROWCOUNT(R);
 
-        Task<List<WeatherForecastResponseDto>?> task1 = _functionAppHttpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
+        //Task<List<WeatherForecastResponseDto>?> task1 = _functionAppHttpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
         Task<List<WeatherForecastResponseDto>?> task2 = _webAppHttpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
 
         var sw = new Stopwatch();
 
-        if (task1 is not null)
-        {
-            sw.Start();
+        //if (task1 is not null)
+        //{
+        //    sw.Start();
 
-            var result = await _functionAppHttpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
+        //    var result = await _functionAppHttpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
 
-            if (result is not null)
-            {
-                forecasts = result;
-            }
+        //    if (result is not null)
+        //    {
+        //        forecasts = result;
+        //    }
 
-            sw.Stop();
+        //    sw.Stop();
 
-            elapsedMs1 = sw.ElapsedMilliseconds;
-            elapsedTime1 = sw.Elapsed.ToString();
-        }
+        //    elapsedMs1 = sw.ElapsedMilliseconds;
+        //    elapsedTime1 = sw.Elapsed.ToString();
+        //}
 
 
         if (task2 is not null)

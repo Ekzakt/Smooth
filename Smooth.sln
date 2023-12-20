@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Client.Flaunt", "Smo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Api.Application", "Smooth.Application\Smooth.Api.Application.csproj", "{382F4001-240B-41D3-A699-AAE610B7DBF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Api.FunctionApp", "Smooth.Api.FunctionApp\Smooth.Api.FunctionApp.csproj", "{0A696CD8-407C-4A0E-BB56-D1A47D311EE6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Api.WebApp", "Smooth.Api.WebApp\Smooth.Api.WebApp.csproj", "{71ACDCB7-3C5E-43E3-8B8B-383D41A90EAF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Api.Infrastructure", "Smoorth.Infrastructure\Smooth.Api.Infrastructure.csproj", "{8BFEA4F8-B3F8-4F0E-85A8-864F73D95AC9}"
@@ -29,10 +27,6 @@ Global
 		{382F4001-240B-41D3-A699-AAE610B7DBF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{382F4001-240B-41D3-A699-AAE610B7DBF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{382F4001-240B-41D3-A699-AAE610B7DBF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A696CD8-407C-4A0E-BB56-D1A47D311EE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A696CD8-407C-4A0E-BB56-D1A47D311EE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A696CD8-407C-4A0E-BB56-D1A47D311EE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A696CD8-407C-4A0E-BB56-D1A47D311EE6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{71ACDCB7-3C5E-43E3-8B8B-383D41A90EAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{71ACDCB7-3C5E-43E3-8B8B-383D41A90EAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71ACDCB7-3C5E-43E3-8B8B-383D41A90EAF}.Release|Any CPU.ActiveCfg = Release|Any CPU

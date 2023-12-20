@@ -1,0 +1,52 @@
+﻿@page "/weather"
+@page "/weather/{R:int}"
+
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather</h1>
+
+<form>
+    <div class="mb-3">
+        <label class="form-label" for="n">Number of rows:</label>
+        <input type="text" class="form-control" id="n" @bind-value=R />
+    </div>
+    <button type="button" class="btn btn-primary" @onclick="GetWeartherForecasts">Load weatherforecasts</button>
+</form>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="mt-3">
+        <ul>
+            <li>Elapsed time for Azure Function: @elapsedTime1</li>
+            <li>Elapsed time for WebApp controller: @elapsedTime2</li>
+            <li>Elapsed ms for Azure Function: @elapsedMs1</li>
+            <li>Elapsed ms for WabApp controller: @elapsedMs2</li>
+        </ul>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

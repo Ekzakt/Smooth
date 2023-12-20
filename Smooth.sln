@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Client.Flaunt", "Smooth.Client.Flaunt\Smooth.Client.Flaunt.csproj", "{8841B9AF-D3DC-434D-B6AC-0FAC3C8AB9B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Api.Application", "Smooth.Application\Smooth.Api.Application.csproj", "{382F4001-240B-41D3-A699-AAE610B7DBF1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Api.FunctionApp", "Smooth.Api.FunctionApp\Smooth.Api.FunctionApp.csproj", "{0A696CD8-407C-4A0E-BB56-D1A47D311EE6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Api.WebApp", "Smooth.Api.WebApp\Smooth.Api.WebApp.csproj", "{71ACDCB7-3C5E-43E3-8B8B-383D41A90EAF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Api.Infrastructure", "Smoorth.Infrastructure\Smooth.Api.Infrastructure.csproj", "{8BFEA4F8-B3F8-4F0E-85A8-864F73D95AC9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Client.Application", "Smooth.Client.Application\Smooth.Client.Application.csproj", "{BD776618-405A-42B3-A849-7D10D70C0285}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8841B9AF-D3DC-434D-B6AC-0FAC3C8AB9B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8841B9AF-D3DC-434D-B6AC-0FAC3C8AB9B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8841B9AF-D3DC-434D-B6AC-0FAC3C8AB9B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8841B9AF-D3DC-434D-B6AC-0FAC3C8AB9B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{382F4001-240B-41D3-A699-AAE610B7DBF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{382F4001-240B-41D3-A699-AAE610B7DBF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{382F4001-240B-41D3-A699-AAE610B7DBF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{382F4001-240B-41D3-A699-AAE610B7DBF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A696CD8-407C-4A0E-BB56-D1A47D311EE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A696CD8-407C-4A0E-BB56-D1A47D311EE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A696CD8-407C-4A0E-BB56-D1A47D311EE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A696CD8-407C-4A0E-BB56-D1A47D311EE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71ACDCB7-3C5E-43E3-8B8B-383D41A90EAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71ACDCB7-3C5E-43E3-8B8B-383D41A90EAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71ACDCB7-3C5E-43E3-8B8B-383D41A90EAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71ACDCB7-3C5E-43E3-8B8B-383D41A90EAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BFEA4F8-B3F8-4F0E-85A8-864F73D95AC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BFEA4F8-B3F8-4F0E-85A8-864F73D95AC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BFEA4F8-B3F8-4F0E-85A8-864F73D95AC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BFEA4F8-B3F8-4F0E-85A8-864F73D95AC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD776618-405A-42B3-A849-7D10D70C0285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD776618-405A-42B3-A849-7D10D70C0285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD776618-405A-42B3-A849-7D10D70C0285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD776618-405A-42B3-A849-7D10D70C0285}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A18FB09-10B2-4457-9C76-43C6919FD7C2}
+	EndGlobalSection
+EndGlobal

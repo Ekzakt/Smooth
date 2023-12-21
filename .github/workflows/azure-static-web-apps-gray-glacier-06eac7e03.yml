@@ -20,7 +20,7 @@ jobs:
           submodules: true
           lfs: false
       - name: Update Version
-        run: sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" Smooth.Client.Flaunt.csproj
+        run: sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" ./Smooth.Client.Flaunt/Smooth.Client.Flaunt.csproj
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1

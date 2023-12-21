@@ -22,4 +22,10 @@
     <ProjectReference Include="..\Smooth.Client.Application\Smooth.Client.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Ekzakt.Core">
+      <HintPath>..\..\Ekzakt\Ekzakt.Core\bin\Release\net8.0\Ekzakt.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

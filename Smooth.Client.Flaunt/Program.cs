@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Smooth.Client.Flaunt;
+using Smooth.Client.Flaunt.HttpClients;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 

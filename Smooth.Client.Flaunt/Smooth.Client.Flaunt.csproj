@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>c6080cc3-20b5-40d8-81c4-cfe91269a293</UserSecretsId>
+    <Version>0.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,4 +22,8 @@
     <ProjectReference Include="..\Smooth.Client.Application\Smooth.Client.Application.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="powershell.exe -ExecutionPolicy Unrestricted -NoProfile -NonInteractive -File $(ProjectDir)\postBuild.ps1 -ProjectDir $(ProjectDir) -ProjectPath $(ProjectPath)" />
+  </Target>
+	
 </Project>

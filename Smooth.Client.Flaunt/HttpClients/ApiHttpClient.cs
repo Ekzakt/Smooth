@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-namespace Smooth.Client.Flaunt;
+namespace Smooth.Client.Flaunt.HttpClients;
 
 public class ApiHttpClient
 {
     public HttpClient Client { get; }
 
-    public ApiHttpClient( HttpClient client)
+    public ApiHttpClient(HttpClient client)
     {
         Client = client;
 

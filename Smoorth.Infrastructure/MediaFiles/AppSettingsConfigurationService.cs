@@ -11,12 +11,10 @@ public class AppSettingsConfigurationService(
 
     public async Task<MediaFilesOptions> GetMediaFilesConfigurationAsync()
     {
-        Task<MediaFilesOptions> task = Task.Run(() =>
+        MediaFilesOptions result = await Task.Run(() =>
         {
             return _mediaFileOptions;
         });
-
-        var result = await task;
 
         return result;
     }

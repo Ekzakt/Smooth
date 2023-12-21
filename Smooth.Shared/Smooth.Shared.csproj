@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Ekzakt\Ekzakt.Core\Ekzakt.Core.csproj" />
+    <Reference Include="Ekzakt.Core">
+      <HintPath>..\..\Ekzakt\Ekzakt.Core\bin\Release\net8.0\Ekzakt.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

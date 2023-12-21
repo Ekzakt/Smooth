@@ -1,4 +1,4 @@
-﻿namespace Smooth.Application.WeatherForecasts;
+﻿namespace Smooth.Api.Application.WeatherForecasts;
 
 public interface IWeatherForecastService
 {

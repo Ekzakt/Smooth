@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Smooth.Application.WeatherForecasts;
+using Smooth.Api.Application.WeatherForecasts;
 
 namespace Smoorth.Infrastructure.WeatherForecasts;
 

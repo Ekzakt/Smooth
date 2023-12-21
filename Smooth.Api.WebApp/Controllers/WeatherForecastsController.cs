@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Smooth.Application.WeatherForecasts;
+using Smooth.Api.Application.WeatherForecasts;
 
 namespace Smooth.Api.WebApp.Controllers
 {
@@ -14,7 +14,7 @@ namespace Smooth.Api.WebApp.Controllers
         private readonly IWeatherForecastService _weatherForecastService = weatherForecast;
 
 
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet(Name = "GetByRowCount")]
         public async Task<IActionResult> Get(int? r)
         {
             var result = await _weatherForecastService.GetAllAsync(r);

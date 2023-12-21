@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Ekzakt\Ekzakt.Core\Ekzakt.Core.csproj" />
+    <ProjectReference Include="..\Smooth.Shared\Smooth.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="MediaFiles\" />
+  </ItemGroup>
+
 </Project>

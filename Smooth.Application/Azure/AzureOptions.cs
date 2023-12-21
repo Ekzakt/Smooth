@@ -1,4 +1,4 @@
-﻿namespace Smooth.Application.Azure;
+﻿namespace Smooth.Api.Application.Azure;
 
 public class AzureOptions
 {

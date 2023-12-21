@@ -22,16 +22,21 @@ public partial class Weather
     public int? R { get; set; }
 
 
+    private List<WeatherForecastResponseDto>? forecasts = new();
+    private string? elapsedTime;
+    private long elapsedMs;
+
+
     protected override async Task OnInitializedAsync()
     {
         await GetWeartherForecasts();
     }
 
-    private List<WeatherForecastResponseDto>? forecasts = new();
-    private string? elapsedTime;
-    private long elapsedMs;
 
-    public async Task GetWeartherForecasts()
+
+    #region Helpers
+
+    private async Task GetWeartherForecasts()
     {
         var endpoint = WeatherForecastEndpoints.GET_BY_ROWCOUNT(R);
 
@@ -50,4 +55,6 @@ public partial class Weather
         elapsedMs = sw.ElapsedMilliseconds;
         elapsedTime = sw.Elapsed.ToString();
     }
+
+    #endregion Helpers
 }

@@ -1,7 +1,4 @@
-﻿
-using System.Reflection;
-
-namespace Smooth.Client.Flaunt.Layout;
+﻿namespace Smooth.Client.Flaunt.Layout;
 
 public partial class MainLayout
 {
@@ -11,7 +8,6 @@ public partial class MainLayout
     {
         var fullVersion = typeof(Program).Assembly.GetName().Version;
 
-        version = $"{fullVersion?.Major}.{fullVersion?.Minor}.{fullVersion?.Build}";   
-
+        version = $"{fullVersion?.Major}.{fullVersion?.Minor}.{fullVersion?.Build}";
     }
 }

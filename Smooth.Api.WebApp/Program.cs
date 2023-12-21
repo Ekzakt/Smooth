@@ -1,5 +1,8 @@
 using Smoorth.Infrastructure.WeatherForecasts;
-using Smooth.Application.WeatherForecasts;
+using Smooth.Api.Application.Configuration;
+using Smooth.Api.Application.WeatherForecasts;
+using Smooth.Api.Infrastructure.MediaFiles;
+using Smooth.Shared.MediaFiles.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +13,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 
+builder.Services
+            .Configure<MediaFilesOptions>
+            (
+                builder.Configuration.GetSection(MediaFilesOptions.OptionsName)
+            );
+
+
+
 builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
+builder.Services.AddScoped<IConfigurationService, AppSettingsConfigurationService>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -22,6 +34,8 @@ builder.Services.AddCors(options =>
                           policy.WithOrigins("https://localhost:7083");
                       });
 });
+
+
 
 var app = builder.Build();
 

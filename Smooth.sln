@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Api.Infrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Client.Application", "Smooth.Client.Application\Smooth.Client.Application.csproj", "{BD776618-405A-42B3-A849-7D10D70C0285}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{72780C17-B2DD-4120-8DE6-F7C57B88CEA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{382F4001-240B-41D3-A699-AAE610B7DBF1} = {72780C17-B2DD-4120-8DE6-F7C57B88CEA8}
+		{71ACDCB7-3C5E-43E3-8B8B-383D41A90EAF} = {72780C17-B2DD-4120-8DE6-F7C57B88CEA8}
+		{8BFEA4F8-B3F8-4F0E-85A8-864F73D95AC9} = {72780C17-B2DD-4120-8DE6-F7C57B88CEA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3A18FB09-10B2-4457-9C76-43C6919FD7C2}

@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <Reference Include="Ekzakt.Core">
-      <HintPath>..\..\Ekzakt\Ekzakt.Core\bin\Release\net8.0\Ekzakt.Core.dll</HintPath>
+      <HintPath>Ekzakt.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
 

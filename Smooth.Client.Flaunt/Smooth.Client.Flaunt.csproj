@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Smooth.Client.Application\Smooth.Client.Application.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="powershell.exe -ExecutionPolicy Unrestricted -NoProfile -NonInteractive -File $(ProjectDir)\postBuild.ps1 -ProjectDir $(ProjectDir) -ProjectPath $(ProjectPath)" />
+  </Target>
+	
 </Project>

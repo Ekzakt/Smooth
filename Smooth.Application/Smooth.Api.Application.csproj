@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Smooth.Shared\Smooth.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MediaFiles\" />
-  </ItemGroup>
-
 </Project>

@@ -13,9 +13,21 @@ namespace Smooth.Api.WebApp.Controllers
 
         [HttpGet]
         [Route("MediaFiles")]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetMediaFilesConfiurationAsync()
         {
             var result = await _configurationService.GetMediaFilesConfigurationAsync();
+
+            return result is not null
+                ? Ok(result)
+                : NoContent();
+        }
+
+
+        [HttpGet]
+        [Route("Versions")]
+        public async Task<IActionResult> GetFrameWorkVersionAsync()
+        {
+            var result = await _configurationService.GetVersionsAsync(typeof(Program).Assembly);
 
             return result is not null
                 ? Ok(result)

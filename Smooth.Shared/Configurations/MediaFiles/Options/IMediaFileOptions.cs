@@ -1,4 +1,4 @@
-﻿namespace Smooth.Shared.MediaFiles.Options;
+﻿namespace Smooth.Shared.Configurations.MediaFiles.Options;
 
 public interface IMediaFileOptions
 {

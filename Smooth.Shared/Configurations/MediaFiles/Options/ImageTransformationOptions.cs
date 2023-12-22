@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Smooth.Shared.MediaFiles.Options;
+namespace Smooth.Shared.Configurations.MediaFiles.Options;
 
 public class ImageTransformationOptions : IMediaFileTransformationOptions
 {

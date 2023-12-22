@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Smooth.Client.Application.Endpoints;
 using Smooth.Client.Application.WeaterForcasts;
 using Smooth.Client.Flaunt.HttpClients;
+using Smooth.Shared.Endpoints;
 using System.Diagnostics;
 using System.Net.Http.Json;
 

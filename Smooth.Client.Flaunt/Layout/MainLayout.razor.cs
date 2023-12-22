@@ -1,13 +1,42 @@
-﻿namespace Smooth.Client.Flaunt.Layout;
+﻿using System;
+using System.Reflection;
+using System.Runtime.Versioning;
+
+namespace Smooth.Client.Flaunt.Layout;
 
 public partial class MainLayout
 {
-    private string version = string.Empty;
+    private string _buildVersion = string.Empty;
+    private string _frameWorkVersion = string.Empty;
+
 
     protected override async Task OnInitializedAsync()
     {
-        var fullVersion = typeof(Program).Assembly.GetName().Version;
-
-        version = $"{fullVersion?.Major}.{fullVersion?.Minor}.{fullVersion?.Build}";
+        _buildVersion = GetBuildVersion();
+        _frameWorkVersion = GetFrameworkVersion();
     }
+
+
+
+    #region Helpers
+
+    private string GetBuildVersion()
+    {
+        var buildVersion = typeof(Program).Assembly.GetName().Version;
+
+        if (buildVersion is not null)
+        { 
+            return $"{buildVersion?.Major}.{buildVersion?.Minor}.{buildVersion?.Build}";
+        }
+
+        return string.Empty;
+    }
+
+
+    private string GetFrameworkVersion()
+    {
+        return Environment.Version.ToString();
+    }
+
+    #endregion Helpers
 }

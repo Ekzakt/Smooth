@@ -1,8 +1,8 @@
-using Smoorth.Infrastructure.WeatherForecasts;
 using Smooth.Api.Application.Configuration;
 using Smooth.Api.Application.WeatherForecasts;
-using Smooth.Api.Infrastructure.MediaFiles;
-using Smooth.Shared.MediaFiles.Options;
+using Smooth.Api.Infrastructure.Configuration;
+using Smooth.Api.Infrastructure.WeatherForecasts;
+using Smooth.Shared.Configurations.MediaFiles.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +22,7 @@ builder.Services
 
 
 builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
-builder.Services.AddScoped<IConfigurationService, AppSettingsConfigurationService>();
+builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

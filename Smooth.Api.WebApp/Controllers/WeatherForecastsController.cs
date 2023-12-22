@@ -1,21 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Smooth.Api.Application.WeatherForecasts;
+using Smooth.Shared.Endpoints;
 
 namespace Smooth.Api.WebApp.Controllers
 {
     [ApiController]
-    [Route("/api/[controller]")]
+    [Route(WeatherForecastEndpoints.CONTROLLER)]
     public class WeatherForecastsController(
-        ILogger<WeatherForecastsController> logger,
         IWeatherForecastService weatherForecast)
         : ControllerBase
     {
-        private readonly ILogger<WeatherForecastsController> _logger = logger;
         private readonly IWeatherForecastService _weatherForecastService = weatherForecast;
 
 
         [HttpGet(Name = "GetByRowCount")]
-        public async Task<IActionResult> Get(int? r)
+        public async Task<IActionResult> GetByRowcount(int? r)
         {
             var result = await _weatherForecastService.GetAllAsync(r);
 

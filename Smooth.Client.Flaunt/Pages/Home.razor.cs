@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Smooth.Client.Application.Endpoints;
 using Smooth.Client.Flaunt.HttpClients;
-using Smooth.Shared.MediaFiles.Options;
+using Smooth.Shared.Configurations;
+using Smooth.Shared.Configurations.MediaFiles.Options;
+using Smooth.Shared.Endpoints;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -14,12 +15,16 @@ public partial class Home
 
 
     private string _mediaFilesOptions = string.Empty;
+    private string _apiVersions = string.Empty;
+    private string _webVersions = string.Empty;
 
 
     protected override async Task OnInitializedAsync()
     {
-        await SetMediaFileOptionsAsync();        
+        await SetMediaFileOptionsAsync();
+        await SetVersion();
     }
+
 
 
 
@@ -36,7 +41,24 @@ public partial class Home
             _mediaFilesOptions = JsonSerializer.Serialize(result, new JsonSerializerOptions
             { 
                 IgnoreReadOnlyFields = false,
-                WriteIndented = true 
+                WriteIndented = true
+            });
+        }
+    }
+
+
+    private async Task SetVersion()
+    {
+        var endpoint = ConfigurationEndpoints.VERSIONS();
+
+        var result = await _httpClient.Client.GetFromJsonAsync<Versions>(endpoint);
+
+        if (result is not null)
+        {
+            _apiVersions = JsonSerializer.Serialize(result, new JsonSerializerOptions
+            {
+                IgnoreReadOnlyFields = false,
+                WriteIndented = true
             });
         }
     }

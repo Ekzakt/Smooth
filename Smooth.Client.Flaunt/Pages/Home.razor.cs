@@ -35,7 +35,7 @@ public partial class Home
         {
             _mediaFilesOptions = JsonSerializer.Serialize(result, new JsonSerializerOptions
             { 
-                IgnoreReadOnlyFields = true,
+                IgnoreReadOnlyFields = false,
                 WriteIndented = true 
             });
         }

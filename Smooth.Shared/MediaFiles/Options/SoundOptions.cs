@@ -6,7 +6,7 @@ public class SoundOptions : IMediaFileOptions
 
     public long MaxLength { get; init; } = 52428800; // 50 MB
     public string OutputMimeTypeValue { get; init; } = string.Empty;
-    public string[] Destinations { get; init; } = [];
-    public MimeType[] MimeTypes { get; init; } = [];
-    public string[] Tags { get; init; } = [];
+    public string[] Destinations { get; init; } = Array.Empty<string>();    
+    public MimeType[] MimeTypes { get; init; } = Array.Empty<MimeType>();
+    public string[] Tags { get; init; } =Array.Empty<string>();
 }

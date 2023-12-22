@@ -2,5 +2,5 @@
 
 public class MimeType : Ekzakt.Core.Files.MimeType
 {
-    public string[] Destinations { get; init; } = [];
+    public string[] Destinations { get; init; } = Array.Empty<string>();
 }

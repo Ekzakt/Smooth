@@ -6,8 +6,8 @@ public class ImagesOptions : IMediaFileOptions
 
     public long MaxLength { get; init; } = 10485760; // 10 MB
     public string OutputMimeTypeValue { get; init; } = string.Empty;
-    public string[] Destinations { get; init; } = [];
-    public MimeType[] MimeTypes { get; init; } = [];
-    public string[] Tags { get; init; } = [];
-    public ImageTransformationOptions[] Transformations { get; init; } = [];
+    public string[] Destinations { get; init; } = Array.Empty<string>();
+    public MimeType[] MimeTypes { get; init; } = Array.Empty<MimeType>();
+    public string[] Tags { get; init; } = Array.Empty<string>();
+    public ImageTransformationOptions[] Transformations { get; init; } = Array.Empty<ImageTransformationOptions>();
 }

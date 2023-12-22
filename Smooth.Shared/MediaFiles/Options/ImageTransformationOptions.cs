@@ -5,7 +5,7 @@ namespace Smooth.Shared.MediaFiles.Options;
 public class ImageTransformationOptions : IMediaFileTransformationOptions
 {
     public string Name { get; init; } = string.Empty;
-    public string[] Tags { get; init; } = [];
+    public string[] Tags { get; init; } = Array.Empty<string>();
     public Size Size { get; init; } = new Size(0, 0);
     public Rectangle Crop { get; init; } = new Rectangle(-1, -1, 0, 0);
 

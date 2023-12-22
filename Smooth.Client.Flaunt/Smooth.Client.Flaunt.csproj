@@ -5,6 +5,7 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>c6080cc3-20b5-40d8-81c4-cfe91269a293</UserSecretsId>
+		<WasmEnableSIMD>false</WasmEnableSIMD>
 		<Version>0.1.0</Version>
 	</PropertyGroup>
 

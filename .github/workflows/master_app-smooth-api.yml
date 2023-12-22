@@ -23,7 +23,7 @@ jobs:
           include-prerelease: true
 
       - name: Update Build Number
-        run: sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" Smooth.Api.WebApp.csproj
+        run: sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" ./Smooth.Api.WebApp/Smooth.Api.WebApp.csproj
         
       - name: Build with dotnet
         run: dotnet build --configuration Release

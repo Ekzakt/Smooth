@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Update Build Number
-        run: sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" Smooth.Client.Flaunt.csproj
+        run: sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" Smooth.Api.WebApp.csproj
         
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1

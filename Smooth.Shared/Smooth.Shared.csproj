@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="Ekzakt.Core">
-      <HintPath>Ekzakt.Core.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Ekzakt.Utilities" Version="0.0.5" />
   </ItemGroup>
 </Project>
 

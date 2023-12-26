@@ -22,9 +22,8 @@ public partial class Home
     protected override async Task OnInitializedAsync()
     {
         await SetMediaFileOptionsAsync();
-        await SetVersion();
+        await SetVersionAsync();
     }
-
 
 
 
@@ -39,7 +38,7 @@ public partial class Home
         if (result is not null)
         {
             _mediaFilesOptions = JsonSerializer.Serialize(result, new JsonSerializerOptions
-            { 
+            {
                 IgnoreReadOnlyFields = false,
                 WriteIndented = true
             });
@@ -47,7 +46,7 @@ public partial class Home
     }
 
 
-    private async Task SetVersion()
+    private async Task SetVersionAsync()
     {
         var endpoint = ConfigurationEndpoints.VERSIONS();
 
@@ -55,11 +54,13 @@ public partial class Home
 
         if (result is not null)
         {
-            _apiVersions = JsonSerializer.Serialize(result, new JsonSerializerOptions
+            var version = JsonSerializer.Serialize(result, new JsonSerializerOptions
             {
                 IgnoreReadOnlyFields = false,
                 WriteIndented = true
             });
+
+            _apiVersions = version;
         }
     }
 

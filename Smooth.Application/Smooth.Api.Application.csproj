@@ -10,10 +10,4 @@
     <ProjectReference Include="..\Smooth.Shared\Smooth.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Ekzakt.Core">
-      <HintPath>..\Smooth.Shared\Ekzakt.Core.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

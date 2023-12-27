@@ -1,4 +1,4 @@
-﻿using Ekzakt.Core.Helpers;
+﻿using Ekzakt.Utilities.Helpers;
 using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Configuration;
 using Smooth.Shared.Configurations;

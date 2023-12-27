@@ -9,4 +9,6 @@ public interface IMediaFileOptions
     string[] Destinations { get; init; }
     MimeType[] MimeTypes { get; init; }
     string[] Tags { get; init; }
+
+    public int UploadCount { get; }
 }

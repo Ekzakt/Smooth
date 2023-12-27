@@ -10,4 +10,5 @@ public class ImagesOptions : IMediaFileOptions
     public MimeType[] MimeTypes { get; init; } = Array.Empty<MimeType>();
     public string[] Tags { get; init; } = Array.Empty<string>();
     public ImageTransformationOptions[] Transformations { get; init; } = Array.Empty<ImageTransformationOptions>();
+    public int UploadCount => Transformations.Length == 0 ? 1 : Transformations.Length;
 }

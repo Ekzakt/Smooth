@@ -2,7 +2,6 @@
 using Smooth.Client.Application.WeaterForcasts;
 using Smooth.Client.Flaunt.HttpClients;
 using Smooth.Shared.Endpoints;
-using System.Diagnostics;
 using System.Net.Http.Json;
 
 namespace Smooth.Client.Flaunt.Pages;
@@ -19,12 +18,10 @@ public partial class Weather
     public IConfiguration _configuration { get; set; }
 
     [Parameter]
-    public int? R { get; set; }
+    public int? R { get; set; } = 10;
 
 
     private List<WeatherForecastResponseDto>? forecasts = new();
-    private string? elapsedTime;
-    private long elapsedMs;
 
 
     protected override async Task OnInitializedAsync()
@@ -40,9 +37,6 @@ public partial class Weather
     {
         var endpoint = WeatherForecastEndpoints.GET_BY_ROWCOUNT(R);
 
-        var sw = new Stopwatch();
-        sw.Start();
-
         var result = await _httpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
 
         if (result is not null)
@@ -50,10 +44,6 @@ public partial class Weather
             forecasts = result;
         }
 
-        sw.Stop();
-
-        elapsedMs = sw.ElapsedMilliseconds;
-        elapsedTime = sw.Elapsed.ToString();
     }
 
     #endregion Helpers

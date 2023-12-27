@@ -9,4 +9,5 @@ public class SoundOptions : IMediaFileOptions
     public string[] Destinations { get; init; } = Array.Empty<string>();
     public MimeType[] MimeTypes { get; init; } = Array.Empty<MimeType>();
     public string[] Tags { get; init; } = Array.Empty<string>();
+    public int UploadCount => 1;
 }

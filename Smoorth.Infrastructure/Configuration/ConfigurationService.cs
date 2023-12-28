@@ -1,34 +1,27 @@
-﻿using Ekzakt.Utilities.Helpers;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Configuration;
+using Smooth.Api.Application.Options;
 using Smooth.Shared.Configurations;
 using Smooth.Shared.Configurations.MediaFiles.Options;
-using System;
-using System.IO;
-using System.Reflection;
 
 namespace Smooth.Api.Infrastructure.Configuration;
 
 public class ConfigurationService(
     IOptions<MediaFilesOptions> mediaFileOptions,
-    IOptions<ImageOptions> imageOptions,
-    IOptions<VideoOptions> videoOptions,
-    IOptions<SoundOptions> soundOptions)
+    IOptions<AzureOptions> azureOptions)
     : IConfigurationService
 {
     private readonly MediaFilesOptions _mediaFileOptions = mediaFileOptions.Value;
-    private readonly ImageOptions _imageOptions = imageOptions.Value;
-    private readonly VideoOptions _videoOptions = videoOptions.Value;
-    private readonly SoundOptions _soundOptions = soundOptions.Value;
+    private readonly AzureOptions _azureOptions = azureOptions.Value;
 
 
-    public async Task<IMediaFileOptions> GetMediaFileOptions(string mediaFileOptionsName)
+    public async Task<IMediaFileOptions> GetMediaFileOptionsAsync(string mediaFileOptionsName)
     {
         IMediaFileOptions options = mediaFileOptionsName switch
         {
-            nameof(ImageOptions) => _imageOptions,
-            nameof(VideoOptions) => _videoOptions,
-            nameof(SoundOptions) => _soundOptions,
+            nameof(ImageOptions) => _mediaFileOptions.Images,
+            nameof(VideoOptions) => _mediaFileOptions.Videos,
+            nameof(SoundOptions) => _mediaFileOptions.Sounds,
             _ => throw new NotImplementedException()
         };
 
@@ -41,7 +34,7 @@ public class ConfigurationService(
     }
 
 
-    public async Task<MediaFilesOptions> GetMediaFilesOptions()
+    public async Task<MediaFilesOptions> GetMediaFilesOptionsAsync()
     {
         MediaFilesOptions result = await Task.Run(() =>
         {
@@ -57,6 +50,17 @@ public class ConfigurationService(
         AppVersions result = await Task.Run(() =>
         {
             return new AppVersions(assemblyVersion, environmentVersion);
+        });
+
+        return result;
+    }
+
+
+    public async Task<AzureOptions> GetAzureOptionsAsync()
+    {
+        AzureOptions result = await Task.Run(() =>
+        {
+            return _azureOptions;
         });
 
         return result;

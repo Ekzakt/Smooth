@@ -1,3 +1,3 @@
 ﻿namespace Smooth.Api.Application.Options;
 
-public record KeyVaultOptions(string? Name);
+public record AzureKeyVaultOptions(string? Name);

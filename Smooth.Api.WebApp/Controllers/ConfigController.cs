@@ -17,7 +17,7 @@ namespace Smooth.Api.WebApp.Controllers
         [Route("MediaFilesOptions")]
         public async Task<IActionResult> GetMediaFilesOptionsAsync()
         {
-            var result = await _configurationService.GetMediaFilesOptions();
+            var result = await _configurationService.GetMediaFilesOptionsAsync();
 
             return result is not null
                 ? Ok(result)
@@ -27,11 +27,11 @@ namespace Smooth.Api.WebApp.Controllers
 
         [HttpGet]
         [Route("ImageOptions")]
-        public async Task<IActionResult> GetImageOptions()
+        public async Task<IActionResult> GetImageOptionsAsync()
         {
             //var result = await _configurationService.GetImageOptionsAsync();
 
-            var result = await _configurationService.GetMediaFileOptions(nameof(ImageOptions));
+            var result = await _configurationService.GetMediaFileOptionsAsync(nameof(ImageOptions));
 
             return result is not null
                 ? Ok(result)
@@ -41,11 +41,9 @@ namespace Smooth.Api.WebApp.Controllers
 
         [HttpGet]
         [Route("VideoOptions")]
-        public async Task<IActionResult> GetVideoOptions()
+        public async Task<IActionResult> GetVideoOptionsAsync()
         {
-            //var result = await _configurationService.GetVideoOptionsAsync();
-
-            var result = await _configurationService.GetMediaFileOptions(nameof(VideoOptions));
+            var result = await _configurationService.GetMediaFileOptionsAsync(nameof(VideoOptions));
 
             return result is not null
                 ? Ok(result)
@@ -55,11 +53,21 @@ namespace Smooth.Api.WebApp.Controllers
 
         [HttpGet]
         [Route("SoundOptions")]
-        public async Task<IActionResult> GetSoundOptions()
+        public async Task<IActionResult> GetSoundOptionsAsync()
         {
-            //var result = await _configurationService.GetSoundOptionsAsync();
+            var result = await _configurationService.GetMediaFileOptionsAsync(nameof(SoundOptions));
 
-            var result = await _configurationService.GetMediaFileOptions(nameof(SoundOptions));
+            return result is not null
+                ? Ok(result)
+                : NoContent();
+        }
+
+
+        [HttpGet]
+        [Route("AzureOptions")]
+        public async Task<IActionResult> GetAzureOptionsAsync()
+        {
+            var result = await _configurationService.GetAzureOptionsAsync();
 
             return result is not null
                 ? Ok(result)
@@ -69,7 +77,7 @@ namespace Smooth.Api.WebApp.Controllers
 
         [HttpGet]
         [Route("Versions")]
-        public async Task<IActionResult> GetBuildVersion()
+        public async Task<IActionResult> GetBuildVersionAsync()
         {
             var result = await _configurationService.GetAppVersionsAsync(typeof(Program).Assembly.GetName()?.Version!, Environment.Version);
 

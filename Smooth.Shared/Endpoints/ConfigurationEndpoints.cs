@@ -8,5 +8,6 @@ public static class ConfigurationEndpoints
     public static string IMAGE_OPTIONS() => $"{CONTROLLER}/imageoptions";
     public static string VIDEO_OPTIONS() => $"{CONTROLLER}/videooptions";
     public static string SOUND_OPTIONS() => $"{CONTROLLER}/soundoptions";
+    public static string AZURE_OPTIONS() => $"{CONTROLLER}/azureoptions";
     public static string VERSIONS() => $"{CONTROLLER}/versions";
 }

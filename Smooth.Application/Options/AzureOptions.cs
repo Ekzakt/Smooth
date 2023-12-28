@@ -4,7 +4,9 @@ public class AzureOptions
 {
     public const string OptionsName = "Azure";
 
-    public KeyVaultOptions? KeyVault { get; init; }
+    public AzureKeyVaultOptions? KeyVault { get; init; }
+
+    public AzureStorageAccountOptions? StorageAccount { get; init; }
 
 }
 

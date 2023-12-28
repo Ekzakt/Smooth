@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-namespace Smooth.Client.Flaunt.HttpClients;
+namespace Smooth.Client.Application.HttpClients;
 
 public class ApiHttpClient
 {

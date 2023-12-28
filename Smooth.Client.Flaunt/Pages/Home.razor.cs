@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Smooth.Client.Flaunt.HttpClients;
+using Smooth.Client.Application.HttpClients;
+using Smooth.Client.Application.Managers;
 using Smooth.Shared.Configurations;
 using Smooth.Shared.Configurations.MediaFiles.Options;
 using Smooth.Shared.Endpoints;
@@ -11,15 +12,14 @@ namespace Smooth.Client.Flaunt.Pages;
 public partial class Home
 {
     [Inject]
-    public ApiHttpClient _httpClient { get; set; }
+    public IHttpDataManager _httpDataManager { get; set; }
 
-
-    private string _mediaFilesOptions = string.Empty;
-    private string _imageOptions = string.Empty;
-    private string _videoOptions = string.Empty;
-    private string _soundOptions = string.Empty;
-    private string _apiVersions = string.Empty;
-    private string _webVersions = string.Empty;
+    private string? _mediaFilesOptions = string.Empty;
+    private string? _imageOptions = string.Empty;
+    private string? _videoOptions = string.Empty;
+    private string? _soundOptions = string.Empty;
+    private string? _apiVersions = string.Empty;
+    private string? _webVersions = string.Empty;
 
 
     protected override async Task OnInitializedAsync()
@@ -45,16 +45,7 @@ public partial class Home
     {
         var endpoint = ConfigurationEndpoints.MEDIAFILES_OPTIONS();
 
-        var result = await _httpClient.Client.GetFromJsonAsync<MediaFilesOptions>(endpoint);
-
-        if (result is not null)
-        {
-            _mediaFilesOptions = JsonSerializer.Serialize(result, new JsonSerializerOptions
-            {
-                IgnoreReadOnlyFields = false,
-                WriteIndented = true
-            });
-        }
+        _mediaFilesOptions = await _httpDataManager!.GetSerializedDataAsync<MediaFilesOptions>(endpoint);
     }
 
 
@@ -62,16 +53,7 @@ public partial class Home
     {
         var endpoint = ConfigurationEndpoints.IMAGE_OPTIONS();
 
-        var result = await _httpClient.Client.GetFromJsonAsync<ImageOptions>(endpoint);
-
-        if (result is not null)
-        {
-            _imageOptions = JsonSerializer.Serialize(result, new JsonSerializerOptions
-            {
-                IgnoreReadOnlyFields = false,
-                WriteIndented = true
-            });
-        }
+        _imageOptions = await _httpDataManager!.GetSerializedDataAsync<ImageOptions>(endpoint);
     }
 
 
@@ -79,16 +61,7 @@ public partial class Home
     {
         var endpoint = ConfigurationEndpoints.VIDEO_OPTIONS();
 
-        var result = await _httpClient.Client.GetFromJsonAsync<VideoOptions>(endpoint);
-
-        if (result is not null)
-        {
-            _videoOptions = JsonSerializer.Serialize(result, new JsonSerializerOptions
-            {
-                IgnoreReadOnlyFields = false,
-                WriteIndented = true
-            });
-        }
+        _videoOptions = await _httpDataManager!.GetSerializedDataAsync<VideoOptions>(endpoint);
     }
 
 
@@ -96,16 +69,7 @@ public partial class Home
     {
         var endpoint = ConfigurationEndpoints.SOUND_OPTIONS();
 
-        var result = await _httpClient.Client.GetFromJsonAsync<SoundOptions>(endpoint);
-
-        if (result is not null)
-        {
-            _soundOptions = JsonSerializer.Serialize(result, new JsonSerializerOptions
-            {
-                IgnoreReadOnlyFields = false,
-                WriteIndented = true
-            });
-        }
+        _soundOptions = await _httpDataManager!.GetSerializedDataAsync<SoundOptions>(endpoint);
     }
 
 
@@ -120,18 +84,7 @@ public partial class Home
     {
         var endpoint = ConfigurationEndpoints.VERSIONS();
 
-        var result = await _httpClient.Client.GetFromJsonAsync<AppVersions>(endpoint);
-
-        if (result is not null)
-        {
-            var version = JsonSerializer.Serialize(result, new JsonSerializerOptions
-            {
-                IgnoreReadOnlyFields = false,
-                WriteIndented = true
-            });
-
-            _apiVersions = version;
-        }
+        _apiVersions = await _httpDataManager!.GetSerializedDataAsync<AppVersions>(endpoint);
     }
 
 
@@ -148,6 +101,7 @@ public partial class Home
         _webVersions = version;
 
     }
+
 
     #endregion Helpers
 }

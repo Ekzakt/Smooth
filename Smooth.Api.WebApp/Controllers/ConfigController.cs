@@ -63,6 +63,7 @@ namespace Smooth.Api.WebApp.Controllers
         }
 
 
+#if DEBUG
         [HttpGet]
         [Route("AzureOptions")]
         public async Task<IActionResult> GetAzureOptionsAsync()
@@ -73,10 +74,10 @@ namespace Smooth.Api.WebApp.Controllers
                 ? Ok(result)
                 : NoContent();
         }
-
+#endif
 
         [HttpGet]
-        [Route("Versions")]
+        [Route("AppVersions")]
         public async Task<IActionResult> GetBuildVersionAsync()
         {
             var result = await _configurationService.GetAppVersionsAsync(typeof(Program).Assembly.GetName()?.Version!, Environment.Version);
@@ -85,5 +86,6 @@ namespace Smooth.Api.WebApp.Controllers
                 ? Ok(result)
                 : NoContent();
         }
+
     }
 }

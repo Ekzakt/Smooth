@@ -1,6 +1,7 @@
-﻿using Azure.Identity;
+﻿using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Options;
+using Smooth.Api.WebApp.SignalR;
 using Smooth.Shared.Configurations.MediaFiles.Options;
 
 namespace Smooth.Api.WebApp.Configuration;
@@ -23,10 +24,13 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Services.AddCors(options =>
         {
+            var corsValues = CorsOptions.CorsValues;
+
             options.AddPolicy(name: CorsOptions.OptionsName,
                               policy =>
                               {
-                                  policy.WithOrigins(CorsOptions.CorsValues);
+                                  policy.WithOrigins(corsValues);
+                                  policy.AllowAnyHeader();
                               });
         });
 
@@ -57,6 +61,18 @@ public static class WebApplicationBuilderExtensions
 
         return builder;
     }
+
+
+    public static WebApplicationBuilder AddSignalRHubConnections(this  WebApplicationBuilder builder)
+    {
+        builder.Services.AddSignalR().AddHubOptions<NotificationsHub>(options =>
+        {
+            options.EnableDetailedErrors = builder.Environment.IsDevelopment();
+        });
+
+        return builder;
+    }
+
 
 
 

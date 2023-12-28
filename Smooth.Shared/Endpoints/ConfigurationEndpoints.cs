@@ -9,5 +9,5 @@ public static class ConfigurationEndpoints
     public static string VIDEO_OPTIONS() => $"{CONTROLLER}/videooptions";
     public static string SOUND_OPTIONS() => $"{CONTROLLER}/soundoptions";
     public static string AZURE_OPTIONS() => $"{CONTROLLER}/azureoptions";
-    public static string VERSIONS() => $"{CONTROLLER}/versions";
+    public static string APP_VERSIONS() => $"{CONTROLLER}/appversions";
 }

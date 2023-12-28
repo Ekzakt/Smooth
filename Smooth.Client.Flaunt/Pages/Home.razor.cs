@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Smooth.Client.Application.HttpClients;
 using Smooth.Client.Application.Managers;
 using Smooth.Shared.Configurations;
 using Smooth.Shared.Configurations.MediaFiles.Options;
 using Smooth.Shared.Endpoints;
-using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace Smooth.Client.Flaunt.Pages;
@@ -14,13 +12,15 @@ public partial class Home
     [Inject]
     public IHttpDataManager _httpDataManager { get; set; }
 
+    [Inject]
+    public NavigationManager? NavigationMananger { get; set; }
+
     private string? _mediaFilesOptions = string.Empty;
     private string? _imageOptions = string.Empty;
     private string? _videoOptions = string.Empty;
     private string? _soundOptions = string.Empty;
     private string? _apiVersions = string.Empty;
     private string? _webVersions = string.Empty;
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -38,6 +38,7 @@ public partial class Home
         await SetImageOptionsAsync();
         await SetVideoOptionsAsync();
         await SetSoundOptionsAsync();
+
     }
 
 
@@ -82,7 +83,7 @@ public partial class Home
 
     private async Task SetApiVersionsAsync()
     {
-        var endpoint = ConfigurationEndpoints.VERSIONS();
+        var endpoint = ConfigurationEndpoints.APP_VERSIONS();
 
         _apiVersions = await _httpDataManager!.GetSerializedDataAsync<AppVersions>(endpoint);
     }

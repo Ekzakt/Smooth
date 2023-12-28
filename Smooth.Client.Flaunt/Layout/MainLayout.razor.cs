@@ -1,15 +1,69 @@
-﻿using Smooth.Shared.Configurations;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.SignalR.Client;
+using Smooth.Shared;
+using Smooth.Shared.Configurations;
+using Smooth.Shared.Endpoints;
 
 namespace Smooth.Client.Flaunt.Layout;
 
-public partial class MainLayout
+public partial class MainLayout : IAsyncDisposable
 {
+    [Inject]
+    public NavigationManager? _navigationMananger { get; set; }
+
+    [Inject]
+    public IConfiguration? Configuration { get; set; }
+
+
     private AppVersions? _appVersions;
+    private HubConnection? _hubConnection;
+    private List<string> _messages = new();
 
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         var assemblyVersion = typeof(Program).Assembly?.GetName()?.Version;
         _appVersions = new AppVersions(assemblyVersion!, Environment.Version);
+
+        await StartHubAsync();
     }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_hubConnection is not null)
+        {
+            await _hubConnection.DisposeAsync();
+        }
+    }
+
+
+
+    #region Helpers
+
+    private async Task StartHubAsync()
+    {
+        var apiBaseAddress = Configuration?
+           .GetValue<string>(Constants.API_BASE_ADDRESS);
+
+        apiBaseAddress ??= _navigationMananger?.BaseUri;
+
+        var baseAddres = $"{apiBaseAddress}{SignalREndpoints.NOTIFICATIONS_HUB}";
+
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl(baseAddres)
+            .Build();
+
+        _hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+        {
+            var encodedMsg = $"{user}: {message}";
+            _messages.Add(encodedMsg);
+
+            InvokeAsync(StateHasChanged);
+        });
+
+        await _hubConnection.StartAsync();
+    }
+
+
+    #endregion Helpers
 }

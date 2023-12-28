@@ -1,6 +1,4 @@
-﻿using static System.Net.WebRequestMethods;
-
-namespace Smooth.Api.WebApp.Configuration;
+﻿namespace Smooth.Api.WebApp.Configuration;
 
 public class CorsOptions
 {

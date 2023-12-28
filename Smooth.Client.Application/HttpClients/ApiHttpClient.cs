@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-
-namespace Smooth.Client.Application.HttpClients;
+﻿namespace Smooth.Client.Application.HttpClients;
 
 public class ApiHttpClient
 {
@@ -9,17 +7,5 @@ public class ApiHttpClient
     public ApiHttpClient(HttpClient client)
     {
         Client = client;
-
-        //var baseAddress = _configuration.GetValue<string>("ApiBaseAddress");
-
-        //if (string.IsNullOrEmpty(baseAddress))
-        //{
-        //    baseAddress = environment.BaseAddress;
-        //}
-
-        //Client.BaseAddress = new Uri(baseAddress);
-
-        //Client.Timeout = new TimeSpan(0, 0, 30);
-        //Client.DefaultRequestHeaders.Clear();
     }
 }

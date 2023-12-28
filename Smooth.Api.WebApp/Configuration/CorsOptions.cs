@@ -4,5 +4,5 @@ public class CorsOptions
 {
     public const string OptionsName = "CorsValues";
 
-    public static readonly string[] CorsValues = { "https://localhost:7083" };
+    public static readonly string[] CorsValues = { "https://localhost:7083", "https://dev.ekzakt.be" };
 }

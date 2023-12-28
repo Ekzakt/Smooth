@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.Connections;
+﻿using Azure.Identity;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Options;
 using Smooth.Api.WebApp.SignalR;

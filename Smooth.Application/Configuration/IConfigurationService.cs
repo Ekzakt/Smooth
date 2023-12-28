@@ -6,7 +6,7 @@ namespace Smooth.Api.Application.Configuration;
 
 public interface IConfigurationService
 {
-    Task<MediaFilesOptions> GetMediaFilesConfigurationAsync();
-
-    Task<Versions> GetVersionsAsync(Assembly assembly);
+    Task<MediaFilesOptions> GetMediaFilesOptions();
+    Task<IMediaFileOptions> GetMediaFileOptions(string mediaFileOptionsName);
+    Task<AppVersions> GetAppVersionsAsync(Version assemblyVersion, Version environmentVersion);
 }

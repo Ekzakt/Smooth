@@ -2,22 +2,17 @@ using Smooth.Api.Application.Configuration;
 using Smooth.Api.Application.WeatherForecasts;
 using Smooth.Api.Infrastructure.Configuration;
 using Smooth.Api.Infrastructure.WeatherForecasts;
-using Smooth.Shared.Configurations.MediaFiles.Options;
+using Smooth.Api.WebApp.Configuration;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 
+builder.AddConfigurationOptions();
+
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-
-builder.Services
-            .Configure<MediaFilesOptions>
-            (
-                builder.Configuration.GetSection(MediaFilesOptions.OptionsName)
-            );
-
 
 
 builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
@@ -38,7 +33,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     //app.UseSwagger();

@@ -1,6 +1,6 @@
 ﻿namespace Smooth.Shared.Configurations.MediaFiles.Options;
 
-public class ImagesOptions : IMediaFileOptions
+public class ImageOptions : IMediaFileOptions
 {
     public static string OptionsName => "Images";
 

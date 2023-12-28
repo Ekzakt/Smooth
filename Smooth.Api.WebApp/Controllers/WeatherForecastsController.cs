@@ -14,9 +14,9 @@ namespace Smooth.Api.WebApp.Controllers
 
 
         [HttpGet(Name = "GetByRowCount")]
-        public async Task<IActionResult> GetByRowcount(int? r)
+        public async Task<IActionResult> GetByRowcount(int? r, CancellationToken cancellationToken)
         {
-            var result = await _weatherForecastService.GetAllAsync(r);
+            var result = await _weatherForecastService.GetAllAsync(r, cancellationToken);
 
             return result is not null
                 ? Ok(result)

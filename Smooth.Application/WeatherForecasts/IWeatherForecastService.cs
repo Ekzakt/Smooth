@@ -2,5 +2,5 @@
 
 public interface IWeatherForecastService
 {
-    Task<List<WeatherForecast>?> GetAllAsync(int? number);
+    Task<List<WeatherForecast>?> GetAllAsync(int? number, CancellationToken cancellationToken);
 }

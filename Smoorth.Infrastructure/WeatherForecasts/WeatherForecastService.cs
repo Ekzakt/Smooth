@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Smooth.Api.Application.WeatherForecasts;
+using Smooth.Shared.Configurations.MediaFiles.Options;
 
 namespace Smooth.Api.Infrastructure.WeatherForecasts;
 
@@ -10,21 +11,34 @@ public class WeatherForecastService(
 {
     private readonly ILogger<WeatherForecastService> _logger = logger;
 
-    public async Task<List<WeatherForecast>?> GetAllAsync(int? rowCount)
+    public async Task<List<WeatherForecast>?> GetAllAsync(int? rowCount, CancellationToken cancellationToken)
     {
         var randomNumber = new Random();
         var temp = 0;
 
-        var result = Enumerable.Range(1, CheckRowcount(rowCount)).Select(index => new WeatherForecast
+        try
         {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = temp = randomNumber.Next(-20, 55),
-            Summary = GetSummary(temp)
-        }).ToList();
+            var output = await Task.Run(() =>
+            {
+                var result = Enumerable.Range(1, CheckRowcount(rowCount)).Select(index => new WeatherForecast
+                {
+                    Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+                    TemperatureC = temp = randomNumber.Next(-20, 55),
+                    Summary = GetSummary(temp)
+                }).ToList();
 
-        await Task.Delay(1);
+                return result;
 
-        return result;
+            }, cancellationToken);
+
+            return output;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+        
     }
 
 

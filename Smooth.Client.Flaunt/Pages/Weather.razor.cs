@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 
 namespace Smooth.Client.Flaunt.Pages;
 
-public partial class Weather
+public partial class Weather : IDisposable
 {
     [Inject]
     public ApiHttpClient _httpClient { get; set; }
@@ -21,6 +21,7 @@ public partial class Weather
     public int? R { get; set; } = 10;
 
 
+    private CancellationTokenSource cancellationToken = new();
     private List<WeatherForecastResponseDto>? forecasts = new();
 
 
@@ -37,13 +38,20 @@ public partial class Weather
     {
         var endpoint = WeatherForecastEndpoints.GET_BY_ROWCOUNT(R);
 
-        var result = await _httpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint);
+        var result = await _httpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint, cancellationToken.Token);
 
         if (result is not null)
         {
             forecasts = result;
         }
 
+    }
+
+
+    void IDisposable.Dispose()
+    {
+        cancellationToken.Cancel();
+        cancellationToken.Dispose();
     }
 
     #endregion Helpers

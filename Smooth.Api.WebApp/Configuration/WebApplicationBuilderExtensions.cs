@@ -12,7 +12,22 @@ public static class WebApplicationBuilderExtensions
             .AddAzureStorageAccountOptions()
             .AddApplicationDbOptions()
             .AddMediaFilesOptions();
-            
+
+        return builder;
+    }
+
+
+    public static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(name: CorsOptions.OptionsName,
+                              policy =>
+                              {
+                                  policy.WithOrigins(CorsOptions.CorsValues);
+                              });
+        });
+
         return builder;
     }
 

@@ -7,29 +7,14 @@ using Smooth.Api.WebApp.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.AddConfigurationOptions();
-
+builder.AddCors();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-
 builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
 builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
-
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.WithOrigins("https://localhost:7083");
-                      });
-});
-
-
 
 var app = builder.Build();
 
@@ -39,7 +24,7 @@ if (app.Environment.IsDevelopment())
     //app.UseSwaggerUI();
 }
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors(CorsOptions.OptionsName);
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

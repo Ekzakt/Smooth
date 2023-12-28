@@ -1,42 +1,15 @@
-﻿using System;
-using System.Reflection;
-using System.Runtime.Versioning;
+﻿using Smooth.Shared.Configurations;
 
 namespace Smooth.Client.Flaunt.Layout;
 
 public partial class MainLayout
 {
-    private string _buildVersion = string.Empty;
-    private string _frameWorkVersion = string.Empty;
+    private AppVersions? _appVersions;
 
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        _buildVersion = GetBuildVersion();
-        _frameWorkVersion = GetFrameworkVersion();
+        var assemblyVersion = typeof(Program).Assembly?.GetName()?.Version;
+        _appVersions = new AppVersions(assemblyVersion!, Environment.Version);
     }
-
-
-
-    #region Helpers
-
-    private string GetBuildVersion()
-    {
-        var buildVersion = typeof(Program).Assembly.GetName().Version;
-
-        if (buildVersion is not null)
-        { 
-            return $"{buildVersion?.Major}.{buildVersion?.Minor}.{buildVersion?.Build}";
-        }
-
-        return string.Empty;
-    }
-
-
-    private string GetFrameworkVersion()
-    {
-        return Environment.Version.ToString();
-    }
-
-    #endregion Helpers
 }

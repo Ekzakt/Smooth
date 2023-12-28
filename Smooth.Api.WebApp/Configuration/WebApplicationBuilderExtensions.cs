@@ -92,5 +92,6 @@ public static class WebApplicationBuilderExtensions
         return builder;
     }
 
+
     #endregion Helpers
 }

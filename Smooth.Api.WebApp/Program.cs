@@ -17,13 +17,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
 builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 
-var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    //app.UseSwagger();
-    //app.UseSwaggerUI();
-}
+
+var app = builder.Build();
 
 app.UseCors(CorsOptions.OptionsName);
 app.UseHttpsRedirection();

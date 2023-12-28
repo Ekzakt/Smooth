@@ -36,24 +36,24 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddAzure(this WebApplicationBuilder builder)
     {
-        var azureOptions = builder.Services.BuildServiceProvider()
-            .GetService<IOptions<AzureOptions>>()?.Value;
+        //var azureOptions = builder.Services.BuildServiceProvider()
+        //    .GetService<IOptions<AzureOptions>>()?.Value;
 
-#if !DEBUG
-        builder.Configuration.AddAzureKeyVault(
-            new Uri($"https://{azureOptions?.KeyVault?.Name}.vault.azure.net/"),
-            new DefaultAzureCredential(new DefaultAzureCredentialOptions
-            {
-                ExcludeEnvironmentCredential = true,
-                ExcludeInteractiveBrowserCredential = true,
-                ExcludeAzurePowerShellCredential = true,
-                ExcludeSharedTokenCacheCredential = true,
-                ExcludeVisualStudioCodeCredential = true,
-                ExcludeVisualStudioCredential = true,
-                ExcludeAzureCliCredential = true,
-                ExcludeManagedIdentityCredential = false
-            }));
-#endif
+//#if !DEBUG
+//        builder.Configuration.AddAzureKeyVault(
+//            new Uri($"https://{azureOptions?.KeyVault?.Name}.vault.azure.net/"),
+//            new DefaultAzureCredential(new DefaultAzureCredentialOptions
+//            {
+//                ExcludeEnvironmentCredential = true,
+//                ExcludeInteractiveBrowserCredential = true,
+//                ExcludeAzurePowerShellCredential = true,
+//                ExcludeSharedTokenCacheCredential = true,
+//                ExcludeVisualStudioCodeCredential = true,
+//                ExcludeVisualStudioCredential = true,
+//                ExcludeAzureCliCredential = true,
+//                ExcludeManagedIdentityCredential = false
+//            }));
+//#endif
 
         return builder;
     }

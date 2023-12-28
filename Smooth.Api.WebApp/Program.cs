@@ -8,6 +8,7 @@ using Smooth.Api.WebApp.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddConfigurationOptions();
+builder.AddAzure();
 builder.AddCors();
 
 builder.Services.AddControllers();

@@ -1,4 +1,6 @@
-﻿using Smooth.Api.Application.Options;
+﻿using Azure.Identity;
+using Microsoft.Extensions.Options;
+using Smooth.Api.Application.Options;
 using Smooth.Shared.Configurations.MediaFiles.Options;
 
 namespace Smooth.Api.WebApp.Configuration;
@@ -27,6 +29,31 @@ public static class WebApplicationBuilderExtensions
                                   policy.WithOrigins(CorsOptions.CorsValues);
                               });
         });
+
+        return builder;
+    }
+
+
+    public static WebApplicationBuilder AddAzure(this WebApplicationBuilder builder)
+    {
+        var azureOptions = builder.Services.BuildServiceProvider()
+            .GetService<IOptions<AzureOptions>>()?.Value;
+
+#if !DEBUG
+        builder.Configuration.AddAzureKeyVault(
+            new Uri($"https://{azureOptions?.KeyVault?.Name}.vault.azure.net/"),
+            new DefaultAzureCredential(new DefaultAzureCredentialOptions
+            {
+                ExcludeEnvironmentCredential = true,
+                ExcludeInteractiveBrowserCredential = true,
+                ExcludeAzurePowerShellCredential = true,
+                ExcludeSharedTokenCacheCredential = true,
+                ExcludeVisualStudioCodeCredential = true,
+                ExcludeVisualStudioCredential = true,
+                ExcludeAzureCliCredential = true,
+                ExcludeManagedIdentityCredential = false
+            }));
+#endif
 
         return builder;
     }

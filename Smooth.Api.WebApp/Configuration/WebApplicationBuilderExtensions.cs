@@ -23,11 +23,11 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
     {
+        var corsValues = CorsOptions.CorsValues;
+
         builder.Services.AddCors(options =>
         {
-            var corsValues = CorsOptions.CorsValues;
-
-            options.AddPolicy(name: CorsOptions.OptionsName,
+            options.AddPolicy(name: CorsOptions.POLICY_NAME,
                               policy =>
                               {
                                   policy.WithOrigins(corsValues);

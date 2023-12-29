@@ -33,7 +33,8 @@ var app = builder.Build();
 
 app.UseStaticFiles();
 app.UseResponseCompression();
-app.UseCors(CorsOptions.OptionsName);
+app.UseCors(CorsOptions.POLICY_NAME);
+//app.UseCors();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

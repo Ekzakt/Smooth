@@ -2,7 +2,7 @@
 
 public class CorsOptions
 {
-    public const string OptionsName = "CorsValues";
+    public const string POLICY_NAME = "_MyAllowedOrigins";
 
-    public static readonly string[] CorsValues = { "https://localhost:7083", "https://dev.ekzakt.be" };
+    public static readonly string[] CorsValues = ["https://localhost:7083", "https://dev.ekzakt.be"];
 }

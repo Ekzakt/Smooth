@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
 using Smooth.Shared;
 using Smooth.Shared.Configurations;
@@ -28,6 +29,7 @@ public partial class MainLayout : IAsyncDisposable
         await StartHubAsync();
     }
 
+
     public async ValueTask DisposeAsync()
     {
         if (_hubConnection is not null)
@@ -43,14 +45,12 @@ public partial class MainLayout : IAsyncDisposable
     private async Task StartHubAsync()
     {
         var apiBaseAddress = Configuration?
-           .GetValue<string>(Constants.API_BASE_ADDRESS);
+           .GetValue<string>(Constants.API_BASE_ADDRESS_CONFIG_NAME);
 
-        apiBaseAddress ??= _navigationMananger?.BaseUri;
-
-        var baseAddres = $"{apiBaseAddress}{SignalREndpoints.NOTIFICATIONS_HUB}";
+        apiBaseAddress ??= _navigationMananger?.BaseUri.TrimEnd('/');
 
         _hubConnection = new HubConnectionBuilder()
-            .WithUrl(baseAddres)
+            .WithUrl($"{apiBaseAddress}{SignalREndpoints.NOTIFICATIONS_HUB}")
             .Build();
 
         _hubConnection.On<string, string>("ReceiveMessage", (user, message) =>

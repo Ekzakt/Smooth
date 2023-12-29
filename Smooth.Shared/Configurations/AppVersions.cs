@@ -4,7 +4,7 @@ namespace Smooth.Shared.Configurations;
 
 public class AppVersions
 {
-    public string Build { get; set; } = string.Empty;
+    public string App { get; set; } = string.Empty;
     public string FrameWork { get; init; } = string.Empty;
 
 
@@ -13,7 +13,7 @@ public class AppVersions
 
     public AppVersions(Version assemblyVersion, Version environmentVersion)
     {
-        Build = assemblyVersion?.Format()!;
-        FrameWork = Environment.Version.ToString();
+        App = assemblyVersion.Format();
+        FrameWork = environmentVersion.Format();
     }
 }

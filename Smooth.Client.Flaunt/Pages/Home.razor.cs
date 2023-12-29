@@ -4,7 +4,6 @@ using Smooth.Shared.Configurations;
 using Smooth.Shared.Configurations.MediaFiles.Options;
 using Smooth.Shared.Endpoints;
 using System.Text.Json;
-
 namespace Smooth.Client.Flaunt.Pages;
 
 public partial class Home
@@ -13,7 +12,7 @@ public partial class Home
     public IHttpDataManager _httpDataManager { get; set; }
 
     [Inject]
-    public NavigationManager? NavigationMananger { get; set; }
+    public NavigationManager _navigationMananger { get; set; }
 
     private string? _mediaFilesOptions = string.Empty;
     private string? _imageOptions = string.Empty;
@@ -21,11 +20,15 @@ public partial class Home
     private string? _soundOptions = string.Empty;
     private string? _apiVersions = string.Empty;
     private string? _webVersions = string.Empty;
+    private string? _baseAddress = string.Empty;
+
 
     protected override async Task OnInitializedAsync()
     {
         await SetOptionsAsync();
         await SetVersionsAsync();
+        
+        _baseAddress = _navigationMananger.BaseUri;
     }
 
 

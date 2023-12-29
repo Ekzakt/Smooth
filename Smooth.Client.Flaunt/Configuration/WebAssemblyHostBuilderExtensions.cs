@@ -9,7 +9,7 @@ public static class WebAssemblyHostBuilderExtensions
     public static WebAssemblyHostBuilder AddHttpClients(this WebAssemblyHostBuilder builder)
     {
         var apiBaseAddress = builder.Configuration
-            .GetValue<string>(Constants.API_BASE_ADDRESS);
+            .GetValue<string>(Constants.API_BASE_ADDRESS_CONFIG_NAME);
 
         apiBaseAddress ??= builder.HostEnvironment.BaseAddress;
 

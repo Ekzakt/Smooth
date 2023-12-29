@@ -30,7 +30,8 @@ public static class WebApplicationBuilderExtensions
             options.AddPolicy(name: CorsOptions.POLICY_NAME,
                               policy =>
                               {
-                                  policy.WithOrigins(corsValues);
+                                  //policy.WithOrigins(corsValues);
+                                  policy.AllowAnyOrigin();
                                   policy.AllowAnyHeader();
                                   policy.AllowAnyMethod();
                               });

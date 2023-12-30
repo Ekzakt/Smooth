@@ -4,7 +4,9 @@ using Smooth.Shared.Configurations;
 using Smooth.Shared.Configurations.MediaFiles.Options;
 using Smooth.Shared.Dtos;
 using Smooth.Shared.Endpoints;
+using System.Runtime.InteropServices;
 using System.Text.Json;
+
 namespace Smooth.Client.Flaunt.Pages;
 
 public partial class Home
@@ -23,17 +25,23 @@ public partial class Home
     private string? _webVersions = string.Empty;
     private string? _baseAddress = string.Empty;
     private string? _insertTestClassResult = string.Empty;
+    private string? _isWasm = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
         await SetOptionsAsync();
         await SetVersionsAsync();
-        
-        _baseAddress = _navigationMananger.BaseUri;
+
+        SetBaseAddress();
+        SetIsWasm();
     }
 
 
-    private async Task InsertTestClass()
+
+
+    #region Helpers
+
+    private async Task InsertTestClassAsync()
     {
         var result = await _httpDataManager.Insert<InsertTestClassResponsDto, InsertTestClassRequestDto>(TestEndpoints.INSERT_TEST_CLASS(), new InsertTestClassRequestDto
         {
@@ -44,7 +52,6 @@ public partial class Home
         _insertTestClassResult = result.Id.ToString();
     }
 
-    #region Helpers
 
     private async Task SetOptionsAsync()
     {
@@ -115,6 +122,20 @@ public partial class Home
 
         _webVersions = version;
 
+    }
+
+
+    private void SetIsWasm()
+    {
+        var isWasm = RuntimeInformation.IsOSPlatform(OSPlatform.Create("WEBASSEMBLY"));
+
+        _isWasm = isWasm.ToString();
+    }
+
+
+    private void SetBaseAddress()
+    {
+        _baseAddress = _navigationMananger.BaseUri;
     }
 
 

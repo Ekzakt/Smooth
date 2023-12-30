@@ -51,6 +51,7 @@ public partial class MainLayout : IAsyncDisposable
 
         _hubConnection = new HubConnectionBuilder()
             .WithUrl($"{apiBaseAddress}{SignalREndpoints.NOTIFICATIONS_HUB}")
+            .WithAutomaticReconnect()
             .Build();
 
         _hubConnection.On<string, string>("ReceiveMessage", (user, message) =>

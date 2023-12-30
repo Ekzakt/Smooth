@@ -26,10 +26,11 @@
 
 <Article Title="TestClass POST Method:" Value="@_insertTestClassResult">
     <div class="mb-2">
-        <button type="button" class="btn btn-info" @onclick="InsertTestClass">Insert TestClass</button>
+        <button type="button" class="btn btn-info" @onclick="InsertTestClassAsync">Insert TestClass</button>
     </div>
 </Article>
 
+<Article Title="Is WASM" Value="@_isWasm"></Article>
 <Article Title="Base Uri from NavigationManager:" Value="@_baseAddress"></Article>
 <Article Title="Api Versions:" Value="@_apiVersions"></Article>
 <Article Title="Web Versions:" Value="@_webVersions"></Article>

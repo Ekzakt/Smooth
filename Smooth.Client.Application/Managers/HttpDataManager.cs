@@ -1,4 +1,5 @@
 ﻿using Smooth.Client.Application.HttpClients;
+using Smooth.Shared.Endpoints;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -37,5 +38,24 @@ public class HttpDataManager : IHttpDataManager
         }
 
         return string.Empty;
+    }
+
+
+    public async Task<T?> Insert<T, U>(string endpoint, U data)
+        where T : class
+        where U : class
+    {
+        var response = await _httpClient.Client.PostAsJsonAsync(endpoint, data);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadFromJsonAsync<T>();
+            return content;
+        }
+
+        return null;
+
+        //return (T)Convert.ChangeType(response, typeof(T));
+        //return (T)(object)response;
     }
 }

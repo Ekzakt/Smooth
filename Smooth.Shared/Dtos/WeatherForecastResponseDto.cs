@@ -1,4 +1,4 @@
-﻿namespace Smooth.Client.Application.WeaterForcasts;
+﻿namespace Smooth.Shared.Dtos;
 
 public class WeatherForecastResponseDto
 {

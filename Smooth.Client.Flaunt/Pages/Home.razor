@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-@using Smooth.Client.Flaunt.Components;
+@using Smooth.Client.Flaunt.Components.Article
 
 <PageTitle>Home</PageTitle>
 
@@ -23,6 +23,12 @@
         <li><a href="weather/500">Weather 500</a></li>
     </ul>
 </div>
+
+<Article Title="TestClass POST Method:" Value="@_insertTestClassResult">
+    <div class="mb-2">
+        <button type="button" class="btn btn-info" @onclick="InsertTestClass">Insert TestClass</button>
+    </div>
+</Article>
 
 <Article Title="Base Uri from NavigationManager:" Value="@_baseAddress"></Article>
 <Article Title="Api Versions:" Value="@_apiVersions"></Article>

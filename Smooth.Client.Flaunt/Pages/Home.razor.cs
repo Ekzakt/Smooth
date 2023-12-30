@@ -2,6 +2,7 @@
 using Smooth.Client.Application.Managers;
 using Smooth.Shared.Configurations;
 using Smooth.Shared.Configurations.MediaFiles.Options;
+using Smooth.Shared.Dtos;
 using Smooth.Shared.Endpoints;
 using System.Text.Json;
 namespace Smooth.Client.Flaunt.Pages;
@@ -21,7 +22,7 @@ public partial class Home
     private string? _apiVersions = string.Empty;
     private string? _webVersions = string.Empty;
     private string? _baseAddress = string.Empty;
-
+    private string? _insertTestClassResult = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -32,6 +33,16 @@ public partial class Home
     }
 
 
+    private async Task InsertTestClass()
+    {
+        var result = await _httpDataManager.Insert<InsertTestClassResponsDto, InsertTestClassRequestDto>(TestEndpoints.INSERT_TEST_CLASS(), new InsertTestClassRequestDto
+        {
+            Name = "Test class name",
+            Description = "Test class description"
+        });
+
+        _insertTestClassResult = result.Id.ToString();
+    }
 
     #region Helpers
 

@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace Smooth.Client.Flaunt.Components;
+namespace Smooth.Client.Flaunt.Components.Article;
 
 public partial class Article
 {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+
     [Parameter]
     public string Title { get; set; } = string.Empty;
 

@@ -62,7 +62,7 @@ public partial class MainLayout : IAsyncDisposable
             InvokeAsync(StateHasChanged);
         });
 
-        await _hubConnection.StartAsync();
+        //await _hubConnection.StartAsync();
     }
 
 

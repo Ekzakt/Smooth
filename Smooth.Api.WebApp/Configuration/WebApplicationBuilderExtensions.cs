@@ -73,10 +73,10 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services
             .AddSignalR()
-            .AddAzureSignalR(options =>
-            {
-                options.ConnectionString = azureOptions?.SignalR?.ConnectionString;
-            })
+            //.AddAzureSignalR(options =>
+            //{
+            //    options.ConnectionString = azureOptions?.SignalR?.ConnectionString;
+            //})
             .AddHubOptions<NotificationsHub>(options =>
             {
                 options.EnableDetailedErrors = builder.Environment.IsDevelopment();

@@ -12,4 +12,5 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.AddHttpClients();
 builder.Services.AddScoped<IHttpDataManager, HttpDataManager>();
 
+
 await builder.Build().RunAsync();

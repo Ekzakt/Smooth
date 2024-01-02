@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.AspNetCore.WebUtilities;
+using Smooth.Client.Flaunt.Configuration;
 using Smooth.Shared;
 using Smooth.Shared.Configurations;
 using Smooth.Shared.Endpoints;
@@ -59,8 +60,8 @@ public partial class MainLayout : IAsyncDisposable
         _hubConnection = new HubConnectionBuilder()
             .WithUrl(url, options => 
             {
-                options.SkipNegotiation = false;
-                options.Transports = HttpTransportType.WebSockets;
+                //options.HttpMessageHandlerFactory = innerHandler => new IncludeRequestCredentialsMessagHandler { InnerHandler = innerHandler };
+                //options.Transports = HttpTransportType.WebSockets;
             })
             .WithAutomaticReconnect()
             .Build();

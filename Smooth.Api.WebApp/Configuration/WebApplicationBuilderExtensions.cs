@@ -32,8 +32,9 @@ public static class WebApplicationBuilderExtensions
                               {
                                   policy.WithOrigins(corsValues);
                                   policy.AllowAnyHeader();
-                                  policy.AllowAnyMethod();
-                                  policy.SetIsOriginAllowed((host) => true);
+                                  //policy.AllowAnyMethod();
+                                  policy.WithMethods("GET", "POST");
+                                  policy.AllowCredentials();
                               });
         });
 

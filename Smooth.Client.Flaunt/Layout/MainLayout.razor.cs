@@ -59,7 +59,7 @@ public partial class MainLayout : IAsyncDisposable
         _hubConnection = new HubConnectionBuilder()
             .WithUrl(url, options => 
             {
-                options.SkipNegotiation = true;
+                options.SkipNegotiation = false;
                 options.Transports = HttpTransportType.WebSockets;
             })
             .WithAutomaticReconnect()

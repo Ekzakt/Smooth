@@ -6,15 +6,18 @@ using Smooth.Shared.Configurations.MediaFiles.Options;
 
 namespace Smooth.Api.Infrastructure.Configuration;
 
-public class ConfigurationService(
-    IOptions<MediaFilesOptions> mediaFileOptions,
-    IOptions<AzureOptions> azureOptions)
+public class ConfigurationService
     : IConfigurationService
 {
-    private readonly MediaFilesOptions _mediaFileOptions = mediaFileOptions.Value;
-    private readonly AzureOptions _azureOptions = azureOptions.Value;
+    private readonly MediaFilesOptions _mediaFileOptions;
+    private readonly AzureOptions _azureOptions;
 
 
+    public ConfigurationService(IOptions<MediaFilesOptions> mediaFileOptions, IOptions<AzureOptions> azureOptions)
+    {
+        _mediaFileOptions = mediaFileOptions.Value;
+        _azureOptions = azureOptions.Value;
+    }
     public async Task<IMediaFileOptions> GetMediaFileOptionsAsync(string mediaFileOptionsName)
     {
         IMediaFileOptions options = mediaFileOptionsName switch

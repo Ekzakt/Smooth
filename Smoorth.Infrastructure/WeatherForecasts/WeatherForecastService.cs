@@ -1,15 +1,18 @@
 ﻿using Microsoft.Extensions.Logging;
 using Smooth.Api.Application.WeatherForecasts;
-using Smooth.Shared.Configurations.MediaFiles.Options;
 
 namespace Smooth.Api.Infrastructure.WeatherForecasts;
 
-public class WeatherForecastService(
-    ILogger<WeatherForecastService> logger
-    )
+public class WeatherForecastService
     : IWeatherForecastService
 {
-    private readonly ILogger<WeatherForecastService> _logger = logger;
+    private readonly ILogger<WeatherForecastService> _logger;
+
+    public WeatherForecastService(ILogger<WeatherForecastService> logger)
+    {
+        _logger = logger;
+    }
+
 
     public async Task<List<WeatherForecast>?> GetAllAsync(int? rowCount, CancellationToken cancellationToken)
     {

@@ -6,11 +6,17 @@ namespace Smooth.Api.WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ConfigController(
-        IConfigurationService configurationService)
+    public class ConfigController
         : ControllerBase
     {
-        private readonly IConfigurationService _configurationService = configurationService;
+        private readonly IConfigurationService _configurationService;
+
+
+        public ConfigController(IConfigurationService configurationService)
+        {
+            _configurationService = configurationService;
+        }
+
 
 
         [HttpGet]

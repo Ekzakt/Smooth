@@ -8,11 +8,17 @@ namespace Smooth.Api.WebApp.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class TestController(
-    IHubContext<NotificationsHub> hub)
+public class TestController
     : ControllerBase
 {
-    private readonly IHubContext<NotificationsHub> _hub = hub;
+    private readonly IHubContext<NotificationsHub> _hub;
+
+
+    public TestController(IHubContext<NotificationsHub> hub)
+    {
+        _hub = hub;
+    }
+
 
     [HttpPost]
     public async Task<IActionResult> InsertTestClass(InsertTestClassRequestDto request)

@@ -6,11 +6,17 @@ namespace Smooth.Api.WebApp.Controllers
 {
     [ApiController]
     [Route(WeatherForecastEndpoints.CONTROLLER)]
-    public class WeatherForecastsController(
-        IWeatherForecastService weatherForecast)
+    public class WeatherForecastsController
         : ControllerBase
     {
-        private readonly IWeatherForecastService _weatherForecastService = weatherForecast;
+        private readonly IWeatherForecastService _weatherForecastService;
+
+
+        public WeatherForecastsController(IWeatherForecastService weatherForecast)
+        {
+            _weatherForecastService = weatherForecast;
+        }
+
 
 
         [HttpGet(Name = "GetByRowCount")]

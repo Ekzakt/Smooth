@@ -17,9 +17,9 @@ builder.Services.AddResponseCompression(opts =>
 });
 
 builder.AddConfigurationOptions();
-builder.AddAzure();
+builder.AddAzureKeyVault();
 builder.AddCors();
-builder.AddSignalRHubConnections();
+builder.AddAzureSignalR();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -34,10 +34,11 @@ var app = builder.Build();
 app.UseStaticFiles();
 app.UseResponseCompression();
 app.UseCors(CorsOptions.POLICY_NAME);
-//app.UseCors();
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
 app.MapControllers();
+
 app.MapHub<NotificationsHub>(SignalREndpoints.NOTIFICATIONS_HUB);
 
 app.Run();

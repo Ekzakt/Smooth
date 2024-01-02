@@ -30,10 +30,10 @@ public static class WebApplicationBuilderExtensions
             options.AddPolicy(name: CorsOptions.POLICY_NAME,
                               policy =>
                               {
-                                  //policy.WithOrigins(corsValues);
-                                  policy.AllowAnyOrigin();
+                                  policy.WithOrigins(corsValues);
                                   policy.AllowAnyHeader();
                                   policy.AllowAnyMethod();
+                                  policy.SetIsOriginAllowed((host) => true);
                               });
         });
 
@@ -41,7 +41,7 @@ public static class WebApplicationBuilderExtensions
     }
 
 
-    public static WebApplicationBuilder AddAzure(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddAzureKeyVault(this WebApplicationBuilder builder)
     {
         var azureOptions = builder.Services.BuildServiceProvider()
             .GetService<IOptions<AzureOptions>>()?.Value;
@@ -66,12 +66,21 @@ public static class WebApplicationBuilderExtensions
     }
 
 
-    public static WebApplicationBuilder AddSignalRHubConnections(this  WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddAzureSignalR(this  WebApplicationBuilder builder)
     {
-        builder.Services.AddSignalR().AddHubOptions<NotificationsHub>(options =>
-        {
-            options.EnableDetailedErrors = builder.Environment.IsDevelopment();
-        });
+        var azureOptions = builder.Services.BuildServiceProvider()
+            .GetService<IOptions<AzureOptions>>()?.Value;
+
+        builder.Services
+            .AddSignalR()
+            .AddAzureSignalR(options =>
+            {
+                options.ConnectionString = azureOptions?.SignalR?.ConnectionString;
+            })
+            .AddHubOptions<NotificationsHub>(options =>
+            {
+                options.EnableDetailedErrors = builder.Environment.IsDevelopment();
+            });
 
         return builder;
     }

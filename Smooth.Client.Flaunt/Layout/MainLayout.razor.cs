@@ -20,7 +20,7 @@ public partial class MainLayout : IAsyncDisposable
     private AppVersions? _appVersions;
     private HubConnection? _hubConnection;
     private bool _startHub = true;
-    private List<string> _messages = new();
+    private int _id = default;
 
 
     protected override async Task OnInitializedAsync()
@@ -46,6 +46,31 @@ public partial class MainLayout : IAsyncDisposable
 
     #region Helpers
 
+    private async Task StartHubAsync()
+    {
+        if (!_startHub)
+        {
+            return;
+        }
+
+        var url = GetHubConnectionUrl();
+
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl(url)
+            .WithAutomaticReconnect()
+            .Build();
+
+        _hubConnection.On<int>("ReceiveMessage", (id) =>
+        {
+            _id = id;
+
+            InvokeAsync(StateHasChanged);
+        });
+
+        await _hubConnection.StartAsync();
+    }
+
+
     private void ReadQueryStringValues()
     {
         var uri = _navigationMananger?.ToAbsoluteUri(_navigationMananger.Uri);
@@ -60,34 +85,19 @@ public partial class MainLayout : IAsyncDisposable
         }
     }
 
-    private async Task StartHubAsync()
-    {
-        if (!_startHub)
-        {
-            return;
-        }
 
-        var apiBaseAddress = Configuration?
+    private string GetHubConnectionUrl()
+    {
+        var output = Configuration?
            .GetValue<string>(Constants.API_BASE_ADDRESS_CONFIG_NAME);
 
-        apiBaseAddress ??= _navigationMananger?.BaseUri.TrimEnd('/');
+        output ??= _navigationMananger?.BaseUri.TrimEnd('/');
 
-        _hubConnection = new HubConnectionBuilder()
-            .WithUrl($"{apiBaseAddress}{SignalREndpoints.NOTIFICATIONS_HUB}")
-            .WithAutomaticReconnect()
-            .Build();
+        output = $"{output}{SignalREndpoints.NOTIFICATIONS_HUB}";
 
-        _hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
-        {
-            var encodedMsg = $"{user}: {message}";
-            _messages.Add(encodedMsg);
-
-            InvokeAsync(StateHasChanged);
-        });
-
-        await _hubConnection.StartAsync();
+        return output;
     }
-
+    
 
     #endregion Helpers
 }

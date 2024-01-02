@@ -8,6 +8,5 @@ public class AzureOptions
 
     public AzureStorageAccountOptions? StorageAccount { get; init; }
 
+    public AzureSignalROptions? SignalR { get; init; }
 }
-
-

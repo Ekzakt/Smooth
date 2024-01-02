@@ -31,14 +31,14 @@ builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 
 var app = builder.Build();
 
+app.UseAuthorization();
 app.UseStaticFiles();
+app.UseHttpsRedirection();
 app.UseResponseCompression();
 app.UseCors(CorsOptions.POLICY_NAME);
-app.UseHttpsRedirection();
-app.UseAuthorization();
 
 app.MapControllers();
-
 app.MapHub<NotificationsHub>(SignalREndpoints.NOTIFICATIONS_HUB);
+
 
 app.Run();

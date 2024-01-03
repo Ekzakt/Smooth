@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Azure.Identity;
+using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Options;
 using Smooth.Api.WebApp.SignalR;
 using Smooth.Shared.Configurations.MediaFiles.Options;

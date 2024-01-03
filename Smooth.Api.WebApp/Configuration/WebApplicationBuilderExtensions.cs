@@ -27,14 +27,14 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddCors(options =>
         {
             options.AddPolicy(name: CorsOptions.POLICY_NAME,
-                              policy =>
-                              {
-                                  policy.WithOrigins(corsValues);
-                                  policy.AllowAnyHeader();
-                                  policy.AllowAnyMethod();
-                                  policy.AllowCredentials();
-                                  policy.SetIsOriginAllowed(_ => true);
-                              });
+                policy =>
+                {
+                    policy.WithOrigins(corsValues);
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                    policy.AllowCredentials();
+                    policy.SetIsOriginAllowed(_ => true);
+                });
         });
 
         return builder;

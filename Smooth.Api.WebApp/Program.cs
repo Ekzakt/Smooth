@@ -35,8 +35,8 @@ app.UseAuthorization();
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseResponseCompression();
+app.UseRouting();
 app.UseCors(CorsOptions.POLICY_NAME);
-
 app.MapControllers();
 app.MapHub<NotificationsHub>(SignalREndpoints.NOTIFICATIONS_HUB);
 

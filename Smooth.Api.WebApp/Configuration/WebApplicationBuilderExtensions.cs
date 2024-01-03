@@ -1,6 +1,4 @@
-﻿using Azure.Identity;
-using Microsoft.AspNetCore.Http.Connections;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Options;
 using Smooth.Api.WebApp.SignalR;
 using Smooth.Shared.Configurations.MediaFiles.Options;
@@ -32,9 +30,9 @@ public static class WebApplicationBuilderExtensions
                               {
                                   policy.WithOrigins(corsValues);
                                   policy.AllowAnyHeader();
-                                  //policy.AllowAnyMethod();
-                                  policy.WithMethods("GET", "POST");
+                                  policy.AllowAnyMethod();
                                   policy.AllowCredentials();
+                                  policy.SetIsOriginAllowed(_ => true);
                               });
         });
 

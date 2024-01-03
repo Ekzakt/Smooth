@@ -61,7 +61,7 @@ public partial class MainLayout : IAsyncDisposable
             .WithUrl(url, options => 
             {
                 //options.HttpMessageHandlerFactory = innerHandler => new IncludeRequestCredentialsMessagHandler { InnerHandler = innerHandler };
-                //options.Transports = HttpTransportType.WebSockets;
+                options.Transports = HttpTransportType.LongPolling;
             })
             .WithAutomaticReconnect()
             .Build();

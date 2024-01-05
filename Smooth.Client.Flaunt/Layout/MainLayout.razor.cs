@@ -59,6 +59,7 @@ public partial class MainLayout : IAsyncDisposable
         _hubConnection = new HubConnectionBuilder()
             .WithUrl(url, options => 
             {
+                options.Headers.Add("method", "GET");
                 //options.HttpMessageHandlerFactory = innerHandler => new IncludeRequestCredentialsMessagHandler { InnerHandler = innerHandler };
                 options.Transports = HttpTransportType.WebSockets;
             })

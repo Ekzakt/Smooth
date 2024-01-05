@@ -23,6 +23,8 @@ public class TestController
     [HttpPost]
     public async Task<IActionResult> InsertTestClass(InsertTestClassRequestDto request)
     {
+        HttpContext.Response.Headers.Add("x-my-custom-header", "individual response");
+
         var output = await Task.Run(() =>
         {
             var result = IntHelpers.GetRandomPositiveInt();

@@ -33,7 +33,7 @@ var app = builder.Build();
 
 app.UseAuthorization();
 app.UseStaticFiles();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseResponseCompression();
 app.UseRouting();
 app.UseCors(CorsOptions.POLICY_NAME);

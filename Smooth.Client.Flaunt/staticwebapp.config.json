@@ -2,10 +2,5 @@
   "navigationFallback": {
     "rewrite": "/index.html",
     "exclude": [ "/_framework/*", "/css/*" ]
-  },
-  "globalHeaders": {
-    "Test-Header": "Test-Header-Value",
-    "Access-Control-Allow-Origin": "https://dev.ekzakt.be",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, DELETE, PATCH"
   }
 }

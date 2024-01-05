@@ -54,6 +54,7 @@ public partial class MainLayout : IAsyncDisposable
             return;
         }
 
+
         var url = GetHubConnectionUrl();
 
 

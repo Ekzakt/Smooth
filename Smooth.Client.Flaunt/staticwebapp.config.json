@@ -4,6 +4,7 @@
     "exclude": [ "/_framework/*", "/css/*" ]
   },
   "globalHeaders": {
+    "Test-Header": "Test-Header-Value",
     "Access-Control-Allow-Origin": "https://dev.ekzakt.be",
     "Access-Control-Allow-Methods": "POST, GET, OPTIONS"
   }

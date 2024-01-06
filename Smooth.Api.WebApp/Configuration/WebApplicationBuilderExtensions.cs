@@ -1,5 +1,4 @@
-﻿using Azure.Identity;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Options;
 using Smooth.Api.WebApp.SignalR;
 using Smooth.Shared.Configurations.MediaFiles.Options;
@@ -11,6 +10,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddConfigurationOptions(this WebApplicationBuilder builder)
     {
         builder
+            .AddCorsOptions()
             .AddAzureOptions()
             .AddAzureStorageAccountOptions()
             .AddApplicationDbOptions()
@@ -22,14 +22,17 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
     {
-        var corsValues = CorsOptions.CorsValues;
+        var corsOptions = builder.Services.BuildServiceProvider()
+            .GetService<IOptions<CorsOptions>>()?.Value;
+
+        var origins = corsOptions?.AllowedOrigins;
 
         builder.Services.AddCors(options =>
         {
             options.AddPolicy(name: CorsOptions.POLICY_NAME,
                 policy =>
                 {
-                    policy.WithOrigins(corsValues);
+                    policy.WithOrigins(origins);
                     policy.AllowAnyHeader();
                     policy.AllowAnyMethod();
                     policy.AllowCredentials();
@@ -88,6 +91,18 @@ public static class WebApplicationBuilderExtensions
 
 
     #region Helpers
+
+    private static WebApplicationBuilder AddCorsOptions(this WebApplicationBuilder builder)
+    {
+        builder.Services
+           .Configure<CorsOptions>
+           (
+               builder.Configuration.GetSection(CorsOptions.OptionsName)
+           );
+
+        return builder;
+    }
+
 
     private static WebApplicationBuilder AddAzureOptions(this WebApplicationBuilder builder)
     {

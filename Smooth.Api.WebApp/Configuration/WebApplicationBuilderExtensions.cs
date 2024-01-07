@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Options;
 using Smooth.Api.WebApp.SignalR;
 using Smooth.Shared.Configurations.MediaFiles.Options;
@@ -83,6 +84,18 @@ public static class WebApplicationBuilderExtensions
             {
                 options.EnableDetailedErrors = builder.Environment.IsDevelopment();
             });
+
+        return builder;
+    }
+
+
+    public static WebApplicationBuilder AddResponseCompression(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddResponseCompression(opts =>
+        {
+            opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                  new[] { "application/octet-stream" });
+        });
 
         return builder;
     }

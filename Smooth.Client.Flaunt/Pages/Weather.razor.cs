@@ -8,6 +8,7 @@ namespace Smooth.Client.Flaunt.Pages;
 
 public partial class Weather : IDisposable
 {
+
     [Inject]
     public ApiHttpClient _httpClient { get; set; }
 

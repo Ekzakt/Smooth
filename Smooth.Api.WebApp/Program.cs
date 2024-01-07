@@ -8,14 +8,10 @@ using Smooth.Api.WebApp.SignalR;
 using Smooth.Shared.Endpoints;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddResponseCompression(opts =>
-{
-    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-          new[] { "application/octet-stream" });
-});
-
+builder.AddResponseCompression();
 builder.AddConfigurationOptions();
 builder.AddAzureKeyVault();
 builder.AddCors();
@@ -33,8 +29,7 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.UseCors(CorsOptions.POLICY_NAME);
-//app.UseAuthorization();
-app.UseStaticFiles();
+app.UseAuthorization();
 app.UseResponseCompression();
 app.UseRouting();
 app.MapControllers();

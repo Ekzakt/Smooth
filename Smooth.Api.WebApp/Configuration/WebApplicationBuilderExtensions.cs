@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.ResponseCompression;
+﻿// Imortant! Do not remove the namespace
+// Azure.Identity. It will cause a namespace
+// not found error when deploying because
+// of conditional code in AddAzureKeyVault.
+using Azure.Identity;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Options;
 using Smooth.Api.WebApp.SignalR;
@@ -50,6 +55,7 @@ public static class WebApplicationBuilderExtensions
             .GetService<IOptions<AzureOptions>>()?.Value;
 
 #if !DEBUG
+
         builder.Configuration.AddAzureKeyVault(
             new Uri($"https://{azureOptions?.KeyVault?.Name}.vault.azure.net/"),
             new DefaultAzureCredential(new DefaultAzureCredentialOptions

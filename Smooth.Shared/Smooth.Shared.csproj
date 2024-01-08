@@ -7,6 +7,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Ekzakt.Utilities" Version="0.0.20" />
+		<PackageReference Include="Ekzakt.Utilities" Version="0.0.21" />
 	</ItemGroup>
 </Project>

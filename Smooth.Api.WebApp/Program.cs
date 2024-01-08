@@ -29,6 +29,7 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.UseCors(CorsOptions.POLICY_NAME);
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseResponseCompression();
 app.UseRouting();

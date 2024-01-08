@@ -8,7 +8,7 @@ using Smooth.Shared.Endpoints;
 
 namespace Smooth.Client.Flaunt.Layout;
 
-public partial class MainLayout : IAsyncDisposable
+public partial class MainLayout : LayoutComponentBase, IAsyncDisposable
 {
     [Inject]
     public NavigationManager? _navigationMananger { get; set; }

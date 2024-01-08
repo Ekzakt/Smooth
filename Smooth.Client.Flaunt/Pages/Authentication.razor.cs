@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace Smooth.Client.Flaunt.Components.Authentication;
+namespace Smooth.Client.Flaunt.Pages;
 
 public partial class Authentication
 {

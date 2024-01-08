@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.ResponseCompression;
 using Smooth.Api.Application.Configuration;
 using Smooth.Api.Application.WeatherForecasts;
 using Smooth.Api.Infrastructure.Configuration;

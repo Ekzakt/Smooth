@@ -3,3 +3,15 @@
 @attribute [Authorize]
 
 <PageHeader Title="User"></PageHeader>
+
+
+<Article Title="Claims">
+    <div>
+        <ul>
+            @foreach (var claim in claims)
+            {
+                <li><b>@claim.Type</b>: @claim.Value</li>
+            }
+        </ul>
+    </div>
+</Article>

@@ -3,6 +3,7 @@ using Smooth.Shared.Dtos;
 using Ekzakt.Utilities.Helpers;
 using Microsoft.AspNetCore.SignalR;
 using Smooth.Api.WebApp.SignalR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Smooth.Api.WebApp.Controllers;
 
@@ -21,10 +22,9 @@ public class TestController
 
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> InsertTestClass(InsertTestClassRequestDto request)
     {
-        HttpContext.Response.Headers.Add("x-my-custom-header", "individual response");
-
         var output = await Task.Run(() =>
         {
             var result = IntHelpers.GetRandomPositiveInt();

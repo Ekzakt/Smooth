@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+﻿using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Smooth.Client.Application.HttpClients;
 using Smooth.Shared;
 
@@ -13,10 +14,20 @@ public static class WebAssemblyHostBuilderExtensions
 
         apiBaseAddress ??= builder.HostEnvironment.BaseAddress;
 
-        builder.Services.AddHttpClient<ApiHttpClient>(config =>
-        {
-            config.BaseAddress = new Uri(apiBaseAddress);
-        });
+
+        builder.Services
+            .AddHttpClient<ApiHttpClient>(config =>
+                {
+                    config.BaseAddress = new Uri(apiBaseAddress);
+                })
+            .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+
+        builder.Services
+            .AddHttpClient<PublicHttpClient>(config =>
+            {
+                config.BaseAddress = new Uri(apiBaseAddress);
+            });
 
         return builder;
     }
@@ -28,8 +39,10 @@ public static class WebAssemblyHostBuilderExtensions
         {
             builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
 
-            options.ProviderOptions.DefaultAccessTokenScopes.Add("openid");
-            options.ProviderOptions.DefaultAccessTokenScopes.Add("offline_access");
+            //options.ProviderOptions.DefaultAccessTokenScopes.Add("openid");
+            //options.ProviderOptions.DefaultAccessTokenScopes.Add("offline_access");
+            options.ProviderOptions.DefaultAccessTokenScopes.Add("https://ekzaktb2cdev.onmicrosoft.com/8a1d8d43-59b0-4efa-98fc-577e24d2089a/api.fullaccess");
+
 
             options.ProviderOptions.LoginMode = "redirect";
         });

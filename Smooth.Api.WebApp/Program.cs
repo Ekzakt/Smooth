@@ -7,11 +7,11 @@ using Smooth.Api.WebApp.SignalR;
 using Smooth.Shared.Endpoints;
 
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddResponseCompression();
 builder.AddConfigurationOptions();
+builder.AddAuthentication();
 builder.AddAzureKeyVault();
 builder.AddCors();
 builder.AddAzureSignalR();
@@ -27,12 +27,13 @@ builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-app.UseCors(CorsOptions.POLICY_NAME);
 app.UseAuthentication();
-app.UseAuthorization();
+app.UseCors(CorsOptions.POLICY_NAME);
 app.UseResponseCompression();
 app.UseRouting();
 app.MapControllers();
+app.UseAuthorization();
+
 app.MapHub<NotificationsHub>(SignalREndpoints.NOTIFICATIONS_HUB);
 
 

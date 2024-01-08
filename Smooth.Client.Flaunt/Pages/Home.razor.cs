@@ -49,7 +49,9 @@ public partial class Home
             Description = "Test class description"
         });
 
-        _insertTestClassResult = result.Id.ToString();
+        _insertTestClassResult = result is null
+            ? string.Empty
+            : result.Id.ToString();
     }
 
 
@@ -67,7 +69,7 @@ public partial class Home
     {
         var endpoint = ConfigurationEndpoints.MEDIAFILES_OPTIONS();
 
-        _mediaFilesOptions = await _httpDataManager!.GetSerializedDataAsync<MediaFilesOptions>(endpoint);
+        _mediaFilesOptions = await _httpDataManager!.GetSerializedDataAsync<MediaFilesOptions>(endpoint, usePublicHttpClient: true);
     }
 
 
@@ -75,7 +77,7 @@ public partial class Home
     {
         var endpoint = ConfigurationEndpoints.IMAGE_OPTIONS();
 
-        _imageOptions = await _httpDataManager!.GetSerializedDataAsync<ImageOptions>(endpoint);
+        _imageOptions = await _httpDataManager!.GetSerializedDataAsync<ImageOptions>(endpoint, usePublicHttpClient: true);
     }
 
 
@@ -83,7 +85,7 @@ public partial class Home
     {
         var endpoint = ConfigurationEndpoints.VIDEO_OPTIONS();
 
-        _videoOptions = await _httpDataManager!.GetSerializedDataAsync<VideoOptions>(endpoint);
+        _videoOptions = await _httpDataManager!.GetSerializedDataAsync<VideoOptions>(endpoint, usePublicHttpClient: true);
     }
 
 
@@ -91,7 +93,7 @@ public partial class Home
     {
         var endpoint = ConfigurationEndpoints.SOUND_OPTIONS();
 
-        _soundOptions = await _httpDataManager!.GetSerializedDataAsync<SoundOptions>(endpoint);
+        _soundOptions = await _httpDataManager!.GetSerializedDataAsync<SoundOptions>(endpoint, usePublicHttpClient: true);
     }
 
 
@@ -106,7 +108,7 @@ public partial class Home
     {
         var endpoint = ConfigurationEndpoints.APP_VERSIONS();
 
-        _apiVersions = await _httpDataManager!.GetSerializedDataAsync<AppVersions>(endpoint);
+        _apiVersions = await _httpDataManager!.GetSerializedDataAsync<AppVersions>(endpoint, usePublicHttpClient: true);
     }
 
 

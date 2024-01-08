@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Smooth.Client.Application.HttpClients;
+using Smooth.Client.Application.Managers;
 using Smooth.Shared.Dtos;
 using Smooth.Shared.Endpoints;
 using System.Net.Http.Json;
@@ -11,6 +12,9 @@ public partial class Weather : IDisposable
 
     [Inject]
     public ApiHttpClient _httpClient { get; set; }
+
+    [Inject]
+    public IHttpDataManager _httpDataManager { get; set; }
 
     [Inject]
     public NavigationManager _navigationManager { get; set; }
@@ -33,13 +37,17 @@ public partial class Weather : IDisposable
 
 
 
+
     #region Helpers
 
     private async Task GetWeartherForecasts()
     {
         var endpoint = WeatherForecastEndpoints.GET_BY_ROWCOUNT(R);
 
-        var result = await _httpClient.Client.GetFromJsonAsync<List<WeatherForecastResponseDto>>(endpoint, cancellationToken.Token);
+        var result = await _httpDataManager.GetDataAsync<List<WeatherForecastResponseDto>>(
+            endpoint: endpoint,
+            cancellationToken: cancellationToken.Token,
+            usePublicHttpClient: true);
 
         if (result is not null)
         {

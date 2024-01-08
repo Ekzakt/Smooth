@@ -14,6 +14,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.AddHttpClients();
 builder.AddMsalAuthentication();
 
+builder.Services.AddScoped<ApiAuthorizationMessageHandler>();
 builder.Services.AddScoped<IHttpDataManager, HttpDataManager>();
 
 await builder.Build().RunAsync();

@@ -3,11 +3,14 @@
 // not found error when deploying because
 // of conditional code in AddAzureKeyVault.
 using Azure.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Options;
 using Smooth.Api.WebApp.SignalR;
 using Smooth.Shared.Configurations.MediaFiles.Options;
+using Microsoft.Identity.Web;
 
 namespace Smooth.Api.WebApp.Configuration;
 
@@ -102,6 +105,17 @@ public static class WebApplicationBuilderExtensions
             opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                   new[] { "application/octet-stream" });
         });
+
+        return builder;
+    }
+
+
+    public static WebApplicationBuilder AddAuthentication(this WebApplicationBuilder builder)
+    {
+        var x = builder.Configuration.GetSection("AzureAdB2C");
+
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAdB2C"));
 
         return builder;
     }

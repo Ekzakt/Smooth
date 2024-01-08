@@ -8,23 +8,30 @@ namespace Smooth.Client.Application.Managers;
 public class HttpDataManager : IHttpDataManager
 {
 
-    private readonly ApiHttpClient _httpClient;
+    private readonly ApiHttpClient _apiHttpClient;
+    private readonly PublicHttpClient _publicHttpClient;
 
-    public HttpDataManager(ApiHttpClient httpClient)
+    public HttpDataManager(ApiHttpClient apiHttpClient,  PublicHttpClient publicHttpClient)
     {
-        _httpClient = httpClient;
+        _apiHttpClient = apiHttpClient;
+        _publicHttpClient = publicHttpClient;
     }
 
-    public async Task<T?> GetDataAsync<T>(string endpoint)
-    {
-        var result = await _httpClient.Client.GetFromJsonAsync<T>(endpoint);
 
-        return result;
+    public async Task<T?> GetDataAsync<T>(string endpoint, CancellationToken cancellationToken, bool usePublicHttpClient = false)
+    {
+        if (usePublicHttpClient)
+        {
+            return await _publicHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken);
+        }
+
+        return await _apiHttpClient!.Client!.GetFromJsonAsync<T>(endpoint, cancellationToken);
     }
 
-    public async Task<string?> GetSerializedDataAsync<T>(string endpoint)
+
+    public async Task<string?> GetSerializedDataAsync<T>(string endpoint, CancellationToken cancellationToken, bool usePublicHttpClient = false)
     {
-        var result = await GetDataAsync<T>(endpoint);
+        var result = await GetDataAsync<T>(endpoint, cancellationToken, usePublicHttpClient);
 
         if (result is not null)
         {
@@ -45,7 +52,7 @@ public class HttpDataManager : IHttpDataManager
         where T : class
         where U : class
     {
-        var response = await _httpClient.Client.PostAsJsonAsync(endpoint, data);
+        var response = await _apiHttpClient.Client.PostAsJsonAsync(endpoint, data);
 
         if (response.IsSuccessStatusCode)
         {
@@ -54,8 +61,5 @@ public class HttpDataManager : IHttpDataManager
         }
 
         return null;
-
-        //return (T)Convert.ChangeType(response, typeof(T));
-        //return (T)(object)response;
     }
 }

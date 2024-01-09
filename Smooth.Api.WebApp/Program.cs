@@ -26,13 +26,13 @@ builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
 app.UseCors(CorsOptions.POLICY_NAME);
+app.UseHttpsRedirection();
 app.UseRouting();
 //app.UseResponseCompression();
 
 app.UseAuthentication();
-//app.UseAuthorization();
+app.UseAuthorization();
 
 app.MapControllers();
 

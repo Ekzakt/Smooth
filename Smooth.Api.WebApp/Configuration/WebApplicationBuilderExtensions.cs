@@ -5,7 +5,6 @@
 using Azure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Options;
 using Smooth.Api.WebApp.SignalR;
@@ -112,10 +111,25 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddAuthentication(this WebApplicationBuilder builder)
     {
-        var x = builder.Configuration.GetSection("AzureAdB2C");
+        //var x = builder.Configuration.GetSection("AzureAdB2C");
+
+        //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        //    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAdB2C"));
+
 
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAdB2C"));
+            .AddMicrosoftIdentityWebApi(options =>
+            {
+                builder.Configuration.Bind("AzureAdB2C", options);
+
+                options.TokenValidationParameters.NameClaimType = "name";
+
+                //options.TokenValidationParameters.ValidateIssuer = true;
+                //options.TokenValidationParameters.ValidIssuer = "https://ekzaktb2cdev.b2clogin.com/bf8ba302-a667-4e57-9cdb-84e37c41bc58/v2.0/";
+            },
+            options => { builder.Configuration.Bind("AzureAdB2C", options); });
+
+        // End of the Microsoft Identity platform block    
 
         return builder;
     }

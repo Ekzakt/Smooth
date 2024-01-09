@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smooth.Api.Application.WeatherForecasts;
 using Smooth.Shared.Endpoints;
@@ -18,7 +19,7 @@ namespace Smooth.Api.WebApp.Controllers
         }
 
 
-
+        [Authorize]
         [HttpGet(Name = "GetByRowCount")]
         public async Task<IActionResult> GetByRowcount(int? r, CancellationToken cancellationToken)
         {

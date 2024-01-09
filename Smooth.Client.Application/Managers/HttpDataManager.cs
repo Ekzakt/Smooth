@@ -25,7 +25,7 @@ public class HttpDataManager : IHttpDataManager
             return await _publicHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken);
         }
 
-        return await _apiHttpClient!.Client!.GetFromJsonAsync<T>(endpoint, cancellationToken);
+        return await _apiHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken);
     }
 
 

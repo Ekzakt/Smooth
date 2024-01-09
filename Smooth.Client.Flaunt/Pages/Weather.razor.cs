@@ -47,11 +47,12 @@ public partial class Weather : IDisposable
         var result = await _httpDataManager.GetDataAsync<List<WeatherForecastResponseDto>>(
             endpoint: endpoint,
             cancellationToken: cancellationToken.Token,
-            usePublicHttpClient: true);
+            usePublicHttpClient: false);
 
         if (result is not null)
         {
             forecasts = result;
+            R = result.Count;
         }
 
     }

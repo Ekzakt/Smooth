@@ -1,5 +1,6 @@
 using Microsoft.IdentityModel.Logging;
 using Smooth.Api.Application.Configuration;
+using Smooth.Api.Application.Options;
 using Smooth.Api.Application.WeatherForecasts;
 using Smooth.Api.Infrastructure.Configuration;
 using Smooth.Api.Infrastructure.WeatherForecasts;

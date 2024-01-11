@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.AspNetCore.WebUtilities;
-using Smooth.Shared;
+using Smooth.Client.Application;
 using Smooth.Shared.Configurations;
 using Smooth.Shared.Endpoints;
 

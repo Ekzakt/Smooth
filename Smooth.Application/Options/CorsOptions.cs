@@ -1,4 +1,4 @@
-﻿namespace Smooth.Api.WebApp.Configuration;
+﻿namespace Smooth.Api.Application.Options;
 
 public class CorsOptions
 {

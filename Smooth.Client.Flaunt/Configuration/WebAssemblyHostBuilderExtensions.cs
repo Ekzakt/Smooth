@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Smooth.Client.Application;
 using Smooth.Client.Application.HttpClients;
-using Smooth.Shared;
 
 namespace Smooth.Client.Flaunt.Configuration;
 
@@ -37,12 +36,14 @@ public static class WebAssemblyHostBuilderExtensions
     {
         builder.Services.AddMsalAuthentication(options =>
         {
-            builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
+            builder.Configuration.Bind(Constants.AZUREB2C_CONFIG_NAME, options.ProviderOptions.Authentication);
 
             options.ProviderOptions.DefaultAccessTokenScopes.Add("openid");
             options.ProviderOptions.DefaultAccessTokenScopes.Add("offline_access");
 
+            // TODO: Place this in some variables (appsettings, environmentvariables).
             options.ProviderOptions.DefaultAccessTokenScopes.Add("https://ekzaktb2cdev.onmicrosoft.com/5835b0d0-9e03-4b6c-97c4-4213c87f3808/api_fullaccess");
+
             options.ProviderOptions.LoginMode = "redirect";
         });
 

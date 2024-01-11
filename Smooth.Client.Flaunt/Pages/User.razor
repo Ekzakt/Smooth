@@ -1,5 +1,6 @@
 ﻿@page "/user"
 
+
 @attribute [Authorize]
 
 <PageHeader Title="User"></PageHeader>
@@ -8,10 +9,12 @@
 <Article Title="Claims">
     <div>
         <ul>
-            @foreach (var claim in claims)
+            @foreach (var claim in claims!)
             {
                 <li><b>@claim.Type</b>: @claim.Value</li>
             }
         </ul>
     </div>
 </Article>
+
+<Article Title="Jwt Token" Value="@_jwtToken"></Article>

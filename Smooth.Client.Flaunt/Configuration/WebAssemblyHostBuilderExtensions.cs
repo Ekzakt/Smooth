@@ -20,7 +20,7 @@ public static class WebAssemblyHostBuilderExtensions
                 {
                     config.BaseAddress = new Uri(apiBaseAddress);
                 })
-            .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+            .AddHttpMessageHandler<ApiAuthorizationMessageHandler>();
 
 
         builder.Services
@@ -41,8 +41,8 @@ public static class WebAssemblyHostBuilderExtensions
 
             options.ProviderOptions.DefaultAccessTokenScopes.Add("openid");
             options.ProviderOptions.DefaultAccessTokenScopes.Add("offline_access");
-            options.ProviderOptions.DefaultAccessTokenScopes.Add("https://ekzaktb2cdev.onmicrosoft.com/eb9f35e2-bc3a-4939-8cfa-b8792c9723ad/api.fullaccess");
 
+            options.ProviderOptions.DefaultAccessTokenScopes.Add("https://ekzaktb2cdev.onmicrosoft.com/5835b0d0-9e03-4b6c-97c4-4213c87f3808/api_fullaccess");
             options.ProviderOptions.LoginMode = "redirect";
         });
 

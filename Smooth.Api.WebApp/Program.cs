@@ -1,3 +1,4 @@
+using Microsoft.IdentityModel.Logging;
 using Smooth.Api.Application.Configuration;
 using Smooth.Api.Application.WeatherForecasts;
 using Smooth.Api.Infrastructure.Configuration;
@@ -25,6 +26,11 @@ builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 
 
 var app = builder.Build();
+
+//if (app.Environment.IsDevelopment())
+//{
+//    IdentityModelEventSource.ShowPII = true;
+//}
 
 app.UseCors(CorsOptions.POLICY_NAME);
 app.UseHttpsRedirection();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Smooth.Client.Application.Managers;
 using Smooth.Shared.Configurations;
 using Smooth.Shared.Configurations.MediaFiles.Options;
@@ -17,6 +18,11 @@ public partial class Home
     [Inject]
     public NavigationManager _navigationMananger { get; set; }
 
+    [Inject]
+    public IAccessTokenProvider _tokenProvider { get; set; }
+
+
+
     private string? _mediaFilesOptions = string.Empty;
     private string? _imageOptions = string.Empty;
     private string? _videoOptions = string.Empty;
@@ -26,6 +32,7 @@ public partial class Home
     private string? _baseAddress = string.Empty;
     private string? _insertTestClassResult = string.Empty;
     private string? _isWasm = string.Empty;
+    private string? _token = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,6 +41,17 @@ public partial class Home
 
         SetBaseAddress();
         SetIsWasm();
+
+        var tokenResult = await _tokenProvider.RequestAccessToken();
+
+        if (tokenResult.TryGetToken(out var token))
+        {
+            _token = token.Value;
+        }
+        else
+        {
+            _token = "No token found.";
+        }
     }
 
 

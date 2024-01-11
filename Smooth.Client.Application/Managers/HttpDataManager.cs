@@ -20,12 +20,19 @@ public class HttpDataManager : IHttpDataManager
 
     public async Task<T?> GetDataAsync<T>(string endpoint, CancellationToken cancellationToken, bool usePublicHttpClient = false)
     {
-        if (usePublicHttpClient)
+        try
         {
-            return await _publicHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken);
-        }
+            var response = usePublicHttpClient
+                ? await _publicHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken)
+                : await _apiHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken);
 
-        return await _apiHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken);
+            return response;
+
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 
 
@@ -58,8 +65,10 @@ public class HttpDataManager : IHttpDataManager
         {
             var content = await response.Content.ReadFromJsonAsync<T>();
             return content;
+
         }
 
-        return null;
+        throw new Exception(response.ReasonPhrase);
+
     }
 }

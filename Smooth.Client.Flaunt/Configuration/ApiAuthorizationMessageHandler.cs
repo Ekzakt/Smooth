@@ -1,24 +1,25 @@
-﻿using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Smooth.Shared;
 
-namespace Smooth.Client.Flaunt.Configuration
+namespace Smooth.Client.Flaunt.Configuration;
+
+public class ApiAuthorizationMessageHandler : AuthorizationMessageHandler
 {
-    public class ApiAuthorizationMessageHandler : AuthorizationMessageHandler
+    public ApiAuthorizationMessageHandler(
+        IAccessTokenProvider provider,
+        NavigationManager navigation,
+        IConfiguration configuration)
+        : base(provider, navigation)
     {
-        public ApiAuthorizationMessageHandler(
-            IAccessTokenProvider provider,
-            NavigationManager navigation,
-            IConfiguration configuration)
-            : base(provider, navigation)
-        {
 
-            var apiBaseAddress = configuration
-                .GetValue<string>(Constants.API_BASE_ADDRESS_CONFIG_NAME);
+        var scope = $"https://ekzaktb2cdev.onmicrosoft.com/5835b0d0-9e03-4b6c-97c4-4213c87f3808/api_fullaccess";
 
-            ConfigureHandler(
-                authorizedUrls: new[] { apiBaseAddress, "https://localhost:7084" });
-                //scopes: new[] { "api.read", "api.write" });
-        }
+        var apiBaseAddress = configuration
+            .GetValue<string>(Constants.API_BASE_ADDRESS_CONFIG_NAME);
+
+        ConfigureHandler(
+            authorizedUrls: new[] { "https://dev.ekzakt.be", "https://api.ekzakt.be", "https://localhost:7083", "https://localhost:7084" },
+            scopes: new[] { scope });
     }
 }

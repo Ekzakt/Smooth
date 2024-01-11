@@ -3,8 +3,8 @@ using Smooth.Shared.Dtos;
 using Ekzakt.Utilities.Helpers;
 using Microsoft.AspNetCore.SignalR;
 using Smooth.Api.WebApp.SignalR;
-using Microsoft.Identity.Web;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Identity.Web.Resource;
 
 namespace Smooth.Api.WebApp.Controllers;
 

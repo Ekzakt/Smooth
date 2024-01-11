@@ -30,7 +30,8 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
     {
-        var corsOptions = builder.Services.BuildServiceProvider()
+        var corsOptions = builder.Services
+            .BuildServiceProvider()
             .GetService<IOptions<CorsOptions>>()?.Value;
 
         var origins = corsOptions?.AllowedOrigins;
@@ -53,7 +54,8 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddAzureKeyVault(this WebApplicationBuilder builder)
     {
-        var azureOptions = builder.Services.BuildServiceProvider()
+        var azureOptions = builder.Services
+            .BuildServiceProvider()
             .GetService<IOptions<AzureOptions>>()?.Value;
 
 #if !DEBUG
@@ -79,7 +81,8 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddAzureSignalR(this  WebApplicationBuilder builder)
     {
-        var azureOptions = builder.Services.BuildServiceProvider()
+        var azureOptions = builder.Services
+            .BuildServiceProvider()
             .GetService<IOptions<AzureOptions>>()?.Value;
 
         builder.Services
@@ -116,18 +119,20 @@ public static class WebApplicationBuilderExtensions
         //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         //    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAdB2C"));
 
+        builder.Services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAdB2C"));
 
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddMicrosoftIdentityWebApi(options =>
-            {
-                builder.Configuration.Bind("AzureAdB2C", options);
+        //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        //    .AddMicrosoftIdentityWebApi(options =>
+        //    {
+        //        builder.Configuration.Bind("AzureAdB2C", options);
 
-                options.TokenValidationParameters.NameClaimType = "name";
-
-                //options.TokenValidationParameters.ValidateIssuer = true;
-                //options.TokenValidationParameters.ValidIssuer = "https://ekzaktb2cdev.b2clogin.com/bf8ba302-a667-4e57-9cdb-84e37c41bc58/v2.0/";
-            },
-            options => { builder.Configuration.Bind("AzureAdB2C", options); });
+        //        //options.TokenValidationParameters.NameClaimType = "name";
+        //        //options.TokenValidationParameters.ValidateIssuer = true;
+        //        //options.TokenValidationParameters.ValidIssuer = "https://ekzaktb2cdev.b2clogin.com/bf8ba302-a667-4e57-9cdb-84e37c41bc58/v2.0/";
+        //    },
+        //    options => { builder.Configuration.Bind("AzureAdB2C", options); });
 
         // End of the Microsoft Identity platform block    
 

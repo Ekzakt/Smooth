@@ -114,9 +114,17 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddAuthentication(this WebApplicationBuilder builder)
     {
-        builder.Services
-            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(Application.Constants.AZUREB2C_CONFIG_NAME));  
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddMicrosoftIdentityWebApi(options =>
+            {
+                builder.Configuration.Bind(Application.Constants.AZUREB2C_CONFIG_NAME, options);
+
+                options.TokenValidationParameters.NameClaimType = "display_name";
+            },
+            options =>
+            { 
+                builder.Configuration.Bind(Application.Constants.AZUREB2C_CONFIG_NAME, options);
+            });
 
         return builder;
     }

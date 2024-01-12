@@ -32,7 +32,7 @@ public partial class User : ComponentBase
 
     private async Task SetJwtToken()
     {
-        if (_tokenProvider is not null)
+        if (_tokenProvider is null)
         {
             return;
         }

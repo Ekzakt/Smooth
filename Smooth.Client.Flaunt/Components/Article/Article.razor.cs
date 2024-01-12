@@ -5,7 +5,7 @@ namespace Smooth.Client.Flaunt.Components.Article;
 public partial class Article
 {
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public RenderFragment? ChildContent { get; set; }
 
 
     [Parameter]

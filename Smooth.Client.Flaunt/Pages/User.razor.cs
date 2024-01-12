@@ -18,19 +18,35 @@ public partial class User : ComponentBase
     private string _jwtToken = "No token found.";
 
 
+
     protected override async Task OnInitializedAsync()
     {
         await SetClaims();
         await SetJwtToken();
     }
 
+
+
+
+    #region Helpers
+
     private async Task SetJwtToken()
     {
+        if (_tokenProvider is not null)
+        {
+            return;
+        }
+
         var tokenResult = await _tokenProvider.RequestAccessToken();
+
+        if (tokenResult is null)
+        {
+            return;
+        }
 
         if (tokenResult.TryGetToken(out var token))
         {
-            _jwtToken = token.Value;
+            _jwtToken = token?.Value;
         }
     }
 
@@ -44,6 +60,9 @@ public partial class User : ComponentBase
             claims = authenticationState.User.Claims ?? new List<Claim>();
         }
     }
+
+
+    #endregion Helpers
 }
 
 

@@ -18,6 +18,8 @@ public class ConfigurationService
         _mediaFileOptions = mediaFileOptions.Value;
         _azureOptions = azureOptions.Value;
     }
+
+
     public async Task<IMediaFileOptions> GetMediaFileOptionsAsync(string mediaFileOptionsName)
     {
         IMediaFileOptions options = mediaFileOptionsName switch

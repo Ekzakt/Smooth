@@ -27,7 +27,8 @@ public partial class Home
     private string? _webVersions = string.Empty;
     private string? _baseAddress = string.Empty;
     private string? _insertTestClassResult = string.Empty;
-    private string? _isWasm = string.Empty;
+    private string? _emailSendResult = string.Empty;    
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -35,9 +36,7 @@ public partial class Home
         await SetVersionsAsync();
 
         SetBaseAddress();
-        SetIsWasm();
     }
-
 
 
 
@@ -45,7 +44,7 @@ public partial class Home
 
     private async Task InsertTestClassAsync()
     {
-        var result = await _httpDataManager.Insert<InsertTestClassResponsDto, InsertTestClassRequestDto>(TestEndpoints.INSERT_TEST_CLASS(), new InsertTestClassRequestDto
+        var result = await _httpDataManager.Insert<InsertTestClassResponse, InsertTestClassRequest>(TestEndpoints.INSERT_TEST_CLASS(), new InsertTestClassRequest
         {
             Name = "Test class name",
             Description = "Test class description"
@@ -54,6 +53,18 @@ public partial class Home
         _insertTestClassResult = result is null
             ? string.Empty
             : result.Id.ToString();
+    }
+
+
+    private async Task TriggerSendEmailAsync()
+    {
+        var result = await _httpDataManager.Insert<string, InsertTestClassRequest>(TestEndpoints.INSERT_TEST_CLASS(), new InsertTestClassRequest
+        {
+            Name = "Test class name",
+            Description = "Test class description"
+        });
+
+        return;
     }
 
 
@@ -126,14 +137,6 @@ public partial class Home
 
         _webVersions = version;
 
-    }
-
-
-    private void SetIsWasm()
-    {
-        var isWasm = RuntimeInformation.IsOSPlatform(OSPlatform.Create("WEBASSEMBLY"));
-
-        _isWasm = isWasm.ToString();
     }
 
 

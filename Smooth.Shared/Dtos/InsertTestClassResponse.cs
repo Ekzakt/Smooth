@@ -1,8 +1,8 @@
 ﻿namespace Smooth.Shared.Dtos;
 
-public class InsertTestClassResponsDto
+public class InsertTestClassResponse
 {
-    public InsertTestClassResponsDto() { }
+    public InsertTestClassResponse() { }
 
     public int Id { get; set; } = default;
 }

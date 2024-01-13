@@ -4,27 +4,28 @@ using Ekzakt.Utilities.Helpers;
 using Microsoft.AspNetCore.SignalR;
 using Smooth.Api.WebApp.SignalR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Identity.Web.Resource;
+using Ekzakt.EmailSender.Contracts;
+using Ekzakt.EmailSender.Models;
 
 namespace Smooth.Api.WebApp.Controllers;
 
+
 [Route("api/[controller]")]
 [ApiController]
-public class TestController
+public class TestController(
+    IHubContext<NotificationsHub> hub,
+    IEmailSenderService emailSenderService
+    )
     : ControllerBase
 {
-    private readonly IHubContext<NotificationsHub> _hub;
-
-
-    public TestController(IHubContext<NotificationsHub> hub)
-    {
-        _hub = hub;
-    }
+    private readonly IHubContext<NotificationsHub> _hub = hub;
+    private readonly IEmailSenderService _emailSenderService;
 
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> InsertTestClass(InsertTestClassRequestDto request)
+    [Route("/testclass")]
+    public async Task<IActionResult> InsertTestClass(InsertTestClassRequest request)
     {
         var output = await Task.Run(() =>
         {
@@ -35,7 +36,20 @@ public class TestController
 
         await _hub.Clients.All.SendAsync("ReceiveMessage", output);
 
-        return Ok(new InsertTestClassResponsDto { Id = output });
+        return Ok(new InsertTestClassResponse { Id = output });
+    }
+
+
+    [HttpPost]
+    [Authorize]
+    [Route("/triggeremail")]
+    public async Task<IActionResult> SendEmail()
+    {
+        SendEmailRequest request = new();
+
+        await _emailSenderService.SendAsync(request);
+
+        return Created();
     }
 }
 

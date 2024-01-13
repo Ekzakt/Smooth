@@ -26,7 +26,13 @@
     </div>
 </Article>
 
-<Article Title="Is WASM" Value="@_isWasm"></Article>
+<Article Title="Send Email Result:" Value="@_emailSendResult">
+    <div class="mb-2">
+        <button type="button" class="btn btn-info" @onclick="TriggerSendEmailAsync">Send Email</button>
+    </div>
+</Article>
+
+
 <Article Title="Base Uri from NavigationManager:" Value="@_baseAddress"></Article>
 <Article Title="Api Versions:" Value="@_apiVersions"></Article>
 <Article Title="Web Versions:" Value="@_webVersions"></Article>

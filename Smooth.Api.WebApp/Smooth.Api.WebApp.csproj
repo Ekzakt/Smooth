@@ -18,7 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Smoorth.Infrastructure\Smooth.Api.Infrastructure.csproj" />
+		<ProjectReference Include="..\Smooth.Api.Infrastructure\Smooth.Api.Infrastructure.csproj" />
 		<ProjectReference Include="..\Smooth.Application\Smooth.Api.Application.csproj" />
 	</ItemGroup>
 

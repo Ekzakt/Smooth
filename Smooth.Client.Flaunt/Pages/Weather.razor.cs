@@ -27,7 +27,7 @@ public partial class Weather : IDisposable
 
 
     private CancellationTokenSource cancellationToken = new();
-    private List<WeatherForecastResponseDto>? forecasts = new();
+    private List<WeatherForecastResponse>? forecasts = new();
 
 
     protected override async Task OnInitializedAsync()
@@ -44,7 +44,7 @@ public partial class Weather : IDisposable
     {
         var endpoint = WeatherForecastEndpoints.GET_BY_ROWCOUNT(R);
 
-        var result = await _httpDataManager.GetDataAsync<List<WeatherForecastResponseDto>>(
+        var result = await _httpDataManager.GetDataAsync<List<WeatherForecastResponse>>(
             endpoint: endpoint,
             cancellationToken: cancellationToken.Token,
             usePublicHttpClient: false);

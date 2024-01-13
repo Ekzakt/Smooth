@@ -1,6 +1,6 @@
 ﻿namespace Smooth.Shared.Dtos;
 
-public class WeatherForecastResponseDto
+public class WeatherForecastResponse
 {
     public DateOnly Date { get; set; }
     public int TemperatureC { get; set; }

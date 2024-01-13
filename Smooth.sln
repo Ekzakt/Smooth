@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Api.Application", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Api.WebApp", "Smooth.Api.WebApp\Smooth.Api.WebApp.csproj", "{71ACDCB7-3C5E-43E3-8B8B-383D41A90EAF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Api.Infrastructure", "Smoorth.Infrastructure\Smooth.Api.Infrastructure.csproj", "{8BFEA4F8-B3F8-4F0E-85A8-864F73D95AC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Api.Infrastructure", "Smooth.Api.Infrastructure\Smooth.Api.Infrastructure.csproj", "{8BFEA4F8-B3F8-4F0E-85A8-864F73D95AC9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smooth.Client.Application", "Smooth.Client.Application\Smooth.Client.Application.csproj", "{BD776618-405A-42B3-A849-7D10D70C0285}"
 EndProject

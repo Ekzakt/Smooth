@@ -1,4 +1,3 @@
-using Microsoft.IdentityModel.Logging;
 using Smooth.Api.Application.Configuration;
 using Smooth.Api.Application.Options;
 using Smooth.Api.Application.WeatherForecasts;
@@ -23,7 +22,6 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
 builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
-
 
 
 var app = builder.Build();

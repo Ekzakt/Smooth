@@ -1,5 +1,4 @@
 ﻿using Smooth.Client.Application.HttpClients;
-using Smooth.Shared.Endpoints;
 using System.Net.Http.Json;
 using System.Text.Json;
 

@@ -20,8 +20,8 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\Ekzakt\Ekzakt.EmailSender.Core\Ekzakt.EmailSender.Core.csproj" />
 		<ProjectReference Include="..\..\Ekzakt\Ekzakt.EmailSender.Smtp\Ekzakt.EmailSender.Smtp.csproj" />
+		<ProjectReference Include="..\Smooth.Api.Application\Smooth.Api.Application.csproj" />
 		<ProjectReference Include="..\Smooth.Api.Infrastructure\Smooth.Api.Infrastructure.csproj" />
-		<ProjectReference Include="..\Smooth.Application\Smooth.Api.Application.csproj" />
 	</ItemGroup>
 
 </Project>

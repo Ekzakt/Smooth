@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Smooth.Api.Application.Configuration;
 using Smooth.Shared.Configurations.MediaFiles.Options;
+using Smooth.Shared.Endpoints;
 
 namespace Smooth.Api.WebApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route(Ctrls.CONFIGURATION)]
     [ApiController]
     public class ConfigController
         : ControllerBase
@@ -20,7 +21,7 @@ namespace Smooth.Api.WebApp.Controllers
 
 
         [HttpGet]
-        [Route("MediaFilesOptions")]
+        [Route(Routes.GET_MEDIAFILES_OPTIONS)]
         public async Task<IActionResult> GetMediaFilesOptionsAsync()
         {
             var result = await _configurationService.GetMediaFilesOptionsAsync();
@@ -32,7 +33,7 @@ namespace Smooth.Api.WebApp.Controllers
 
 
         [HttpGet]
-        [Route("ImageOptions")]
+        [Route(Routes.GET_IMAGE_OPTIONS)]
         public async Task<IActionResult> GetImageOptionsAsync()
         {
             //var result = await _configurationService.GetImageOptionsAsync();
@@ -46,7 +47,7 @@ namespace Smooth.Api.WebApp.Controllers
 
 
         [HttpGet]
-        [Route("VideoOptions")]
+        [Route(Routes.GET_VIDEO_OPTIONS)]
         public async Task<IActionResult> GetVideoOptionsAsync()
         {
             var result = await _configurationService.GetMediaFileOptionsAsync(nameof(VideoOptions));
@@ -58,7 +59,7 @@ namespace Smooth.Api.WebApp.Controllers
 
 
         [HttpGet]
-        [Route("SoundOptions")]
+        [Route(Routes.GET_SOUND_OPTIONS)]
         public async Task<IActionResult> GetSoundOptionsAsync()
         {
             var result = await _configurationService.GetMediaFileOptionsAsync(nameof(SoundOptions));
@@ -71,7 +72,7 @@ namespace Smooth.Api.WebApp.Controllers
 
 #if DEBUG
         [HttpGet]
-        [Route("AzureOptions")]
+        [Route(Routes.GET_AZURE_OPTIONS)]
         public async Task<IActionResult> GetAzureOptionsAsync()
         {
             var result = await _configurationService.GetAzureOptionsAsync();
@@ -83,7 +84,7 @@ namespace Smooth.Api.WebApp.Controllers
 #endif
 
         [HttpGet]
-        [Route("AppVersions")]
+        [Route(Routes.GET_APP_VERSIONS)]
         public async Task<IActionResult> GetBuildVersionAsync()
         {
             var result = await _configurationService.GetAppVersionsAsync(typeof(Program).Assembly.GetName()?.Version!, Environment.Version);

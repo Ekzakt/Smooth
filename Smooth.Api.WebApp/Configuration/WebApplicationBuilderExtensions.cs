@@ -10,6 +10,7 @@ using Smooth.Api.WebApp.SignalR;
 using Smooth.Shared.Configurations.MediaFiles.Options;
 using Microsoft.Identity.Web;
 using Smooth.Api.Application.Options;
+using Ekzakt.EmailSender.Smtp.Configuration;
 
 namespace Smooth.Api.WebApp.Configuration;
 
@@ -23,6 +24,7 @@ public static class WebApplicationBuilderExtensions
             .AddAzureStorageAccountOptions()
             .AddApplicationDbOptions()
             .AddMediaFilesOptions();
+            //.AddSmtpOptions();
 
         return builder;
     }
@@ -100,13 +102,17 @@ public static class WebApplicationBuilderExtensions
     }
 
 
-    public static WebApplicationBuilder AddResponseCompression(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddResponseSizeCompression(this WebApplicationBuilder builder)
     {
-        builder.Services.AddResponseCompression(opts =>
+        if (!builder.Environment.IsDevelopment())
         {
-            opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-                  new[] { "application/octet-stream" });
-        });
+            builder.Services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                      new[] { "application/octet-stream" });
+            });
+        }
 
         return builder;
     }
@@ -214,6 +220,19 @@ public static class WebApplicationBuilderExtensions
                    .GetSection(MediaFilesOptions.OptionsName)
                    .GetSection(SoundOptions.OptionsName)
           );
+
+        return builder;
+    }
+
+
+    private static WebApplicationBuilder AddSmtpOptions(this WebApplicationBuilder builder)
+    {
+        builder.Services
+            .Configure<SmtpEmailSenderOptions>
+            (
+                builder.Configuration
+                    .GetSection(SmtpEmailSenderOptions.OptionsName)
+            );
 
         return builder;
     }

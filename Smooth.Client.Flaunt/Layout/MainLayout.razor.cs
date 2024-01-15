@@ -102,7 +102,7 @@ public partial class MainLayout : LayoutComponentBase, IAsyncDisposable
 
         output ??= _navigationMananger?.BaseUri.TrimEnd('/');
 
-        output = $"{output}{SignalREndpoints.NOTIFICATIONS_HUB}";
+        output = $"{output}{Hubs.NOTIFICATIONS_HUB}";
 
         return output;
     }

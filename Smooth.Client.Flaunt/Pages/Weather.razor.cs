@@ -3,7 +3,6 @@ using Smooth.Client.Application.HttpClients;
 using Smooth.Client.Application.Managers;
 using Smooth.Shared.Dtos;
 using Smooth.Shared.Endpoints;
-using System.Net.Http.Json;
 
 namespace Smooth.Client.Flaunt.Pages;
 
@@ -42,12 +41,12 @@ public partial class Weather : IDisposable
 
     private async Task GetWeartherForecasts()
     {
-        var endpoint = WeatherForecastEndpoints.GET_BY_ROWCOUNT(R);
+        var endpoint = EndPoints.GET_WEATHERFORECASTS(R);
 
         var result = await _httpDataManager.GetDataAsync<List<WeatherForecastResponse>>(
             endpoint: endpoint,
             cancellationToken: cancellationToken.Token,
-            usePublicHttpClient: false);
+            usePublicHttpClient: true);
 
         if (result is not null)
         {

@@ -25,17 +25,14 @@ public partial class Home
     private string? _soundOptions = string.Empty;
     private string? _apiVersions = string.Empty;
     private string? _webVersions = string.Empty;
-    private string? _baseAddress = string.Empty;
     private string? _insertTestClassResult = string.Empty;
-    private string? _emailSendResult = string.Empty;    
+    private string? _triggerEmailResult = string.Empty;    
 
 
     protected override async Task OnInitializedAsync()
     {
         await SetOptionsAsync();
         await SetVersionsAsync();
-
-        SetBaseAddress();
     }
 
 
@@ -44,11 +41,11 @@ public partial class Home
 
     private async Task InsertTestClassAsync()
     {
-        var result = await _httpDataManager.Insert<InsertTestClassResponse, InsertTestClassRequest>(TestEndpoints.INSERT_TEST_CLASS(), new InsertTestClassRequest
+        var result = await _httpDataManager.Insert<InsertTestClassResponse, InsertTestClassRequest>(EndPoints.INSERT_TESTCLASS(), new InsertTestClassRequest
         {
             Name = "Test class name",
             Description = "Test class description"
-        });
+        }, true);
 
         _insertTestClassResult = result is null
             ? string.Empty
@@ -58,15 +55,10 @@ public partial class Home
 
     private async Task TriggerSendEmailAsync()
     {
-        var result = await _httpDataManager.Insert<string, InsertTestClassRequest>(TestEndpoints.INSERT_TEST_CLASS(), new InsertTestClassRequest
-        {
-            Name = "Test class name",
-            Description = "Test class description"
-        });
+        var result = await _httpDataManager.GetSerializedDataAsync<TriggerEmailResponse>(EndPoints.TRIGGER_EMAIL(), true);
 
-        return;
+        _triggerEmailResult = result;
     }
-
 
     private async Task SetOptionsAsync()
     {
@@ -74,13 +66,12 @@ public partial class Home
         await SetImageOptionsAsync();
         await SetVideoOptionsAsync();
         await SetSoundOptionsAsync();
-
     }
 
 
     private async Task SetMediaFileOptionsAsync()
     {
-        var endpoint = ConfigurationEndpoints.MEDIAFILES_OPTIONS();
+        var endpoint = EndPoints.GET_MEDIAFILES_OPTIONS();
 
         _mediaFilesOptions = await _httpDataManager!.GetSerializedDataAsync<MediaFilesOptions>(endpoint, usePublicHttpClient: true);
     }
@@ -88,7 +79,7 @@ public partial class Home
 
     private async Task SetImageOptionsAsync()
     {
-        var endpoint = ConfigurationEndpoints.IMAGE_OPTIONS();
+        var endpoint = EndPoints.GET_IMAGE_OPTIONS();
 
         _imageOptions = await _httpDataManager!.GetSerializedDataAsync<ImageOptions>(endpoint, usePublicHttpClient: true);
     }
@@ -96,7 +87,7 @@ public partial class Home
 
     private async Task SetVideoOptionsAsync()
     {
-        var endpoint = ConfigurationEndpoints.VIDEO_OPTIONS();
+        var endpoint = EndPoints.GET_VIDEO_OPTIONS();
 
         _videoOptions = await _httpDataManager!.GetSerializedDataAsync<VideoOptions>(endpoint, usePublicHttpClient: true);
     }
@@ -104,7 +95,7 @@ public partial class Home
 
     private async Task SetSoundOptionsAsync()
     {
-        var endpoint = ConfigurationEndpoints.SOUND_OPTIONS();
+        var endpoint = EndPoints.GET_SOUND_OPTIONS();
 
         _soundOptions = await _httpDataManager!.GetSerializedDataAsync<SoundOptions>(endpoint, usePublicHttpClient: true);
     }
@@ -119,7 +110,7 @@ public partial class Home
 
     private async Task SetApiVersionsAsync()
     {
-        var endpoint = ConfigurationEndpoints.APP_VERSIONS();
+        var endpoint = EndPoints.GET_APP_VERSIONS();
 
         _apiVersions = await _httpDataManager!.GetSerializedDataAsync<AppVersions>(endpoint, usePublicHttpClient: true);
     }
@@ -137,12 +128,6 @@ public partial class Home
 
         _webVersions = version;
 
-    }
-
-
-    private void SetBaseAddress()
-    {
-        _baseAddress = _navigationMananger.BaseUri;
     }
 
 

@@ -6,7 +6,7 @@ using Smooth.Shared.Endpoints;
 namespace Smooth.Api.WebApp.Controllers
 {
     [ApiController]
-    [Route(WeatherForecastEndpoints.CONTROLLER)]
+    [Route(Ctrls.WEATERFORECASTS)]
     public class WeatherForecastsController
         : ControllerBase
     {
@@ -19,8 +19,8 @@ namespace Smooth.Api.WebApp.Controllers
         }
 
 
-        [Authorize]
-        [HttpGet(Name = "GetByRowCount")]
+        [HttpGet]
+        [Route(Routes.GET_WEATERFORECASTS)]
         public async Task<IActionResult> GetByRowcount(int? r, CancellationToken cancellationToken)
         {
             var result = await _weatherForecastService.GetAllAsync(r, cancellationToken);

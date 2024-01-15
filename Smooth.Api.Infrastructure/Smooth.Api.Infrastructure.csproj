@@ -13,6 +13,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Smooth.Application\Smooth.Api.Application.csproj" />
+		<ProjectReference Include="..\Smooth.Client.Application\Smooth.Client.Application.csproj" />
 	</ItemGroup>
 
 </Project>

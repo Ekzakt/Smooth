@@ -3,14 +3,14 @@ using Smooth.Shared.Dtos;
 using Ekzakt.Utilities.Helpers;
 using Microsoft.AspNetCore.SignalR;
 using Smooth.Api.WebApp.SignalR;
-using Microsoft.AspNetCore.Authorization;
-using Ekzakt.EmailSender.Contracts;
-using Ekzakt.EmailSender.Models;
+using Ekzakt.EmailSender.Core.Contracts;
+using Ekzakt.EmailSender.Core.Models;
+using Smooth.Shared.Endpoints;
 
 namespace Smooth.Api.WebApp.Controllers;
 
 
-[Route("api/[controller]")]
+[Route(Ctrls.TEST)]
 [ApiController]
 public class TestController(
     IHubContext<NotificationsHub> hub,
@@ -19,13 +19,11 @@ public class TestController(
     : ControllerBase
 {
     private readonly IHubContext<NotificationsHub> _hub = hub;
-    private readonly IEmailSenderService _emailSenderService;
-
+    private readonly IEmailSenderService _emailSenderService = emailSenderService;
 
     [HttpPost]
-    [Authorize]
-    [Route("/testclass")]
-    public async Task<IActionResult> InsertTestClass(InsertTestClassRequest request)
+    [Route(Routes.INSERT_TESTCLASS)]
+    public async Task<IActionResult> InsertTestClassAsync(InsertTestClassRequest request)
     {
         var output = await Task.Run(() =>
         {
@@ -40,17 +38,19 @@ public class TestController(
     }
 
 
-    [HttpPost]
-    [Authorize]
-    [Route("/triggeremail")]
-    public async Task<IActionResult> SendEmail()
+    [HttpGet]
+    [Route(Routes.TRIGGER_EMAIL)]
+    public async Task<IActionResult> TriggerEmailAsync()
     {
         SendEmailRequest request = new();
 
-        await _emailSenderService.SendAsync(request);
+        request.Tos.Add(new EmailAddress("mail@ericjansen.com", "Eric Jansen"));
+        request.Subject = "Send email trigger from TestController.";
+        request.HtmlBody = "<b>HtmlBody</b>";
+        request.TextBody = "TextBody";
 
-        return Created();
+        var result = await _emailSenderService.SendAsync(request);
+
+        return Ok(new TriggerEmailResponse { Response = result.ServerResponse });
     }
 }
-
-

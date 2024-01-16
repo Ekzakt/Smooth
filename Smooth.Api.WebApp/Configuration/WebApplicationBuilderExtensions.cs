@@ -5,12 +5,10 @@
 using Azure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.Options;
 using Smooth.Api.WebApp.SignalR;
 using Smooth.Shared.Configurations.MediaFiles.Options;
 using Microsoft.Identity.Web;
 using Smooth.Api.Application.Options;
-using Ekzakt.EmailSender.Smtp.Configuration;
 
 namespace Smooth.Api.WebApp.Configuration;
 
@@ -18,13 +16,7 @@ public static class WebApplicationBuilderExtensions
 {
     public static WebApplicationBuilder AddConfigurationOptions(this WebApplicationBuilder builder)
     {
-        builder
-            .AddCorsOptions()
-            .AddAzureOptions()
-            .AddAzureStorageAccountOptions()
-            .AddApplicationDbOptions()
-            .AddMediaFilesOptions();
-            //.AddSmtpOptions();
+        builder.AddMediaFilesOptions();
 
         return builder;
     }
@@ -32,9 +24,8 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
     {
-        var corsOptions = builder.Services
-            .BuildServiceProvider()
-            .GetService<IOptions<CorsOptions>>()?.Value;
+        CorsOptions corsOptions = new();
+        builder.Configuration.GetSection(CorsOptions.OptionsName).Bind(corsOptions);
 
         var origins = corsOptions?.AllowedOrigins;
 
@@ -56,9 +47,8 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddAzureKeyVault(this WebApplicationBuilder builder)
     {
-        var azureOptions = builder.Services
-            .BuildServiceProvider()
-            .GetService<IOptions<AzureOptions>>()?.Value;
+        AzureOptions azureOptions = new();
+        builder.Configuration.GetSection(AzureOptions.OptionsName).Bind(azureOptions);
 
 #if !DEBUG
 
@@ -83,9 +73,8 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddAzureSignalR(this  WebApplicationBuilder builder)
     {
-        var azureOptions = builder.Services
-            .BuildServiceProvider()
-            .GetService<IOptions<AzureOptions>>()?.Value;
+        AzureOptions azureOptions = new();
+        builder.Configuration.GetSection(AzureOptions.OptionsName).Bind(azureOptions);
 
         builder.Services
             .AddSignalR()
@@ -140,54 +129,6 @@ public static class WebApplicationBuilderExtensions
 
     #region Helpers
 
-    private static WebApplicationBuilder AddCorsOptions(this WebApplicationBuilder builder)
-    {
-        builder.Services
-           .Configure<CorsOptions>
-           (
-               builder.Configuration.GetSection(CorsOptions.OptionsName)
-           );
-
-        return builder;
-    }
-
-
-    private static WebApplicationBuilder AddAzureOptions(this WebApplicationBuilder builder)
-    {
-        builder.Services
-           .Configure<AzureOptions>
-           (
-               builder.Configuration.GetSection(AzureOptions.OptionsName)
-           );
-
-        return builder;
-    }
-
-
-    private static WebApplicationBuilder AddAzureStorageAccountOptions(this WebApplicationBuilder builder)
-    {
-        builder.Services
-            .Configure<AzureStorageAccountOptions>
-            (
-                builder.Configuration.GetSection(AzureStorageAccountOptions.OptionsName)
-            );
-
-        return builder;
-    }
-
-
-    private static WebApplicationBuilder AddApplicationDbOptions(this WebApplicationBuilder builder)
-    {
-        builder.Services
-            .Configure<ApplicationDbOptions>
-            (
-                builder.Configuration.GetSection(ApplicationDbOptions.OptionsName)
-            );
-
-        return builder;
-    }
-
-
     private static WebApplicationBuilder AddMediaFilesOptions(this WebApplicationBuilder builder)
     {
         builder.Services
@@ -220,19 +161,6 @@ public static class WebApplicationBuilderExtensions
                    .GetSection(MediaFilesOptions.OptionsName)
                    .GetSection(SoundOptions.OptionsName)
           );
-
-        return builder;
-    }
-
-
-    private static WebApplicationBuilder AddSmtpOptions(this WebApplicationBuilder builder)
-    {
-        builder.Services
-            .Configure<SmtpEmailSenderOptions>
-            (
-                builder.Configuration
-                    .GetSection(SmtpEmailSenderOptions.OptionsName)
-            );
 
         return builder;
     }

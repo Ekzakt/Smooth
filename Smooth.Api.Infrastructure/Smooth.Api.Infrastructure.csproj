@@ -8,12 +8,11 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
-	  <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Smooth.Application\Smooth.Api.Application.csproj" />
-		<ProjectReference Include="..\Smooth.Client.Application\Smooth.Client.Application.csproj" />
+	  <ProjectReference Include="..\Smooth.Api.Application\Smooth.Api.Application.csproj" />
 	</ItemGroup>
 
 </Project>

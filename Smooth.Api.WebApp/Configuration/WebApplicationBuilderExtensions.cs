@@ -51,7 +51,6 @@ public static class WebApplicationBuilderExtensions
         builder.Configuration.GetSection(AzureOptions.OptionsName).Bind(azureOptions);
 
 #if !DEBUG
-
         builder.Configuration.AddAzureKeyVault(
             new Uri($"https://{azureOptions?.KeyVault?.Name}.vault.azure.net/"),
             new DefaultAzureCredential(new DefaultAzureCredentialOptions
@@ -112,13 +111,13 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddMicrosoftIdentityWebApi(options =>
             {
-                builder.Configuration.Bind(Application.Constants.AZUREB2C_CONFIG_NAME, options);
+                builder.Configuration.Bind(AzureOptions.OptionsNameAzureAdB2C, options);
 
                 options.TokenValidationParameters.NameClaimType = "display_name";
             },
             options =>
             { 
-                builder.Configuration.Bind(Application.Constants.AZUREB2C_CONFIG_NAME, options);
+                builder.Configuration.Bind(AzureOptions.OptionsNameAzureAdB2C, options);
             });
 
         return builder;

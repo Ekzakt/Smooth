@@ -21,6 +21,7 @@ public class TestController(
     private readonly IHubContext<NotificationsHub> _hub = hub;
     private readonly IEmailSenderService _emailSenderService = emailSenderService;
 
+
     [HttpPost]
     [Route(Routes.INSERT_TESTCLASS)]
     public async Task<IActionResult> InsertTestClassAsync(InsertTestClassRequest request)
@@ -46,7 +47,7 @@ public class TestController(
 
         request.Tos.Add(new EmailAddress("mail@ericjansen.com", "Eric Jansen"));
         request.Subject = "Send email trigger from TestController.";
-        request.HtmlBody = "<b>HtmlBody</b>";
+        request.HtmlBody = "<h1>Header</h1><p>Body</p>";
         request.TextBody = "TextBody";
 
         var result = await _emailSenderService.SendAsync(request);

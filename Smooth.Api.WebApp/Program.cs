@@ -19,12 +19,12 @@ builder.AddAuthentication();
 builder.AddCors();
 builder.AddAzureSignalR();
 
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
 builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 builder.Services.AddSmtpEmailSender(SmtpEmailSenderOptions.OptionsName);
-
 
 
 var app = builder.Build();

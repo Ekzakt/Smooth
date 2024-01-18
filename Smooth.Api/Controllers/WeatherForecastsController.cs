@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Smooth.Api.Application.WeatherForecasts;
 using Smooth.Shared.Endpoints;
 
-namespace Smooth.Api.WebApp.Controllers
+namespace Smooth.Api.Controllers
 {
     [ApiController]
     [Route(Ctrls.WEATERFORECASTS)]

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace Smooth.Api.WebApp.SignalR;
+namespace Smooth.Api.SignalR;
 
 public class NotificationsHub : Hub
 {

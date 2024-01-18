@@ -3,7 +3,7 @@ using Smooth.Api.Application.Configuration;
 using Smooth.Shared.Configurations.MediaFiles.Options;
 using Smooth.Shared.Endpoints;
 
-namespace Smooth.Api.WebApp.Controllers
+namespace Smooth.Api.Controllers
 {
     [Route(Ctrls.CONFIGURATION)]
     [ApiController]

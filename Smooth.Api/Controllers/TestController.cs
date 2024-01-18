@@ -2,12 +2,12 @@
 using Smooth.Shared.Dtos;
 using Ekzakt.Utilities.Helpers;
 using Microsoft.AspNetCore.SignalR;
-using Smooth.Api.WebApp.SignalR;
 using Ekzakt.EmailSender.Core.Contracts;
 using Ekzakt.EmailSender.Core.Models;
 using Smooth.Shared.Endpoints;
+using Smooth.Api.SignalR;
 
-namespace Smooth.Api.WebApp.Controllers;
+namespace Smooth.Api.Controllers;
 
 
 [Route(Ctrls.TEST)]

@@ -1,4 +1,4 @@
-﻿namespace Smooth.Api.WebApp.Configuration;
+﻿namespace Smooth.Api.Configuration;
 
 public static class WebApplicationExtensions
 {

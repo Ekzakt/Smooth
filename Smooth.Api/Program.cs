@@ -4,10 +4,10 @@ using Smooth.Api.Application.Options;
 using Smooth.Api.Application.WeatherForecasts;
 using Smooth.Api.Infrastructure.Configuration;
 using Smooth.Api.Infrastructure.WeatherForecasts;
-using Smooth.Api.WebApp.Configuration;
-using Smooth.Api.WebApp.SignalR;
 using Smooth.Shared.Endpoints;
 using Serilog;
+using Smooth.Api.SignalR;
+using Smooth.Api.Configuration;
 
 
 var builder = WebApplication.CreateBuilder(args);

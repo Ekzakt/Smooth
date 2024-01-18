@@ -5,12 +5,13 @@
 using Azure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
-using Smooth.Api.WebApp.SignalR;
 using Smooth.Shared.Configurations.MediaFiles.Options;
 using Microsoft.Identity.Web;
 using Smooth.Api.Application.Options;
+using Smooth.Api.SignalR;
+using Smooth.Api.Configuration;
 
-namespace Smooth.Api.WebApp.Configuration;
+namespace Smooth.Api.Configuration;
 
 public static class WebApplicationBuilderExtensions
 {
@@ -70,7 +71,7 @@ public static class WebApplicationBuilderExtensions
     }
 
 
-    public static WebApplicationBuilder AddAzureSignalR(this  WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddAzureSignalR(this WebApplicationBuilder builder)
     {
         AzureOptions azureOptions = new();
         builder.Configuration.GetSection(AzureOptions.OptionsName).Bind(azureOptions);
@@ -116,7 +117,7 @@ public static class WebApplicationBuilderExtensions
                 options.TokenValidationParameters.NameClaimType = "display_name";
             },
             options =>
-            { 
+            {
                 builder.Configuration.Bind(AzureOptions.OptionsNameAzureAdB2C, options);
             });
 

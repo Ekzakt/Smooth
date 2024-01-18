@@ -7,10 +7,18 @@ using Smooth.Api.Infrastructure.WeatherForecasts;
 using Smooth.Api.WebApp.Configuration;
 using Smooth.Api.WebApp.SignalR;
 using Smooth.Shared.Endpoints;
-
+using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
+
 
 builder.AddResponseSizeCompression();
 builder.AddConfigurationOptions();
@@ -29,6 +37,7 @@ builder.Services.AddSmtpEmailSender(SmtpEmailSenderOptions.OptionsName);
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
 app.UseCors(CorsOptions.POLICY_NAME);
 app.UseHttpsRedirection();
 app.UseRouting();

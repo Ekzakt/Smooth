@@ -2,7 +2,7 @@
 
 public class CorsOptions
 {
-    public const string OptionsName = "Cors";
+    public const string SectionName = "Cors";
 
     public const string POLICY_NAME = "AllowedOrigins";
 

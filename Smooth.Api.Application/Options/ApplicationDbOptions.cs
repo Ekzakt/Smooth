@@ -2,7 +2,7 @@
 
 public class ApplicationDbOptions
 {
-    public const string OptionsName = "ApplicationDb";
+    public const string SectionName = "ApplicationDb";
 
     public string? ConnectionString { get; init; }
 

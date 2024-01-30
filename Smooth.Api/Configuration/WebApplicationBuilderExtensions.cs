@@ -10,6 +10,7 @@ using Microsoft.Identity.Web;
 using Smooth.Api.Application.Options;
 using Smooth.Api.SignalR;
 using Smooth.Api.Configuration;
+using Microsoft.Extensions.Azure;
 
 namespace Smooth.Api.Configuration;
 
@@ -23,10 +24,30 @@ public static class WebApplicationBuilderExtensions
     }
 
 
+    public static WebApplicationBuilder AddAzureServices(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddAzureClients(clientBuilder =>
+        {
+            clientBuilder.UseCredential(new DefaultAzureCredential());
+
+            clientBuilder.AddSecretClient(
+                builder.Configuration.GetSection("Azure:KeyVault"));
+
+            clientBuilder.AddBlobServiceClient(
+                builder.Configuration.GetSection("Azure:Storage"));
+
+            clientBuilder.ConfigureDefaults(
+                builder.Configuration.GetSection("Azure:Defaults"));
+        });
+
+        return builder;
+    }
+
+
     public static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
     {
         CorsOptions corsOptions = new();
-        builder.Configuration.GetSection(CorsOptions.OptionsName).Bind(corsOptions);
+        builder.Configuration.GetSection(CorsOptions.SectionName).Bind(corsOptions);
 
         var origins = corsOptions?.AllowedOrigins;
 
@@ -49,7 +70,9 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddAzureKeyVault(this WebApplicationBuilder builder)
     {
         AzureOptions azureOptions = new();
-        builder.Configuration.GetSection(AzureOptions.OptionsName).Bind(azureOptions);
+        builder.Configuration
+            .GetSection(AzureOptions.SectionName)
+            .Bind(azureOptions);
 
 #if !DEBUG
         builder.Configuration.AddAzureKeyVault(
@@ -74,7 +97,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddAzureSignalR(this WebApplicationBuilder builder)
     {
         AzureOptions azureOptions = new();
-        builder.Configuration.GetSection(AzureOptions.OptionsName).Bind(azureOptions);
+        builder.Configuration.GetSection(AzureOptions.SectionName).Bind(azureOptions);
 
         builder.Services
             .AddSignalR()
@@ -112,13 +135,13 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddMicrosoftIdentityWebApi(options =>
             {
-                builder.Configuration.Bind(AzureOptions.OptionsNameAzureAdB2C, options);
+                builder.Configuration.Bind(AzureOptions.SectionNameAzureB2C, options);
 
                 options.TokenValidationParameters.NameClaimType = "display_name";
             },
             options =>
             {
-                builder.Configuration.Bind(AzureOptions.OptionsNameAzureAdB2C, options);
+                builder.Configuration.Bind(AzureOptions.SectionNameAzureB2C, options);
             });
 
         return builder;

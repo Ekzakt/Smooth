@@ -47,8 +47,8 @@ public class TestController(
 
         request.Tos.Add(new EmailAddress("mail@ericjansen.com", "Eric Jansen"));
         request.Subject = "Send email trigger from TestController.";
-        request.HtmlBody = "<h1>Header</h1><p>Body</p>";
-        request.TextBody = "TextBody";
+        request.Body.Html = "<h1>Header</h1><p>Body</p>";
+        request.Body.PlainText = "TextBody";
 
         var result = await _emailSenderService.SendAsync(request);
 

@@ -2,7 +2,7 @@
 
 public class AzureSignalROptions
 {
-    public const string OptionsName = "Azure:SignalR";
+    public const string SectionName = "Azure:SignalR";
 
     public string? ConnectionString { get; init; }
 }

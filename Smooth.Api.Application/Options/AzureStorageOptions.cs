@@ -1,8 +1,8 @@
 ﻿namespace Smooth.Api.Application.Options;
 
-public class AzureStorageAccountOptions
+public class AzureStorageOptions
 {
-    public const string OptionsName = "Azure:StorageAccount";
+    public const string SectionName = "Azure:Storage";
 
     public string? ConnectionString { get; init; }
 

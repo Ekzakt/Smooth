@@ -2,5 +2,5 @@
 
 public class AzureKeyVaultOptions()
 {
-    public string? Name { get; init; }
+    public const string SectionName = "Azure:KeyVault";
 }

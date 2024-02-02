@@ -4,7 +4,7 @@ public class AzureStorageOptions
 {
     public const string SectionName = "Azure:Storage";
 
-    public string? ConnectionString { get; init; }
+    public string? ServiceUri { get; init; }
 
     public string[]? Containers { get; init; }
 }

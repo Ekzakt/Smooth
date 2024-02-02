@@ -6,13 +6,13 @@ namespace Smooth.Client.Application.Managers;
 
 public class HttpDataManager : IHttpDataManager
 {
-    private readonly ApiHttpClient _apiHttpClient;
+    private readonly SecureHttpClient _secureHttpClient;
     private readonly PublicHttpClient _publicHttpClient;
 
 
-    public HttpDataManager(ApiHttpClient apiHttpClient,  PublicHttpClient publicHttpClient)
+    public HttpDataManager(SecureHttpClient secureHttpClient,  PublicHttpClient publicHttpClient)
     {
-        _apiHttpClient = apiHttpClient;
+        _secureHttpClient = secureHttpClient;
         _publicHttpClient = publicHttpClient;
     }
 
@@ -23,13 +23,14 @@ public class HttpDataManager : IHttpDataManager
         {
             var response = usePublicHttpClient
                 ? await _publicHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken)
-                : await _apiHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken);
+                : await _secureHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken);
 
             return response;
 
         }
         catch (Exception ex)
         {
+            // TODO: Handle this!
             throw;
         }
     }
@@ -60,7 +61,7 @@ public class HttpDataManager : IHttpDataManager
     {
         var response = usePublicHttpClient
             ? await _publicHttpClient.Client.PostAsJsonAsync(endpoint, data, cancellationToken)
-            : await _apiHttpClient.Client.PostAsJsonAsync(endpoint, data, cancellationToken);
+            : await _secureHttpClient.Client.PostAsJsonAsync(endpoint, data, cancellationToken);
 
         if (response.IsSuccessStatusCode)
         {

@@ -5,7 +5,6 @@ public static class Routes
 
     // Test
     public const string INSERT_TESTCLASS = "insterttestclass";
-
     public const string TRIGGER_EMAIL = "triggeremail";
 
 
@@ -20,4 +19,8 @@ public static class Routes
     public const string GET_SOUND_OPTIONS = "soundoptions";
     public const string GET_AZURE_OPTIONS = "azureoptions";
     public const string GET_APP_VERSIONS = "appversions";
+
+
+    //Files
+    public const string GET_FILES_LIST = "list";
 }

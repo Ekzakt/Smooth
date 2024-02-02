@@ -36,8 +36,6 @@ namespace Smooth.Api.Controllers
         [Route(Routes.GET_IMAGE_OPTIONS)]
         public async Task<IActionResult> GetImageOptionsAsync()
         {
-            //var result = await _configurationService.GetImageOptionsAsync();
-
             var result = await _configurationService.GetMediaFileOptionsAsync(nameof(ImageOptions));
 
             return result is not null

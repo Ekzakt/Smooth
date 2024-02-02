@@ -11,6 +11,7 @@ using Smooth.Api.Application.Options;
 using Smooth.Api.SignalR;
 using Smooth.Api.Configuration;
 using Microsoft.Extensions.Azure;
+using Ekzakt.FileManager.AzureBlob.Configuration;
 
 namespace Smooth.Api.Configuration;
 
@@ -19,26 +20,6 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddConfigurationOptions(this WebApplicationBuilder builder)
     {
         builder.AddMediaFilesOptions();
-
-        return builder;
-    }
-
-
-    public static WebApplicationBuilder AddAzureServices(this WebApplicationBuilder builder)
-    {
-        builder.Services.AddAzureClients(clientBuilder =>
-        {
-            clientBuilder.UseCredential(new DefaultAzureCredential());
-
-            clientBuilder.AddSecretClient(
-                builder.Configuration.GetSection("Azure:KeyVault"));
-
-            clientBuilder.AddBlobServiceClient(
-                builder.Configuration.GetSection("Azure:Storage"));
-
-            clientBuilder.ConfigureDefaults(
-                builder.Configuration.GetSection("Azure:Defaults"));
-        });
 
         return builder;
     }
@@ -67,7 +48,7 @@ public static class WebApplicationBuilderExtensions
     }
 
 
-    public static WebApplicationBuilder AddAzureKeyVault(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddAzureServices(this WebApplicationBuilder builder)
     {
         AzureOptions azureOptions = new();
         builder.Configuration
@@ -75,20 +56,32 @@ public static class WebApplicationBuilderExtensions
             .Bind(azureOptions);
 
 #if !DEBUG
-        builder.Configuration.AddAzureKeyVault(
-            new Uri($"https://{azureOptions?.KeyVault?.Name}.vault.azure.net/"),
-            new DefaultAzureCredential(new DefaultAzureCredentialOptions
-            {
-                ExcludeEnvironmentCredential = true,
-                ExcludeInteractiveBrowserCredential = true,
-                ExcludeAzurePowerShellCredential = true,
-                ExcludeSharedTokenCacheCredential = true,
-                ExcludeVisualStudioCodeCredential = true,
-                ExcludeVisualStudioCredential = true,
-                ExcludeAzureCliCredential = !builder.Environment.IsDevelopment(),
-                ExcludeManagedIdentityCredential = builder.Environment.IsDevelopment()
-            }));
+        var azureCredentialOptions = new DefaultAzureCredentialOptions
+        {
+            ExcludeEnvironmentCredential = true,
+            ExcludeInteractiveBrowserCredential = true,
+            ExcludeAzurePowerShellCredential = true,
+            ExcludeSharedTokenCacheCredential = true,
+            ExcludeVisualStudioCodeCredential = true,
+            ExcludeVisualStudioCredential = true,
+            ExcludeAzureCliCredential = !builder.Environment.IsDevelopment(),
+            ExcludeManagedIdentityCredential = builder.Environment.IsDevelopment()
+        };
 #endif
+
+        builder.Services
+                .AddAzureClients(clientBuilder => {
+#if !DEBUG
+                    clientBuilder
+                        .AddSecretClient(builder.Configuration.GetSection(AzureKeyVaultOptions.SectionName));
+#endif
+                    clientBuilder
+                        .UseCredential(new DefaultAzureCredential());
+                    clientBuilder
+                        .AddBlobServiceClient(builder.Configuration.GetSection(AzureStorageOptions.SectionName));
+                    clientBuilder
+                        .ConfigureDefaults(builder.Configuration.GetSection(AzureDefaultsOptions.SectionName));
+                });
 
         return builder;
     }

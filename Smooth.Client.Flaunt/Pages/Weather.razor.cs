@@ -10,7 +10,7 @@ public partial class Weather : IDisposable
 {
 
     [Inject]
-    public ApiHttpClient _httpClient { get; set; }
+    public SecureHttpClient _httpClient { get; set; }
 
     [Inject]
     public IHttpDataManager _httpDataManager { get; set; }

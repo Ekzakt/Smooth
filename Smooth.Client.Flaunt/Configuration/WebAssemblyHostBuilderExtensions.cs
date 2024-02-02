@@ -15,9 +15,10 @@ public static class WebAssemblyHostBuilderExtensions
 
 
         builder.Services
-            .AddHttpClient<ApiHttpClient>(config =>
+            .AddHttpClient<SecureHttpClient>(config =>
                 {
                     config.BaseAddress = new Uri(apiBaseAddress);
+                    config.DefaultRequestHeaders.Add("X-Correlation-Id", Guid.NewGuid().ToString());
                 })
             .AddHttpMessageHandler<ApiAuthorizationMessageHandler>();
 
@@ -26,6 +27,7 @@ public static class WebAssemblyHostBuilderExtensions
             .AddHttpClient<PublicHttpClient>(config =>
             {
                 config.BaseAddress = new Uri(apiBaseAddress);
+                config.DefaultRequestHeaders.Add("X-Correlation-Id", Guid.NewGuid().ToString());
             });
 
         return builder;

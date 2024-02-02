@@ -13,14 +13,11 @@ namespace Smooth.Api.Controllers;
 [Route(Ctrls.TEST)]
 [ApiController]
 public class TestController(
-    IHubContext<NotificationsHub> hub,
-    IEmailSenderService emailSenderService
-    )
+    IHubContext<NotificationsHub> _hub,
+    IEmailSenderService _emailSenderService,
+    ILogger<TestController> _logger)
     : ControllerBase
 {
-    private readonly IHubContext<NotificationsHub> _hub = hub;
-    private readonly IEmailSenderService _emailSenderService = emailSenderService;
-
 
     [HttpPost]
     [Route(Routes.INSERT_TESTCLASS)]

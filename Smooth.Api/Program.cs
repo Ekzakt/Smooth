@@ -22,7 +22,7 @@ Log.Logger = new LoggerConfiguration()
 
 builder.AddResponseSizeCompression();
 builder.AddConfigurationOptions();
-builder.AddAzureKeyVault();
+builder.AddAzureServices();
 builder.AddAuthentication();
 builder.AddCors();
 builder.AddAzureSignalR();
@@ -37,6 +37,7 @@ builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 
 var app = builder.Build();
 
+app.UseMiddleware<CorrelationIdMiddleware>();
 app.UseSerilogRequestLogging();
 app.UseCors(CorsOptions.POLICY_NAME);
 app.UseHttpsRedirection();

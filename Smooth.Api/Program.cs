@@ -8,6 +8,8 @@ using Smooth.Shared.Endpoints;
 using Serilog;
 using Smooth.Api.SignalR;
 using Smooth.Api.Configuration;
+using Ekzakt.FileManager.AzureBlob.Configuration;
+using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,10 +31,12 @@ builder.AddAzureSignalR();
 
 
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSmtpEmailSender(SmtpEmailSenderOptions.OptionsName);
 builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
 builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
+builder.Services.AddAzureBlobFileManager();
 
 
 var app = builder.Build();

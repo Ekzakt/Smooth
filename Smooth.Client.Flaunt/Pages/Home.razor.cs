@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Smooth.Client.Application.Managers;
 using Smooth.Shared.Configurations;
 using Smooth.Shared.Configurations.MediaFiles.Options;
-using Smooth.Shared.Dtos;
 using Smooth.Shared.Endpoints;
+using Smooth.Shared.Models.Requests;
+using Smooth.Shared.Models.Responses;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
@@ -41,7 +42,7 @@ public partial class Home
 
     private async Task InsertTestClassAsync()
     {
-        var result = await _httpDataManager.Insert<InsertTestClassResponse, InsertTestClassRequest>(EndPoints.INSERT_TESTCLASS(), new InsertTestClassRequest
+        var result = await _httpDataManager.PostDataAsync<InsertTestClassResponse, InsertTestClassRequest>(EndPoints.INSERT_TESTCLASS(), new InsertTestClassRequest
         {
             Name = "Test class name",
             Description = "Test class description"
@@ -59,6 +60,7 @@ public partial class Home
 
         _triggerEmailResult = result;
     }
+
 
     private async Task SetOptionsAsync()
     {

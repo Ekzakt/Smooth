@@ -16,6 +16,21 @@ public class HttpDataManager : IHttpDataManager
         _publicHttpClient = publicHttpClient;
     }
 
+    public async Task<T?> DeleteDataAsync<T>(string endpoint, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
+        where T : class
+    {
+        var response = usePublicHttpClient
+            ? await _publicHttpClient.Client.DeleteAsync(endpoint, cancellationToken)
+            : await _secureHttpClient.Client.DeleteAsync(endpoint, cancellationToken);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadFromJsonAsync<T>();
+            return content;
+        }
+
+        throw new Exception(response.ReasonPhrase);
+    }
 
     public async Task<T?> GetDataAsync<T>(string endpoint, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
     {
@@ -55,7 +70,7 @@ public class HttpDataManager : IHttpDataManager
     }
 
 
-    public async Task<T?> Insert<T, U>(string endpoint, U data, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
+    public async Task<T?> PostDataAsync<T, U>(string endpoint, U data, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
         where T : class
         where U : class
     {

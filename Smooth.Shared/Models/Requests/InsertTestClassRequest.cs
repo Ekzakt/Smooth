@@ -1,4 +1,4 @@
-﻿namespace Smooth.Shared.Dtos;
+﻿namespace Smooth.Shared.Models.Requests;
 
 public class InsertTestClassRequest
 {

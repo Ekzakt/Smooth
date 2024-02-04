@@ -1,0 +1,34 @@
+﻿@page "/filemanager"
+
+@using Smooth.Shared.Models
+@using Ekzakt.Utilities.Extentions
+
+<PageHeader Title="Filemanager"></PageHeader>
+
+<Article Title="Get files">
+
+    <div class="mb-2">
+        <button type="button" class="btn btn-info" @onclick="ListFilesAsync">Get fileslist</button>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var file in filesList ??= new List<FileInformationDto>())
+            {
+                <tr>
+                    <td>@file.Name</td>
+                    <td>@file.Size.FormatFileSize()</td>
+                    <td><button type="button" class="btn btn-outline-danger" @onclick="() => DeleteFileAsync(file.Name)">Delete</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</Article>

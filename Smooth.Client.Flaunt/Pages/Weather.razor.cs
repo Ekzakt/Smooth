@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Smooth.Client.Application.HttpClients;
 using Smooth.Client.Application.Managers;
-using Smooth.Shared.Dtos;
 using Smooth.Shared.Endpoints;
+using Smooth.Shared.Models;
 
 namespace Smooth.Client.Flaunt.Pages;
 
@@ -26,7 +26,7 @@ public partial class Weather : IDisposable
 
 
     private CancellationTokenSource cancellationToken = new();
-    private List<WeatherForecastResponse>? forecasts = new();
+    private List<WeatherForecastDto>? weatherForecastsList = new();
 
 
     protected override async Task OnInitializedAsync()
@@ -43,15 +43,15 @@ public partial class Weather : IDisposable
     {
         var endpoint = EndPoints.GET_WEATHERFORECASTS(R);
 
-        var result = await _httpDataManager.GetDataAsync<List<WeatherForecastResponse>>(
+        var result = await _httpDataManager.GetDataAsync<List<WeatherForecastDto>>(
             endpoint: endpoint,
             cancellationToken: cancellationToken.Token,
             usePublicHttpClient: true);
 
         if (result is not null)
         {
-            forecasts = result;
-            R = result.Count;
+            weatherForecastsList = result ?? new List<WeatherForecastDto>();
+            R = weatherForecastsList.Count;
         }
 
     }
@@ -62,6 +62,7 @@ public partial class Weather : IDisposable
         cancellationToken.Cancel();
         cancellationToken.Dispose();
     }
+
 
     #endregion Helpers
 }

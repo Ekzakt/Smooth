@@ -23,4 +23,5 @@ public static class Routes
 
     //Files
     public const string GET_FILES_LIST = "list";
+    public const string DELETE_FILE = "";
 }

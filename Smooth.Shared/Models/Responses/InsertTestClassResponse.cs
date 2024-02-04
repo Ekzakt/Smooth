@@ -1,4 +1,4 @@
-﻿namespace Smooth.Shared.Dtos;
+﻿namespace Smooth.Shared.Models.Responses;
 
 public class InsertTestClassResponse
 {

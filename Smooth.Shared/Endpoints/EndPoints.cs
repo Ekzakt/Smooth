@@ -1,4 +1,7 @@
-﻿namespace Smooth.Shared.Endpoints;
+﻿using Smooth.Shared.Models.Requests;
+using System.Web;
+
+namespace Smooth.Shared.Endpoints;
 
 public static class EndPoints
 {
@@ -19,5 +22,9 @@ public static class EndPoints
     public static string GET_SOUND_OPTIONS() => $"{Ctrls.CONFIGURATION}/{Routes.GET_SOUND_OPTIONS}";
     public static string GET_AZURE_OPTIONS() => $"{Ctrls.CONFIGURATION}/{Routes.GET_AZURE_OPTIONS}";
     public static string GET_APP_VERSIONS() => $"{Ctrls.CONFIGURATION}/{Routes.GET_APP_VERSIONS}";
-}
 
+
+    // Files
+    public static string GET_FILES_LIST() => $"{Ctrls.FILES}/{Routes.GET_FILES_LIST}";
+    public static string DELETE_FILE(DeleteFileRequest request) => $"{Ctrls.FILES}/{Routes.DELETE_FILE}?filename={HttpUtility.UrlEncode(request.FileName)}";
+}

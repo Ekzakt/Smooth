@@ -32,7 +32,9 @@ public class FilesController(
         };
 
         var result = await _fileMananager.ListFilesAsync(request, cancellationToken);
+
         var mapResult = _mapper.Map<List<FileInformationDto>>(result.Data);
+
         var output = new GetFilesListResponse { Files = mapResult };
 
         return result.IsSuccess()

@@ -15,8 +15,7 @@ namespace Smooth.Api.Controllers;
 [ApiController]
 public class TestController(
     IHubContext<NotificationsHub> _hub,
-    IEmailSenderService _emailSenderService,
-    ILogger<TestController> _logger)
+    IEmailSenderService _emailSenderService)
     : ControllerBase
 {
 

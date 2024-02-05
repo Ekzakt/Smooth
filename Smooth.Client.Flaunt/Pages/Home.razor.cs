@@ -45,9 +45,7 @@ public partial class Home
             Description = "Test class description"
         }, true);
 
-        _insertTestClassResult = result is null
-            ? string.Empty
-            : result.Id.ToString();
+        _insertTestClassResult = result?.Id.ToString() ?? string.Empty;
     }
 
 

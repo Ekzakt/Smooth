@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Smooth.Api.Application.Configuration;
-using Smooth.Shared.Configurations.MediaFiles.Options;
+using Smooth.Shared.Configurations.Options.MediaFiles;
 using Smooth.Shared.Endpoints;
 
 namespace Smooth.Api.Controllers
@@ -68,7 +68,10 @@ namespace Smooth.Api.Controllers
         }
 
 
-#if DEBUG
+        [HttpGet]
+
+
+//#if DEBUG
         [HttpGet]
         [Route(Routes.GET_AZURE_OPTIONS)]
         public async Task<IActionResult> GetAzureOptionsAsync()
@@ -79,7 +82,7 @@ namespace Smooth.Api.Controllers
                 ? Ok(result)
                 : NoContent();
         }
-#endif
+//#endif
 
         [HttpGet]
         [Route(Routes.GET_APP_VERSIONS)]

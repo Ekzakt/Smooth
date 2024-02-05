@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Smooth.Client.Application.Managers;
 using Smooth.Shared.Configurations;
-using Smooth.Shared.Configurations.MediaFiles.Options;
+using Smooth.Shared.Configurations.Options.Azure;
+using Smooth.Shared.Configurations.Options.MediaFiles;
 using Smooth.Shared.Endpoints;
 using Smooth.Shared.Models.Requests;
 using Smooth.Shared.Models.Responses;
@@ -27,7 +28,8 @@ public partial class Home
     private string? _apiVersions = string.Empty;
     private string? _webVersions = string.Empty;
     private string? _insertTestClassResult = string.Empty;
-    private string? _triggerEmailResult = string.Empty;    
+    private string? _triggerEmailResult = string.Empty;
+    private string? _azureOptons = string.Empty;
 
 
     protected override async Task OnInitializedAsync()
@@ -68,6 +70,7 @@ public partial class Home
         await SetImageOptionsAsync();
         await SetVideoOptionsAsync();
         await SetSoundOptionsAsync();
+        await SetAzureOptionsAsync();
     }
 
 
@@ -102,6 +105,13 @@ public partial class Home
         _soundOptions = await _httpDataManager!.GetSerializedDataAsync<SoundOptions>(endpoint, usePublicHttpClient: true);
     }
 
+
+    private async Task SetAzureOptionsAsync()
+    {
+        var endpoint = EndPoints.GET_AZURE_OPTIONS();
+
+        _azureOptons = await _httpDataManager!.GetSerializedDataAsync<AzureOptions>(endpoint, usePublicHttpClient: true);
+    }
 
     private async Task SetVersionsAsync()
     {

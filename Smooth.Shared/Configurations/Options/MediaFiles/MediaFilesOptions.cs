@@ -1,8 +1,8 @@
-﻿namespace Smooth.Shared.Configurations.MediaFiles.Options;
+﻿namespace Smooth.Shared.Configurations.Options.MediaFiles;
 
 public class MediaFilesOptions
 {
-    public static string OptionsName => "MediaFiles";
+    public static string SectionName => "MediaFiles";
 
     public ImageOptions Images { get; init; } = new();
     public VideoOptions Videos { get; init; } = new();

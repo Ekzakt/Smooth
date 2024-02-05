@@ -1,8 +1,8 @@
-﻿namespace Smooth.Shared.Configurations.MediaFiles.Options;
+﻿namespace Smooth.Shared.Configurations.Options.MediaFiles;
 
 public class SoundOptions : IMediaFileOptions
 {
-    public static string OptionsName => "Sounds";
+    public static string SectionName => "Sounds";
 
     public long MaxLength { get; init; } = 52428800; // 50 MB
     public string OutputMimeTypeValue { get; init; } = string.Empty;

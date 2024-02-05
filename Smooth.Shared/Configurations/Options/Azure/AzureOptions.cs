@@ -1,4 +1,4 @@
-﻿namespace Smooth.Api.Application.Options;
+﻿namespace Smooth.Shared.Configurations.Options.Azure;
 
 public class AzureOptions
 {
@@ -10,4 +10,8 @@ public class AzureOptions
     public AzureStorageOptions? Storage { get; init; }
 
     public AzureSignalROptions? SignalR { get; init; }
+
+    public AzureApplicationInsightsOptions? ApplicationInsights { get; init; }
+
+
 }

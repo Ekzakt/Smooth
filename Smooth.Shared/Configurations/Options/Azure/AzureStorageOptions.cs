@@ -1,4 +1,4 @@
-﻿namespace Smooth.Api.Application.Options;
+﻿namespace Smooth.Shared.Configurations.Options.Azure;
 
 public class AzureStorageOptions
 {
@@ -6,5 +6,5 @@ public class AzureStorageOptions
 
     public string? ServiceUri { get; init; }
 
-    public string[]? Containers { get; init; }
+    public string[]? ContainerNames { get; init; }
 }

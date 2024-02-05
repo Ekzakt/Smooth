@@ -5,13 +5,14 @@
 using Azure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
-using Smooth.Shared.Configurations.MediaFiles.Options;
 using Microsoft.Identity.Web;
 using Smooth.Api.Application.Options;
 using Smooth.Api.SignalR;
 using Smooth.Api.Configuration;
 using Microsoft.Extensions.Azure;
 using Ekzakt.FileManager.AzureBlob.Configuration;
+using Smooth.Shared.Configurations.Options.MediaFiles;
+using Smooth.Shared.Configurations.Options.Azure;
 
 namespace Smooth.Api.Configuration;
 
@@ -27,10 +28,12 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddCors(this WebApplicationBuilder builder)
     {
-        CorsOptions corsOptions = new();
-        builder.Configuration.GetSection(CorsOptions.SectionName).Bind(corsOptions);
+        CorsOptions options = new();
+        builder.Configuration
+            .GetSection(CorsOptions.SectionName)
+            .Bind(options);
 
-        var origins = corsOptions?.AllowedOrigins;
+        var origins = options?.AllowedOrigins;
 
         builder.Services.AddCors(options =>
         {
@@ -48,12 +51,12 @@ public static class WebApplicationBuilderExtensions
     }
 
 
-    public static WebApplicationBuilder AddAzureServices(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddAzureClientServices(this WebApplicationBuilder builder)
     {
-        AzureOptions azureOptions = new();
+        AzureOptions options = new();
         builder.Configuration
             .GetSection(AzureOptions.SectionName)
-            .Bind(azureOptions);
+            .Bind(options);
 
 #if !DEBUG
         var azureCredentialOptions = new DefaultAzureCredentialOptions
@@ -89,8 +92,11 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddAzureSignalR(this WebApplicationBuilder builder)
     {
-        AzureOptions azureOptions = new();
-        builder.Configuration.GetSection(AzureOptions.SectionName).Bind(azureOptions);
+        AzureOptions options = new();
+        builder.Configuration
+            .GetSection(AzureOptions.SectionName)
+            .Bind(options);
+
 
         builder.Services
             .AddSignalR()
@@ -102,6 +108,22 @@ public static class WebApplicationBuilderExtensions
             {
                 options.EnableDetailedErrors = builder.Environment.IsDevelopment();
             });
+
+        return builder;
+    }
+
+
+    public static WebApplicationBuilder AddApplicationInsights(this WebApplicationBuilder builder)
+    {
+        AzureApplicationInsightsOptions options = new();
+        builder.Configuration
+            .GetSection(AzureApplicationInsightsOptions.SectionName)
+            .Bind(options);
+
+        builder.Services.AddApplicationInsightsTelemetry(options => 
+        {
+            options.ConnectionString = options.ConnectionString;
+        });
 
         return builder;
     }
@@ -151,31 +173,39 @@ public static class WebApplicationBuilderExtensions
             .Configure<MediaFilesOptions>
             (
                 builder.Configuration
-                    .GetSection(MediaFilesOptions.OptionsName)
+                    .GetSection(MediaFilesOptions.SectionName)
             );
 
         builder.Services
            .Configure<ImageOptions>
            (
                 builder.Configuration
-                    .GetSection(MediaFilesOptions.OptionsName)
-                    .GetSection(ImageOptions.OptionsName)
+                    .GetSection(MediaFilesOptions.SectionName)
+                    .GetSection(ImageOptions.SectionName)
            );
 
         builder.Services
            .Configure<VideoOptions>
            (
                 builder.Configuration
-                    .GetSection(MediaFilesOptions.OptionsName)
-                    .GetSection(VideoOptions.OptionsName)
+                    .GetSection(MediaFilesOptions.SectionName)
+                    .GetSection(VideoOptions.SectionName)
            );
 
         builder.Services
           .Configure<SoundOptions>
           (
                builder.Configuration
-                   .GetSection(MediaFilesOptions.OptionsName)
-                   .GetSection(SoundOptions.OptionsName)
+                   .GetSection(MediaFilesOptions.SectionName)
+                   .GetSection(SoundOptions.SectionName)
+          );
+
+        // TODO: This can be all gone in production.
+        builder.Services
+          .Configure<AzureOptions>
+          (
+               builder.Configuration
+                   .GetSection(AzureOptions.SectionName)
           );
 
         return builder;

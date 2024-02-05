@@ -1,8 +1,8 @@
-﻿namespace Smooth.Shared.Configurations.MediaFiles.Options;
+﻿namespace Smooth.Shared.Configurations.Options.MediaFiles;
 
 public interface IMediaFileOptions
 {
-    static string? OptionsName { get; }
+    static string? SectionName { get; }
 
     long MaxLength { get; init; }
     string OutputMimeTypeValue { get; init; }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Configuration;
-using Smooth.Api.Application.Options;
 using Smooth.Shared.Configurations;
-using Smooth.Shared.Configurations.MediaFiles.Options;
+using Smooth.Shared.Configurations.Options.Azure;
+using Smooth.Shared.Configurations.Options.MediaFiles;
 
 namespace Smooth.Api.Infrastructure.Configuration;
 

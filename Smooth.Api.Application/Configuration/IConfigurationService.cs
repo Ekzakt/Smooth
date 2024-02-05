@@ -1,6 +1,6 @@
-﻿using Smooth.Api.Application.Options;
-using Smooth.Shared.Configurations;
-using Smooth.Shared.Configurations.MediaFiles.Options;
+﻿using Smooth.Shared.Configurations;
+using Smooth.Shared.Configurations.Options.Azure;
+using Smooth.Shared.Configurations.Options.MediaFiles;
 using System.Reflection;
 
 namespace Smooth.Api.Application.Configuration;

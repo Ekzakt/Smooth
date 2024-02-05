@@ -1,8 +1,8 @@
-﻿namespace Smooth.Shared.Configurations.MediaFiles.Options;
+﻿namespace Smooth.Shared.Configurations.Options.MediaFiles;
 
 public class ImageOptions : IMediaFileOptions
 {
-    public static string OptionsName => "Images";
+    public static string SectionName => "Images";
 
     public long MaxLength { get; init; } = 10485760; // 10 MB
     public string OutputMimeTypeValue { get; init; } = string.Empty;

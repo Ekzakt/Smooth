@@ -115,15 +115,15 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder AddApplicationInsights(this WebApplicationBuilder builder)
     {
-        AzureApplicationInsightsOptions options = new();
-        builder.Configuration
-            .GetSection(AzureApplicationInsightsOptions.SectionName)
-            .Bind(options);
+        //AzureApplicationInsightsOptions options = new();
+        //builder.Configuration
+        //    .GetSection(AzureApplicationInsightsOptions.SectionName)
+        //    .Bind(options);
 
-        builder.Services.AddApplicationInsightsTelemetry(options => 
-        {
-            options.ConnectionString = options.ConnectionString;
-        });
+        //builder.Services.AddApplicationInsightsTelemetry(options => 
+        //{
+        //    options.ConnectionString = options.ConnectionString;
+        //});
 
         return builder;
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Configuration;
 using Smooth.Shared.Configurations;
+using Smooth.Shared.Configurations.Options;
 using Smooth.Shared.Configurations.Options.Azure;
 using Smooth.Shared.Configurations.Options.MediaFiles;
 
@@ -11,12 +12,17 @@ public class ConfigurationService
 {
     private readonly MediaFilesOptions _mediaFileOptions;
     private readonly AzureOptions _azureOptions;
+    private readonly CorsOptions _corsOptions;
 
 
-    public ConfigurationService(IOptions<MediaFilesOptions> mediaFileOptions, IOptions<AzureOptions> azureOptions)
+    public ConfigurationService(
+        IOptions<MediaFilesOptions> mediaFileOptions,
+        IOptions<AzureOptions> azureOptions,
+        IOptions<CorsOptions> corsOptions)
     {
         _mediaFileOptions = mediaFileOptions.Value;
         _azureOptions = azureOptions.Value;
+        _corsOptions = corsOptions.Value;
     }
 
 
@@ -66,6 +72,17 @@ public class ConfigurationService
         AzureOptions result = await Task.Run(() =>
         {
             return _azureOptions;
+        });
+
+        return result;
+    }
+
+
+    public async Task<CorsOptions> GetCorsOptionsAsync()
+    {
+        CorsOptions result = await Task.Run(() =>
+        {
+            return _corsOptions;
         });
 
         return result;

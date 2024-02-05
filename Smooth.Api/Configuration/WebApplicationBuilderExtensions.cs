@@ -6,13 +6,13 @@ using Azure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Identity.Web;
-using Smooth.Api.Application.Options;
 using Smooth.Api.SignalR;
 using Smooth.Api.Configuration;
 using Microsoft.Extensions.Azure;
 using Ekzakt.FileManager.AzureBlob.Configuration;
 using Smooth.Shared.Configurations.Options.MediaFiles;
 using Smooth.Shared.Configurations.Options.Azure;
+using Smooth.Shared.Configurations.Options;
 
 namespace Smooth.Api.Configuration;
 
@@ -176,6 +176,7 @@ public static class WebApplicationBuilderExtensions
                     .GetSection(MediaFilesOptions.SectionName)
             );
 
+
         builder.Services
            .Configure<ImageOptions>
            (
@@ -183,6 +184,7 @@ public static class WebApplicationBuilderExtensions
                     .GetSection(MediaFilesOptions.SectionName)
                     .GetSection(ImageOptions.SectionName)
            );
+
 
         builder.Services
            .Configure<VideoOptions>
@@ -192,6 +194,7 @@ public static class WebApplicationBuilderExtensions
                     .GetSection(VideoOptions.SectionName)
            );
 
+
         builder.Services
           .Configure<SoundOptions>
           (
@@ -200,6 +203,7 @@ public static class WebApplicationBuilderExtensions
                    .GetSection(SoundOptions.SectionName)
           );
 
+
         // TODO: This can be all gone in production.
         builder.Services
           .Configure<AzureOptions>
@@ -207,6 +211,16 @@ public static class WebApplicationBuilderExtensions
                builder.Configuration
                    .GetSection(AzureOptions.SectionName)
           );
+
+
+        // TODO: This can be all gone in production.
+        builder.Services
+            .Configure<CorsOptions>
+            (
+                builder.Configuration
+                    .GetSection(CorsOptions.SectionName)
+            );
+
 
         return builder;
     }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Smooth.Client.Application.Managers;
 using Smooth.Shared.Configurations;
+using Smooth.Shared.Configurations.Options;
 using Smooth.Shared.Configurations.Options.Azure;
 using Smooth.Shared.Configurations.Options.MediaFiles;
 using Smooth.Shared.Endpoints;
@@ -21,16 +22,11 @@ public partial class Home
     public NavigationManager _navigationMananger { get; set; }
 
 
-    private string? _mediaFilesOptions = string.Empty;
-    private string? _imageOptions = string.Empty;
-    private string? _videoOptions = string.Empty;
-    private string? _soundOptions = string.Empty;
-    private string? _apiVersions = string.Empty;
-    private string? _webVersions = string.Empty;
+    private OptionsResults _optionsResult = new();
     private string? _insertTestClassResult = string.Empty;
     private string? _triggerEmailResult = string.Empty;
-    private string? _azureOptons = string.Empty;
-
+    private string? _apiVersionsResult = string.Empty;
+    private string? _webVersionsResult = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -71,6 +67,7 @@ public partial class Home
         await SetVideoOptionsAsync();
         await SetSoundOptionsAsync();
         await SetAzureOptionsAsync();
+        await SetCorsOptionsAsync();
     }
 
 
@@ -78,7 +75,7 @@ public partial class Home
     {
         var endpoint = EndPoints.GET_MEDIAFILES_OPTIONS();
 
-        _mediaFilesOptions = await _httpDataManager!.GetSerializedDataAsync<MediaFilesOptions>(endpoint, usePublicHttpClient: true);
+        _optionsResult.MediaFilesOptionsResult = await _httpDataManager!.GetSerializedDataAsync<MediaFilesOptions>(endpoint, usePublicHttpClient: true);
     }
 
 
@@ -86,7 +83,7 @@ public partial class Home
     {
         var endpoint = EndPoints.GET_IMAGE_OPTIONS();
 
-        _imageOptions = await _httpDataManager!.GetSerializedDataAsync<ImageOptions>(endpoint, usePublicHttpClient: true);
+        _optionsResult.ImageOptionsResult = await _httpDataManager!.GetSerializedDataAsync<ImageOptions>(endpoint, usePublicHttpClient: true);
     }
 
 
@@ -94,7 +91,7 @@ public partial class Home
     {
         var endpoint = EndPoints.GET_VIDEO_OPTIONS();
 
-        _videoOptions = await _httpDataManager!.GetSerializedDataAsync<VideoOptions>(endpoint, usePublicHttpClient: true);
+        _optionsResult.VideoOptionsResult = await _httpDataManager!.GetSerializedDataAsync<VideoOptions>(endpoint, usePublicHttpClient: true);
     }
 
 
@@ -102,7 +99,7 @@ public partial class Home
     {
         var endpoint = EndPoints.GET_SOUND_OPTIONS();
 
-        _soundOptions = await _httpDataManager!.GetSerializedDataAsync<SoundOptions>(endpoint, usePublicHttpClient: true);
+        _optionsResult.SoundOptionsResult = await _httpDataManager!.GetSerializedDataAsync<SoundOptions>(endpoint, usePublicHttpClient: true);
     }
 
 
@@ -110,7 +107,15 @@ public partial class Home
     {
         var endpoint = EndPoints.GET_AZURE_OPTIONS();
 
-        _azureOptons = await _httpDataManager!.GetSerializedDataAsync<AzureOptions>(endpoint, usePublicHttpClient: true);
+        _optionsResult.AzureOptionsResult = await _httpDataManager!.GetSerializedDataAsync<AzureOptions>(endpoint, usePublicHttpClient: true);
+    }
+
+
+    private async Task SetCorsOptionsAsync()
+    {
+        var endpoint = EndPoints.GET_CORS_OPTIONS();
+
+        _optionsResult.CorsOptionsResult = await _httpDataManager!.GetSerializedDataAsync<CorsOptions>(endpoint, usePublicHttpClient: true);
     }
 
     private async Task SetVersionsAsync()
@@ -124,7 +129,7 @@ public partial class Home
     {
         var endpoint = EndPoints.GET_APP_VERSIONS();
 
-        _apiVersions = await _httpDataManager!.GetSerializedDataAsync<AppVersions>(endpoint, usePublicHttpClient: true);
+        _apiVersionsResult = await _httpDataManager!.GetSerializedDataAsync<AppVersions>(endpoint, usePublicHttpClient: true);
     }
 
 
@@ -138,7 +143,7 @@ public partial class Home
             WriteIndented = true
         });
 
-        _webVersions = version;
+        _webVersionsResult = version;
 
     }
 

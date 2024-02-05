@@ -1,6 +1,5 @@
 using Ekzakt.EmailSender.Smtp.Configuration;
 using Smooth.Api.Application.Configuration;
-using Smooth.Api.Application.Options;
 using Smooth.Api.Application.WeatherForecasts;
 using Smooth.Api.Infrastructure.Configuration;
 using Smooth.Api.Infrastructure.WeatherForecasts;
@@ -10,6 +9,7 @@ using Smooth.Api.SignalR;
 using Smooth.Api.Configuration;
 using Ekzakt.FileManager.AzureBlob.Configuration;
 using System.Reflection;
+using Smooth.Shared.Configurations.Options;
 
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Smooth.Api.Application.Configuration;
+using Smooth.Api.Application.Options;
 using Smooth.Shared.Configurations.Options.MediaFiles;
 using Smooth.Shared.Endpoints;
 
@@ -68,9 +69,6 @@ namespace Smooth.Api.Controllers
         }
 
 
-        [HttpGet]
-
-
 //#if DEBUG
         [HttpGet]
         [Route(Routes.GET_AZURE_OPTIONS)]
@@ -83,6 +81,19 @@ namespace Smooth.Api.Controllers
                 : NoContent();
         }
 //#endif
+
+        [HttpGet]
+        [Route(Routes.GET_CORS_OPTIONS)]
+        public async Task<IActionResult> GetCorsOptions()
+        {
+            var result = await _configurationService.GetCorsOptionsAsync();
+
+            return result is not null
+                ? Ok(result)
+                : NoContent();
+        }
+
+
 
         [HttpGet]
         [Route(Routes.GET_APP_VERSIONS)]

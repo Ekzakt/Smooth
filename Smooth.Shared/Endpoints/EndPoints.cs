@@ -21,6 +21,7 @@ public static class EndPoints
     public static string GET_VIDEO_OPTIONS() => $"{Ctrls.CONFIGURATION}/{Routes.GET_VIDEO_OPTIONS}";
     public static string GET_SOUND_OPTIONS() => $"{Ctrls.CONFIGURATION}/{Routes.GET_SOUND_OPTIONS}";
     public static string GET_AZURE_OPTIONS() => $"{Ctrls.CONFIGURATION}/{Routes.GET_AZURE_OPTIONS}";
+    public static string GET_CORS_OPTIONS() => $"{Ctrls.CONFIGURATION}/{Routes.GET_CORS_OPTIONS}";
     public static string GET_APP_VERSIONS() => $"{Ctrls.CONFIGURATION}/{Routes.GET_APP_VERSIONS}";
 
 

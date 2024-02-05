@@ -18,6 +18,7 @@ public static class Routes
     public const string GET_VIDEO_OPTIONS = "videooptions";
     public const string GET_SOUND_OPTIONS = "soundoptions";
     public const string GET_AZURE_OPTIONS = "azureoptions";
+    public const string GET_CORS_OPTIONS = "corsoptions";
     public const string GET_APP_VERSIONS = "appversions";
 
 

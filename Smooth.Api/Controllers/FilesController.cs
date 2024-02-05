@@ -37,7 +37,7 @@ public class FilesController(
 
         return result.IsSuccess()
             ? Ok(output)
-            : StatusCode(StatusCodes.Status400BadRequest);
+            : StatusCode(StatusCodes.Status400BadRequest, result);
     }
 
 

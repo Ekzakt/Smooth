@@ -16,8 +16,9 @@ public class HttpDataManager : IHttpDataManager
         _publicHttpClient = publicHttpClient;
     }
 
+
     public async Task<T?> DeleteDataAsync<T>(string endpoint, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
-        where T : class
+        where T : class?
     {
         var response = usePublicHttpClient
             ? await _publicHttpClient.Client.DeleteAsync(endpoint, cancellationToken)
@@ -32,26 +33,20 @@ public class HttpDataManager : IHttpDataManager
         throw new Exception(response.ReasonPhrase);
     }
 
+
     public async Task<T?> GetDataAsync<T>(string endpoint, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
+        where T : class?
     {
-        try
-        {
-            var response = usePublicHttpClient
-                ? await _publicHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken)
-                : await _secureHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken);
+        var response = usePublicHttpClient
+            ? await _publicHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken)
+            : await _secureHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken);
 
-            return response;
-
-        }
-        catch (Exception ex)
-        {
-            // TODO: Handle this!
-            throw;
-        }
+        return response;
     }
 
 
     public async Task<string?> GetSerializedDataAsync<T>(string endpoint, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
+        where T : class?
     {
         var result = await GetDataAsync<T>(endpoint, usePublicHttpClient, cancellationToken);
 
@@ -70,17 +65,17 @@ public class HttpDataManager : IHttpDataManager
     }
 
 
-    public async Task<T?> PostDataAsync<T, U>(string endpoint, U data, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
-        where T : class
-        where U : class
+    public async Task<TResponse?> PostDataAsync<TResponse, TRequest>(string endpoint, TRequest request, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
+        where TResponse : class
+        where TRequest : class
     {
         var response = usePublicHttpClient
-            ? await _publicHttpClient.Client.PostAsJsonAsync(endpoint, data, cancellationToken)
-            : await _secureHttpClient.Client.PostAsJsonAsync(endpoint, data, cancellationToken);
+            ? await _publicHttpClient.Client.PostAsJsonAsync(endpoint, request, cancellationToken)
+            : await _secureHttpClient.Client.PostAsJsonAsync(endpoint, request, cancellationToken);
 
         if (response.IsSuccessStatusCode)
         {
-            var content = await response.Content.ReadFromJsonAsync<T>();
+            var content = await response.Content.ReadFromJsonAsync<TResponse>();
             return content;
         }
 

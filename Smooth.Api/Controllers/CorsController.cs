@@ -1,8 +1,11 @@
 ﻿using Ekzakt.EmailSender.Core.Contracts;
+using Ekzakt.Utilities.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Smooth.Api.SignalR;
 using Smooth.Shared.Endpoints;
+using Smooth.Shared.Models.Requests;
+using Smooth.Shared.Models.Responses;
 
 namespace Smooth.Api.Controllers;
 
@@ -32,21 +35,21 @@ public class CorsController(
     }
 
 
-    //[HttpPost]
-    //[Route(Routes.INSERT_TESTCLASS)]
-    //public async Task<IActionResult> InsertTestClassAsync(InsertTestClassRequest request)
-    //{
-    //    var output = await Task.Run(() =>
-    //    {
-    //        var result = IntHelpers.GetRandomPositiveInt();
+    [HttpPost]
+    [Route(Routes.INSERT_TESTCLASS)]
+    public async Task<IActionResult> InsertTestClassAsync(InsertTestClassRequest request)
+    {
+        var output = await Task.Run(() =>
+        {
+            var result = IntHelpers.GetRandomPositiveInt();
 
-    //        return result;
-    //    });
+            return result;
+        });
 
-    //    //await _hub.Clients.All.SendAsync("ReceiveMessage", output);
+        //await _hub.Clients.All.SendAsync("ReceiveMessage", output);
 
-    //    return Ok(new InsertTestClassResponse { Id = output });
-    //}
+        return Ok(new InsertTestClassResponse { Id = output });
+    }
 
 
 

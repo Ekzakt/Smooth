@@ -7,8 +7,10 @@ public static class EndPoints
 {
 
     // Test 
-    public static string INSERT_TESTCLASS() => $"{Ctrls.TEST}/{Routes.INSERT_TESTCLASS}";
-    public static string TRIGGER_EMAIL() => $"{Ctrls.TEST}/{Routes.TRIGGER_EMAIL}";
+    public static string INSERT_TESTCLASS() => $"{Ctrls.CORS}/{Routes.INSERT_TESTCLASS}";
+    public static string TRIGGER_EMAIL() => $"{Ctrls.CORS}/{Routes.TRIGGER_EMAIL}";
+    public static string GET_RANDOM_GUID() => $"{Ctrls.CORS}/{Routes.GET_RANDOM_GUID}";
+    public static string POST_GUID(Guid value) => $"{Ctrls.CORS}/{Routes.POST_GUID}?value={value}";
 
 
     // WeatherForecasts 
@@ -28,9 +30,4 @@ public static class EndPoints
     // Files
     public static string GET_FILES_LIST() => $"{Ctrls.FILES}/{Routes.GET_FILES_LIST}";
     public static string DELETE_FILE(DeleteFileRequest request) => $"{Ctrls.FILES}/{Routes.DELETE_FILE}?filename={HttpUtility.UrlEncode(request.FileName)}";
-
-
-    // Cors
-    public static string GET_RANDOM_GUID() => $"{Ctrls.CORS}/{Routes.GET_RANDOM_GUID}";
-    public static string POST_GUID(Guid value) => $"{Ctrls.CORS}/{Routes.POST_GUID}?value={value}";
 }

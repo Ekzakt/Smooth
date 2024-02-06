@@ -51,9 +51,14 @@ public partial class Home
 
     private async Task TriggerSendEmailAsync()
     {
-        var result = await _httpDataManager.GetSerializedDataAsync<TriggerEmailResponse>(EndPoints.TRIGGER_EMAIL(), true);
 
-        _triggerEmailResult = result;
+        var result = await _httpDataManager.GetDataAsync<TriggerEmailResponse>(EndPoints.TRIGGER_EMAIL(), true);
+
+        _triggerEmailResult = result?.Response?.ToString();
+
+        //var result = await _httpDataManager.GetSerializedDataAsync<TriggerEmailResponse>(EndPoints.TRIGGER_EMAIL(), true);
+
+        //_triggerEmailResult = result;
     }
 
 

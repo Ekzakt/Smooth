@@ -2,8 +2,6 @@
 using Ekzakt.EmailSender.Core.Models;
 using Ekzakt.Utilities.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Smooth.Api.SignalR;
 using Smooth.Shared.Endpoints;
 using Smooth.Shared.Models.Requests;
 using Smooth.Shared.Models.Responses;
@@ -14,7 +12,7 @@ namespace Smooth.Api.Controllers;
 [Route(Ctrls.CORS)]
 [ApiController]
 public class CorsController(
-    IHubContext<NotificationsHub> _hub,
+    //IHubContext<NotificationsHub> _hub,
     IEmailSenderService _emailSenderService
     ) : ControllerBase
 {
@@ -47,7 +45,7 @@ public class CorsController(
             return result;
         });
 
-        await _hub.Clients.All.SendAsync("ReceiveMessage", output);
+        //await _hub.Clients.All.SendAsync("ReceiveMessage", output);
 
         return Ok(new InsertTestClassResponse { Id = output });
     }

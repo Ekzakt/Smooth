@@ -65,7 +65,7 @@ public class HttpDataManager : IHttpDataManager
     }
 
 
-    public async Task<TResponse?> PostDataAsync<TResponse, TRequest>(string endpoint, TRequest request, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
+    public async Task<TResponse?> PostDataAsync<TRequest, TResponse>(string endpoint, TRequest request, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
         where TResponse : class
         where TRequest : class
     {
@@ -75,7 +75,8 @@ public class HttpDataManager : IHttpDataManager
 
         if (response.IsSuccessStatusCode)
         {
-            var content = await response.Content.ReadFromJsonAsync<TResponse>();
+            dynamic content = await response.Content.ReadFromJsonAsync<TResponse>(cancellationToken: cancellationToken);
+
             return content;
         }
 

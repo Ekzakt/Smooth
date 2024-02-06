@@ -36,6 +36,7 @@ public class TestController(
     }
 
 
+
     [HttpGet]
     [Route(Routes.TRIGGER_EMAIL)]
     public async Task<IActionResult> TriggerEmailAsync()

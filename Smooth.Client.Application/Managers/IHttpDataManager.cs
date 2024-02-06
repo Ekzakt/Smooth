@@ -8,7 +8,7 @@ public interface IHttpDataManager
     Task<string?> GetSerializedDataAsync<T>(string endpoint, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
         where T : class?;
 
-    Task<TResponse?> PostDataAsync<TResponse, TRequest>(string endpoint, TRequest request, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
+    Task<TResponse?> PostDataAsync<TRequest, TResponse>(string endpoint, TRequest request, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
         where TResponse : class
         where TRequest : class;
 

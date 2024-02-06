@@ -1,0 +1,19 @@
+﻿@page "/cors"
+
+<PageHeader Title="Cors Controller tryouts"></PageHeader>
+
+<Article Title="Get Random Guid" Value="@_getRandomGuidResult">
+    <div class="mb-2">
+        <button type="button" class="btn btn-info" @onclick="GetRandomGuid">Get Random Guid</button>
+    </div>
+</Article>
+
+<Article Title="Post Random Guid" Value="@_postRandomGuidResult">
+    <div class="mb-3">
+        <label class="form-label" for="guid">Guid value:</label>
+        <input type="text" class="form-control" id="guid" @bind-value=_postRandomGuid />
+    </div>
+    <div class="mb-2">
+        <button type="button" class="btn btn-info" @onclick="PostRandomGuid">Post Random Guid</button>
+    </div>
+</Article>

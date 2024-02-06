@@ -39,7 +39,7 @@ public partial class Home
 
     private async Task InsertTestClassAsync()
     {
-        var result = await _httpDataManager.PostDataAsync<InsertTestClassResponse, InsertTestClassRequest>(EndPoints.INSERT_TESTCLASS(), new InsertTestClassRequest
+        var result = await _httpDataManager.PostDataAsync<InsertTestClassRequest, InsertTestClassResponse>(EndPoints.INSERT_TESTCLASS(), new InsertTestClassRequest
         {
             Name = "Test class name",
             Description = "Test class description"
@@ -55,10 +55,6 @@ public partial class Home
         var result = await _httpDataManager.GetDataAsync<TriggerEmailResponse>(EndPoints.TRIGGER_EMAIL(), true);
 
         _triggerEmailResult = result?.Response?.ToString();
-
-        //var result = await _httpDataManager.GetSerializedDataAsync<TriggerEmailResponse>(EndPoints.TRIGGER_EMAIL(), true);
-
-        //_triggerEmailResult = result;
     }
 
 

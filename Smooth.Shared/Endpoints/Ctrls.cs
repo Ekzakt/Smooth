@@ -9,4 +9,6 @@ public static class Ctrls
     public const string CONFIGURATION = $"{Apis.API}/config";
 
     public const string FILES = $"{Apis.API}/files";
+
+    public const string CORS = $"{Apis.API}/cors";
 }

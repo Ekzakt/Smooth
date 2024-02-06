@@ -4,7 +4,7 @@ public static class Routes
 {
 
     // TestController
-    public const string INSERT_TESTCLASS = "insterttestclass";
+    public const string INSERT_TESTCLASS = "inserttestclass";
     public const string TRIGGER_EMAIL = "triggeremail";
 
 

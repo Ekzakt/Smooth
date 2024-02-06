@@ -1,8 +1,7 @@
 ﻿using Smooth.Client.Application.HttpClients;
+using Smooth.Client.Application.Managers;
 using System.Net.Http.Json;
 using System.Text.Json;
-
-namespace Smooth.Client.Application.Managers;
 
 public class HttpDataManager : IHttpDataManager
 {
@@ -10,7 +9,7 @@ public class HttpDataManager : IHttpDataManager
     private readonly PublicHttpClient _publicHttpClient;
 
 
-    public HttpDataManager(SecureHttpClient secureHttpClient,  PublicHttpClient publicHttpClient)
+    public HttpDataManager(SecureHttpClient secureHttpClient, PublicHttpClient publicHttpClient)
     {
         _secureHttpClient = secureHttpClient;
         _publicHttpClient = publicHttpClient;
@@ -20,28 +19,31 @@ public class HttpDataManager : IHttpDataManager
     public async Task<T?> DeleteDataAsync<T>(string endpoint, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
         where T : class?
     {
-        var response = usePublicHttpClient
-            ? await _publicHttpClient.Client.DeleteAsync(endpoint, cancellationToken)
-            : await _secureHttpClient.Client.DeleteAsync(endpoint, cancellationToken);
+        HttpClient client = usePublicHttpClient ? _publicHttpClient.Client : _secureHttpClient.Client;
 
-        if (response.IsSuccessStatusCode)
-        {
-            var content = await response.Content.ReadFromJsonAsync<T>();
-            return content;
-        }
-
-        throw new Exception(response.ReasonPhrase);
+        var response = await client.DeleteAsync(endpoint, cancellationToken);
+        return await HandleResponse<T>(response);
     }
 
 
     public async Task<T?> GetDataAsync<T>(string endpoint, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
         where T : class?
     {
-        var response = usePublicHttpClient
-            ? await _publicHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken)
-            : await _secureHttpClient.Client.GetFromJsonAsync<T>(endpoint, cancellationToken);
+        HttpClient client = usePublicHttpClient ? _publicHttpClient.Client : _secureHttpClient.Client;
 
+        var response = await client.GetFromJsonAsync<T>(endpoint, cancellationToken);
         return response;
+    }
+
+
+    public async Task<TResponse?> PostDataAsync<TRequest, TResponse>(string endpoint, TRequest request, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
+        where TResponse : class
+        where TRequest : class
+    {
+        HttpClient client = usePublicHttpClient ? _publicHttpClient.Client : _secureHttpClient.Client;
+
+        var response = await client.PostAsJsonAsync(endpoint, request, cancellationToken);
+        return await HandleResponse<TResponse>(response);
     }
 
 
@@ -52,35 +54,30 @@ public class HttpDataManager : IHttpDataManager
 
         if (result is not null)
         {
-            var output = JsonSerializer.Serialize(result, new JsonSerializerOptions
+            return JsonSerializer.Serialize(result, new JsonSerializerOptions
             {
                 IgnoreReadOnlyFields = false,
                 WriteIndented = true
             });
-
-            return output.ToString();
         }
 
         return string.Empty;
     }
 
 
-    public async Task<TResponse?> PostDataAsync<TRequest, TResponse>(string endpoint, TRequest request, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
-        where TResponse : class
-        where TRequest : class
-    {
-        var response = usePublicHttpClient
-            ? await _publicHttpClient.Client.PostAsJsonAsync(endpoint, request, cancellationToken)
-            : await _secureHttpClient.Client.PostAsJsonAsync(endpoint, request, cancellationToken);
 
+
+    #region Helpers
+
+    private async Task<T?> HandleResponse<T>(HttpResponseMessage response) where T : class?
+    {
         if (response.IsSuccessStatusCode)
         {
-            dynamic content = await response.Content.ReadFromJsonAsync<TResponse>(cancellationToken: cancellationToken);
-
-            return content;
+            return await response.Content.ReadFromJsonAsync<T>();
         }
 
-        throw new Exception(response.ReasonPhrase);
-
+        throw new HttpRequestException(response.ReasonPhrase);
     }
+
+    #endregion Helpers
 }

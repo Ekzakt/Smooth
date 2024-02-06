@@ -6,7 +6,9 @@ namespace Smooth.Api.Controllers
 {
     [ApiController]
     [Route(Ctrls.WEATERFORECASTS)]
-    public class WeatherForecastsController(IWeatherForecastService _weatherForecastService, ILogger<WeatherForecastsController> _logger)
+    public class WeatherForecastsController(
+        IWeatherForecastService _weatherForecastService, 
+        ILogger<WeatherForecastsController> _logger)
         : ControllerBase
     {
 

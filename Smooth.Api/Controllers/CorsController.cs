@@ -10,8 +10,8 @@ namespace Smooth.Api.Controllers;
 [Route(Ctrls.CORS)]
 [ApiController]
 public class CorsController(
-    //IHubContext<NotificationsHub> _hub,
-    //IEmailSenderService _emailSenderService
+    IHubContext<NotificationsHub> _hub,
+    IEmailSenderService _emailSenderService
     ) : ControllerBase
 {
     [HttpGet]

@@ -25,10 +25,12 @@ Log.Logger = new LoggerConfiguration()
 builder.AddResponseSizeCompression();
 builder.AddConfigurationOptions();
 builder.AddAzureClientServices();
+builder.AddAzureKeyVault();
 builder.AddAuthentication();
 builder.AddCors();
 builder.AddAzureSignalR();
 builder.AddApplicationInsights();
+
 
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());

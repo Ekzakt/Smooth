@@ -39,7 +39,7 @@ public partial class Home
 
     private async Task InsertTestClassAsync()
     {
-        var result = await _httpDataManager.PostDataAsync<InsertTestClassRequest, InsertTestClassResponse>(EndPoints.INSERT_TESTCLASS(), new InsertTestClassRequest
+        var result = await _httpDataManager.PostDataAsJsonAsync<InsertTestClassRequest, InsertTestClassResponse>(EndPoints.INSERT_TESTCLASS(), new InsertTestClassRequest
         {
             Name = "Test class name",
             Description = "Test class description"

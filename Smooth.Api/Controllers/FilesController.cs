@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using Ekzakt.FileManager.Core.Contracts;
 using Ekzakt.FileManager.Core.Models.Requests;
+using Ekzakt.FileManager.Core.Models;
+using Ekzakt.Utilities.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Smooth.Api.SignalR;
@@ -62,5 +65,41 @@ public class FilesController(
         var result = await _fileMananager.DeleteFileAsync(request, cancellationToken);
 
         return Ok(new DeleteFileResponse { IsSuccess = result.IsSuccess() });
+    }
+
+
+
+    [HttpPost]
+    [Route(Routes.POST_FILE)]
+    public async Task<IActionResult> SaveFile([FromForm] IFormFile file)
+    {
+        var progressHandler = new Progress<ProgressEventArgs>(progress =>
+        {
+            var x = 5;
+        });
+
+        var fileGuid = Guid.NewGuid();
+
+        using var fileStream = file.OpenReadStream();
+
+        var request = new SaveFileRequest
+        {
+            ContainerName = "demo-blazor8",
+            FileName = $"{fileGuid}.jpg",
+            FileStream = fileStream,
+            CorrelationId = Guid.NewGuid(),
+            ProgressHandler = progressHandler
+        };
+
+        var result = await _fileMananager.SaveFileAsync(request);
+
+        if (result.IsSuccess())
+        {
+            return Ok(new PostFileResponse { FileId = fileGuid });
+        }
+        else
+        {
+            return BadRequest(result.Message);
+        }
     }
 }

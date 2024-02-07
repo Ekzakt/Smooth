@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Smooth.Client.Application.Managers;
 using Smooth.Shared.Endpoints;
 using Smooth.Shared.Models;
@@ -10,13 +11,28 @@ namespace Smooth.Client.Flaunt.Pages;
 public partial class Filemanager
 {
     [Inject]
-    public IHttpDataManager? dataManager { get; set; }
+    private IHttpDataManager dataManager { get; set; }
+
+    [Inject]
+    private IFileManager fileManager { get; set; }
+
 
     private List<FileInformationDto>? filesList = null;
+    private string saveFilesResult = string.Empty;
+
 
 
 
     #region Helpers
+
+    private async Task SaveFilesAsync(InputFileChangeEventArgs e)
+    {
+        foreach (var file in e.GetMultipleFiles())
+        {
+            await fileManager.SaveFileAsync(file);
+        }
+    }
+
 
     private async Task DeleteFileAsync(string fileName)
     {

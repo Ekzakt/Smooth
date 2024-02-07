@@ -36,13 +36,23 @@ public class HttpDataManager : IHttpDataManager
     }
 
 
-    public async Task<TResponse?> PostDataAsync<TRequest, TResponse>(string endpoint, TRequest request, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
+    public async Task<TResponse?> PostDataAsJsonAsync<TRequest, TResponse>(string endpoint, TRequest request, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
         where TResponse : class
         where TRequest : class
     {
         HttpClient client = usePublicHttpClient ? _publicHttpClient.Client : _secureHttpClient.Client;
 
         var response = await client.PostAsJsonAsync(endpoint, request, cancellationToken);
+        return await HandleResponse<TResponse>(response);
+    }
+
+
+    public async Task<TResponse?> PostHttpContent<TResponse>(string endpoint, HttpContent content, bool usePublicHttpClient = false, CancellationToken cancellationToken = default)
+        where TResponse : class
+    {
+        HttpClient client = usePublicHttpClient ? _publicHttpClient.Client : _secureHttpClient.Client;
+
+        var response = await client.PostAsync(endpoint, content, cancellationToken);
         return await HandleResponse<TResponse>(response);
     }
 

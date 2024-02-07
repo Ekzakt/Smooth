@@ -1,4 +1,5 @@
 ﻿using Ekzakt.EmailSender.Core.Contracts;
+using Ekzakt.EmailSender.Core.Models;
 using Ekzakt.Utilities.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -13,8 +14,8 @@ namespace Smooth.Api.Controllers;
 [Route(Ctrls.CORS)]
 [ApiController]
 public class CorsController(
-    IHubContext<NotificationsHub> _hub//,
-    //IEmailSenderService _emailSenderService
+    IHubContext<NotificationsHub> _hub,
+    IEmailSenderService _emailSenderService
     ) : ControllerBase
 {
     [HttpGet]
@@ -46,26 +47,26 @@ public class CorsController(
             return result;
         });
 
-        //await _hub.Clients.All.SendAsync("ReceiveMessage", output);
+        await _hub.Clients.All.SendAsync("ReceiveMessage", output);
 
         return Ok(new InsertTestClassResponse { Id = output });
     }
 
 
 
-    //[HttpGet]
-    //[Route(Routes.TRIGGER_EMAIL)]
-    //public async Task<IActionResult> TriggerEmailAsync()
-    //{
-    //    SendEmailRequest request = new();
+    [HttpGet]
+    [Route(Routes.TRIGGER_EMAIL)]
+    public async Task<IActionResult> TriggerEmailAsync()
+    {
+        SendEmailRequest request = new();
 
-    //    request.Tos.Add(new EmailAddress("mail@ericjansen.com", "Eric Jansen"));
-    //    request.Subject = "Send email trigger from TestController.";
-    //    request.Body.Html = "<h1>Header</h1><p>Body</p>";
-    //    request.Body.PlainText = "TextBody";
+        request.Tos.Add(new EmailAddress("mail@ericjansen.com", "Eric Jansen"));
+        request.Subject = "Send email trigger from TestController.";
+        request.Body.Html = "<h1>Header</h1><p>Body</p>";
+        request.Body.PlainText = "TextBody";
 
-    //    var result = await _emailSenderService.SendAsync(request);
-
-    //    return Ok(new TriggerEmailResponse { Response = result.ServerResponse });
-    //}
+        var result = await _emailSenderService.SendAsync(request);
+        
+        return Ok(new TriggerEmailResponse { Response = result.ServerResponse });
+    }
 }

@@ -18,26 +18,8 @@ public class TrialController(
     IEmailSenderService _emailSenderService
     ) : ControllerBase
 {
-    [HttpGet]
-    [Route(Routes.GET_RANDOM_GUID)]
-    public IActionResult GetRandomValue()
-    {
-        var output = Guid.NewGuid();
-
-        return Ok(output);
-    }
-
-
     [HttpPost]
-    [Route(Routes.POST_GUID)] 
-    public IActionResult PostGuidValue(Guid value)
-    {
-        return Ok( new { Value = value });
-    }
-
-
-    [HttpPost]
-    [Route(Routes.INSERT_TESTCLASS)]
+    [Route(Routes.POST_TEXTCLASS)]
     public async Task<IActionResult> InsertTestClassAsync(InsertTestClassRequest request)
     {
         var output = await Task.Run(() =>
@@ -55,7 +37,7 @@ public class TrialController(
 
 
     [HttpGet]
-    [Route(Routes.TRIGGER_EMAIL)]
+    [Route(Routes.POST_TRIGGER_EMAIL)]
     public async Task<IActionResult> TriggerEmailAsync()
     {
         SendEmailRequest request = new();

@@ -4,8 +4,8 @@ public static class Routes
 {
 
     // TrialController
-    public const string INSERT_TESTCLASS = "inserttestclass";
-    public const string TRIGGER_EMAIL = "triggeremail";
+    public const string POST_TEXTCLASS = "testclass";
+    public const string POST_TRIGGER_EMAIL = "email";
 
 
     // WeatherforecastsController

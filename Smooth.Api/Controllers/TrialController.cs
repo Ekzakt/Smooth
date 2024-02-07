@@ -11,9 +11,9 @@ using Smooth.Shared.Models.Responses;
 namespace Smooth.Api.Controllers;
 
 
-[Route(Ctrls.CORS)]
+[Route(Ctrls.TIAL)]
 [ApiController]
-public class CorsController(
+public class TrialController(
     IHubContext<NotificationsHub> _hub,
     IEmailSenderService _emailSenderService
     ) : ControllerBase

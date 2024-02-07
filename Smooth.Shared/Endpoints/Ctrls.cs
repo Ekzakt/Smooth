@@ -8,5 +8,5 @@ public static class Ctrls
 
     public const string FILES = $"{Apis.API}/files";
 
-    public const string CORS = $"{Apis.API}/cors";
+    public const string TIAL = $"{Apis.API}/cors";
 }

@@ -33,7 +33,7 @@
             {
                 <tr>
                     <td>@file.Name</td>
-                    <td>@file.Size.FormatFileSize()</td>
+                    <td>@file.Size.FormatFileSize(2)</td>
                     <td><button type="button" class="btn btn-outline-danger" @onclick="() => DeleteFileAsync(file.Name)">Delete</button></td>
                 </tr>
             }

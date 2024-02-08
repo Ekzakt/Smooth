@@ -3,7 +3,7 @@ using Ekzakt.EmailSender.Core.Models;
 using Ekzakt.Utilities.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Smooth.Api.SignalR;
+using Smooth.Api.Hubs;
 using Smooth.Shared.Endpoints;
 using Smooth.Shared.Models.Requests;
 using Smooth.Shared.Models.Responses;

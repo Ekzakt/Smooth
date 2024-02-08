@@ -6,11 +6,11 @@ using Ekzakt.Utilities.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Smooth.Api.SignalR;
 using Smooth.Shared.Endpoints;
 using Smooth.Shared.Models;
 using Smooth.Shared.Models.Responses;
 using System.Web;
+using Smooth.Api.Hubs;
 
 namespace Smooth.Api.Controllers;
 

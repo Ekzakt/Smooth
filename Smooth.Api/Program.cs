@@ -5,11 +5,11 @@ using Smooth.Api.Infrastructure.Configuration;
 using Smooth.Api.Infrastructure.WeatherForecasts;
 using Smooth.Shared.Endpoints;
 using Serilog;
-using Smooth.Api.SignalR;
 using Smooth.Api.Configuration;
 using Ekzakt.FileManager.AzureBlob.Configuration;
 using System.Reflection;
 using Smooth.Shared.Configurations.Options;
+using Smooth.Api.Hubs;
 
 
 var builder = WebApplication.CreateBuilder(args);

@@ -6,7 +6,6 @@ using Azure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Identity.Web;
-using Smooth.Api.SignalR;
 using Smooth.Api.Configuration;
 using Microsoft.Extensions.Azure;
 using Ekzakt.FileManager.AzureBlob.Configuration;
@@ -14,6 +13,7 @@ using Smooth.Shared.Configurations.Options.MediaFiles;
 using Smooth.Shared.Configurations.Options.Azure;
 using Smooth.Shared.Configurations.Options;
 using Microsoft.Extensions.Configuration;
+using Smooth.Api.Hubs;
 
 namespace Smooth.Api.Configuration;
 

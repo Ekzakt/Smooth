@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Smooth.Client.Application.Hubs;
 using Smooth.Client.Application.Managers;
 using Smooth.Client.Flaunt;
 using Smooth.Client.Flaunt.Configuration;
@@ -18,5 +19,6 @@ builder.AddMsalAuthentication();
 builder.Services.AddScoped<ApiAuthorizationMessageHandler>();
 builder.Services.AddScoped<IHttpDataManager, HttpDataManager>();
 builder.Services.AddScoped<IFileManager, FileManager>();
+builder.Services.AddScoped<NotificationsHubService>();
 
 await builder.Build().RunAsync();

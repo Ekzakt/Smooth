@@ -8,6 +8,6 @@ public class FileInformationMapper : Profile
 {
 	public FileInformationMapper()
 	{
-        CreateMap<FileInformationDto, FileInformation>().ReverseMap();
-	}
+        CreateMap<FileInformation, FileInformationDto>();
+    }
 }

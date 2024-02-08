@@ -30,6 +30,8 @@ public partial class Filemanager
         foreach (var file in e.GetMultipleFiles())
         {
             await fileManager.SaveFileAsync(file);
+
+            await ListFilesAsync();
         }
     }
 

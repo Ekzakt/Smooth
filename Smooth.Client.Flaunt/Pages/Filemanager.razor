@@ -14,7 +14,7 @@
 </Article>
 
 
-<Article Title="Get files">
+<Article Title=@($"Files ({@filesList?.Count ?? 0})")>
 
     <div class="mb-2">
         <button type="button" class="btn btn-info" @onclick="ListFilesAsync">Get fileslist</button>
@@ -25,6 +25,7 @@
             <tr>
                 <th>Name</th>
                 <th>Size</th>
+                <th>Created On</th>
                 <th>Delete</th>
             </tr>
         </thead>
@@ -34,6 +35,7 @@
                 <tr>
                     <td>@file.Name</td>
                     <td>@file.Size.FormatFileSize(2)</td>
+                    <td>@file.CreatedOn</td>
                     <td><button type="button" class="btn btn-outline-danger" @onclick="() => DeleteFileAsync(file.Name)">Delete</button></td>
                 </tr>
             }

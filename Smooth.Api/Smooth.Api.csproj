@@ -17,8 +17,8 @@
 		<PackageReference Include="Azure.Identity" Version="1.10.4" />
 		<PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
 		<PackageReference Include="Ekzakt.EmailSender.Smtp" Version="0.0.22" />
-		<PackageReference Include="Ekzakt.FileManager.AzureBlob" Version="0.0.12" />
-		<PackageReference Include="Ekzakt.Utilities" Version="0.2.7" />
+		<PackageReference Include="Ekzakt.FileManager.AzureBlob" Version="0.0.15" />
+		<PackageReference Include="Ekzakt.Utilities" Version="0.2.9" />
 		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Azure" Version="1.7.1" />

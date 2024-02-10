@@ -31,7 +31,6 @@ builder.AddCors();
 builder.AddAzureSignalR();
 builder.AddApplicationInsights();
 
-
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddEndpointsApiExplorer();
@@ -53,6 +52,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHub<NotificationsHub>(Hubs.NOTIFICATIONS_HUB);
+app.MapHub<ProgressHub>(Hubs.PROGRESS_HUB);
+
 
 
 app.Run();

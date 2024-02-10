@@ -37,7 +37,7 @@ public partial class MainLayout : LayoutComponentBase, IAsyncDisposable
         if (_notificationsHubService is not null)
         {
             _notificationsHubService.MessageReceived -= HandleMessageReceived;
-            await _notificationsHubService!.StopAsync();
+            await _notificationsHubService!.StopAsync(true);
         }
     }
 

@@ -20,5 +20,6 @@ builder.Services.AddScoped<ApiAuthorizationMessageHandler>();
 builder.Services.AddScoped<IHttpDataManager, HttpDataManager>();
 builder.Services.AddScoped<IFileManager, FileManager>();
 builder.Services.AddScoped<NotificationsHubService>();
+builder.Services.AddScoped<ProgressHubService>();
 
 await builder.Build().RunAsync();

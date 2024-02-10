@@ -7,10 +7,10 @@ public static class EndPoints
 {
 
     // Test 
-    public static string INSERT_TESTCLASS() => $"{Ctrls.TIAL}/{Routes.POST_TEXTCLASS}";
-    public static string TRIGGER_EMAIL() => $"{Ctrls.TIAL}/{Routes.POST_TRIGGER_EMAIL}";
-    public static string GET_RANDOM_GUID() => $"{Ctrls.TIAL}/{Routes.GET_RANDOM_GUID}";
-    public static string POST_GUID(Guid value) => $"{Ctrls.TIAL}/{Routes.POST_GUID}?value={value}";
+    public static string INSERT_TESTCLASS() => $"{Ctrls.TRIAL}/{Routes.POST_TEXTCLASS}";
+    public static string TRIGGER_EMAIL() => $"{Ctrls.TRIAL}/{Routes.POST_TRIGGER_EMAIL}";
+    public static string GET_RANDOM_GUID() => $"{Ctrls.TRIAL}/{Routes.GET_RANDOM_GUID}";
+    public static string POST_GUID(Guid value) => $"{Ctrls.TRIAL}/{Routes.POST_GUID}?value={value}";
 
 
     // WeatherForecasts 

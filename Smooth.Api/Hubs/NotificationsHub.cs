@@ -9,6 +9,7 @@ public class NotificationsHub : Hub
         await base.OnConnectedAsync();
     }
 
+
     public async Task SendMessage(int id)
     {
         await Clients.All.SendAsync("ReceiveMessage", id);

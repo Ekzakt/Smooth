@@ -11,6 +11,8 @@ using Smooth.Shared.Models;
 using Smooth.Shared.Models.Responses;
 using System.Web;
 using Smooth.Api.Hubs;
+using Ekzakt.Utilities.Helpers;
+using Smooth.Shared.Models.HubMessages;
 
 namespace Smooth.Api.Controllers;
 
@@ -18,7 +20,8 @@ namespace Smooth.Api.Controllers;
 [ApiController]
 public class FilesController(
     IMapper _mapper,
-    IHubContext<NotificationsHub> _hub,
+    IHubContext<NotificationsHub> _notificationsHub,
+    IHubContext<ProgressHub> _progressHub,
     IFileManager _fileMananager)
     : ControllerBase
 {
@@ -73,9 +76,13 @@ public class FilesController(
     [Route(Routes.POST_FILE)]
     public async Task<IActionResult> SaveFile([FromForm] IFormFile file)
     {
-        var progressHandler = new Progress<ProgressEventArgs>(progress =>
+        var progressHandler = new Progress<ProgressEventArgs>(async progress =>
         {
-            var x = 5;
+            await _progressHub.Clients.All.SendAsync("ProgressUpdated", new ProgressHubMessage
+            {
+                PercentageDone = progress.PercentageDone,
+                ProgressId = Guid.NewGuid()
+            });
         });
 
         var fileGuid = Guid.NewGuid();
@@ -92,6 +99,8 @@ public class FilesController(
         };
 
         var result = await _fileMananager.SaveFileAsync(request);
+
+        await _notificationsHub.Clients.All.SendAsync("MessageReceived", IntHelpers.GetRandomInt());
 
         if (result.IsSuccess())
         {

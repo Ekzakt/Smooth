@@ -14,7 +14,7 @@ public class NotificationsHubService : AbstractHubService
         IConfiguration configuration,
         NavigationManager navigationManager) : base(configuration, navigationManager)
     {
-        HubConnection.On<int>("ReceiveMessage", id =>
+        HubConnection.On<int>("MessageReceived", id =>
         {
             MessageReceived?.Invoke(id);
         });

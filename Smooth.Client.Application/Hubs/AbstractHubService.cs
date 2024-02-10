@@ -13,7 +13,7 @@ public abstract class AbstractHubService
     private readonly IConfiguration? _configuration;
 
     protected abstract string HubEndpoint { get; }
-
+    private bool _isDisposed = false;
 
     public AbstractHubService(
         IConfiguration configuration,
@@ -22,32 +22,48 @@ public abstract class AbstractHubService
         _configuration = configuration;
         _navigationManager = navigationManager;
 
-        HubConnection = new HubConnectionBuilder()
-           .WithUrl(GetHubConnectionUrl(), options =>
-           {
-               options.Transports = HttpTransportType.WebSockets;
-           })
-           .WithAutomaticReconnect()
-           .Build();
+        HubConnection = GetHubConnection();
     }
 
 
 
     public async Task StartAsync()
     {
+        if (_isDisposed)
+        {
+            HubConnection = GetHubConnection(); 
+        }
+
         await HubConnection.StartAsync();
     }
 
 
-    public async Task StopAsync()
+    public async Task StopAsync(bool dispose = false)
     {
-        await HubConnection.DisposeAsync();
+        await HubConnection.StopAsync();
+
+        if (dispose)
+        {
+            await HubConnection.DisposeAsync();
+            _isDisposed = true;
+        }
     }
 
 
-
-
     #region Helpers
+
+    private HubConnection GetHubConnection()
+    {
+        return new HubConnectionBuilder()
+           .WithUrl(GetHubConnectionUrl(), options =>
+           {
+               options.Transports = HttpTransportType.WebSockets;
+           })
+           .WithAutomaticReconnect()
+           .Build();
+
+        _isDisposed = false;
+    }
 
     private string GetHubConnectionUrl()
     {

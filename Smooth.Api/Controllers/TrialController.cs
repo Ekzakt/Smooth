@@ -11,10 +11,10 @@ using Smooth.Shared.Models.Responses;
 namespace Smooth.Api.Controllers;
 
 
-[Route(Ctrls.TIAL)]
+[Route(Ctrls.TRIAL)]
 [ApiController]
 public class TrialController(
-    IHubContext<NotificationsHub> _hub,
+    IHubContext<NotificationsHub> _notificationsHub,
     IEmailSenderService _emailSenderService
     ) : ControllerBase
 {
@@ -29,7 +29,7 @@ public class TrialController(
             return result;
         });
 
-        await _hub.Clients.All.SendAsync("ReceiveMessage", output);
+        await _notificationsHub.Clients.All.SendAsync("MessageReceived", output);
 
         return Ok(new InsertTestClassResponse { Id = output });
     }

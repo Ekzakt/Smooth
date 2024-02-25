@@ -17,6 +17,9 @@
 		<PackageReference Include="Azure.Identity" Version="1.10.4" />
 		<PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
 		<PackageReference Include="Ekzakt.EmailSender.Smtp" Version="0.0.24" />
+		<PackageReference Include="Ekzakt.FileManager.AzureBlob" Version="0.0.18" />
+		<PackageReference Include="Ekzakt.FileManager.Core" Version="0.0.18" />
+		<PackageReference Include="Ekzakt.FileManager.Core.Models" Version="0.0.18" />
 		<PackageReference Include="Ekzakt.Utilities" Version="0.2.9" />
 		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
@@ -30,7 +33,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Ekzakt\Ekzakt.FileManager\Ekzakt.FileManager.AzureBlob\Ekzakt.FileManager.AzureBlob.csproj" />
 		<ProjectReference Include="..\Smooth.Api.Application\Smooth.Api.Application.csproj" />
 		<ProjectReference Include="..\Smooth.Api.Infrastructure\Smooth.Api.Infrastructure.csproj" />
 	</ItemGroup>

@@ -1,16 +1,15 @@
 using Ekzakt.EmailSender.Smtp.Configuration;
+using Serilog;
 using Smooth.Api.Application.Configuration;
 using Smooth.Api.Application.WeatherForecasts;
+using Smooth.Api.Configuration;
+using Smooth.Api.Hubs;
 using Smooth.Api.Infrastructure.Configuration;
 using Smooth.Api.Infrastructure.WeatherForecasts;
-using Smooth.Shared.Endpoints;
-using Serilog;
-using Smooth.Api.Configuration;
-using Ekzakt.FileManager.AzureBlob.Configuration;
-using System.Reflection;
 using Smooth.Shared.Configurations.Options;
-using Smooth.Api.Hubs;
-
+using Smooth.Shared.Endpoints;
+using System.Reflection;
+using Ekzakt.FileManager.AzureBlob.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +29,7 @@ builder.AddAuthentication();
 builder.AddCors();
 builder.AddAzureSignalR();
 builder.AddApplicationInsights();
+
 
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());

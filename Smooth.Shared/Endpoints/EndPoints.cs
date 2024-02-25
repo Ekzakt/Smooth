@@ -19,6 +19,7 @@ public static class EndPoints
 
     // Configuration
     public static string GET_MEDIAFILES_OPTIONS() => $"{Ctrls.CONFIGURATION}/{Routes.GET_MEDIAFILES_OPTIONS}";
+    public static string GET_FILEMANAGER_OPTIONS() => $"{Ctrls.CONFIGURATION}/{Routes.GET_FILEMANAGER_OPTIONS}";
     public static string GET_IMAGE_OPTIONS() => $"{Ctrls.CONFIGURATION}/{Routes.GET_IMAGE_OPTIONS}";
     public static string GET_VIDEO_OPTIONS() => $"{Ctrls.CONFIGURATION}/{Routes.GET_VIDEO_OPTIONS}";
     public static string GET_SOUND_OPTIONS() => $"{Ctrls.CONFIGURATION}/{Routes.GET_SOUND_OPTIONS}";

@@ -14,6 +14,7 @@ public static class Routes
 
     // ConfigController
     public const string GET_MEDIAFILES_OPTIONS = "mediafilesoptions";
+    public const string GET_FILEMANAGER_OPTIONS = "filemanageroptions";
     public const string GET_IMAGE_OPTIONS = "imageoptions";
     public const string GET_VIDEO_OPTIONS = "videooptions";
     public const string GET_SOUND_OPTIONS = "soundoptions";

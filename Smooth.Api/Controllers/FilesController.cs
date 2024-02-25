@@ -128,11 +128,9 @@ public class FilesController(
 
             if (contentDisposition!.IsFormDisposition())
             {
-                var jsonString = section.ReadAsStringAsync(cancellationToken);
-                var jsonContent = JsonSerializer.Deserialize<SaveFileFormDisposition>(jsonString.Result, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true,
-                });
+                var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var jsonString = await section.ReadAsStringAsync(cancellationToken);
+                var jsonContent = JsonSerializer.Deserialize<SaveFileFormDisposition>(jsonString, jsonOptions);
 
                 saveFileRequest.ContainerName = "demo-blazor8";
                 saveFileRequest.ContentType = jsonContent.FileContentType;
@@ -149,7 +147,6 @@ public class FilesController(
 
             section = await multipartReader.ReadNextSectionAsync();
         }
-
         return new HttpResponseMessage(HttpStatusCode.OK);
     }
 

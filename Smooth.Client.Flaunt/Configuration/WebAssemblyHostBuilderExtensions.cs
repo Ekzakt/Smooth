@@ -19,6 +19,7 @@ public static class WebAssemblyHostBuilderExtensions
                 {
                     config.BaseAddress = new Uri(apiBaseAddress);
                     config.DefaultRequestHeaders.Add("X-Correlation-Id", Guid.NewGuid().ToString());
+                    config.Timeout = TimeSpan.FromSeconds(300);
                 })
             .AddHttpMessageHandler<ApiAuthorizationMessageHandler>();
 
@@ -28,6 +29,7 @@ public static class WebAssemblyHostBuilderExtensions
             {
                 config.BaseAddress = new Uri(apiBaseAddress);
                 config.DefaultRequestHeaders.Add("X-Correlation-Id", Guid.NewGuid().ToString());
+                config.Timeout = TimeSpan.FromSeconds(300);
             });
 
         return builder;

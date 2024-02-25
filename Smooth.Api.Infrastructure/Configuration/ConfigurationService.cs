@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Ekzakt.FileManager.Core.Options;
+using Microsoft.Extensions.Options;
 using Smooth.Api.Application.Configuration;
 using Smooth.Shared.Configurations;
 using Smooth.Shared.Configurations.Options;
@@ -11,16 +12,19 @@ public class ConfigurationService
     : IConfigurationService
 {
     private readonly MediaFilesOptions _mediaFileOptions;
+    private readonly Ekzakt.FileManager.Core.Options.FileManagerOptions _fileManagerOptions;
     private readonly AzureOptions _azureOptions;
     private readonly CorsOptions _corsOptions;
 
 
     public ConfigurationService(
         IOptions<MediaFilesOptions> mediaFileOptions,
+        IOptions<Ekzakt.FileManager.Core.Options.FileManagerOptions> fileManagerOptions,
         IOptions<AzureOptions> azureOptions,
         IOptions<CorsOptions> corsOptions)
     {
         _mediaFileOptions = mediaFileOptions.Value;
+        _fileManagerOptions = fileManagerOptions.Value;
         _azureOptions = azureOptions.Value;
         _corsOptions = corsOptions.Value;
     }
@@ -50,6 +54,17 @@ public class ConfigurationService
         MediaFilesOptions result = await Task.Run(() =>
         {
             return _mediaFileOptions;
+        });
+
+        return result;
+    }
+
+
+    public async Task<Ekzakt.FileManager.Core.Options.FileManagerOptions> GetEkzaktFileManagerOptions()
+    {
+        Ekzakt.FileManager.Core.Options.FileManagerOptions result = await Task.Run(() =>
+        {
+            return _fileManagerOptions;
         });
 
         return result;

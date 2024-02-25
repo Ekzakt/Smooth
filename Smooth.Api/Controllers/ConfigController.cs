@@ -20,12 +20,23 @@ namespace Smooth.Api.Controllers
         }
 
 
-
         [HttpGet]
         [Route(Routes.GET_MEDIAFILES_OPTIONS)]
         public async Task<IActionResult> GetMediaFilesOptionsAsync()
         {
             var result = await _configurationService.GetMediaFilesOptionsAsync();
+
+            return result is not null
+                ? Ok(result)
+                : NoContent();
+        }
+
+
+        [HttpGet]
+        [Route(Routes.GET_FILEMANAGER_OPTIONS)]
+        public async Task<IActionResult> GetEkzaktFileManagerOptionsAsync()
+        {
+            var result = await _configurationService.GetEkzaktFileManagerOptions();
 
             return result is not null
                 ? Ok(result)

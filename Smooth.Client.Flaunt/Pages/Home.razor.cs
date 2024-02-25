@@ -61,6 +61,7 @@ public partial class Home
     private async Task SetOptionsAsync()
     {
         await SetMediaFileOptionsAsync();
+        await SetEkzaktFileManagerOptionsAsync();
         await SetImageOptionsAsync();
         await SetVideoOptionsAsync();
         await SetSoundOptionsAsync();
@@ -74,6 +75,14 @@ public partial class Home
         var endpoint = EndPoints.GET_MEDIAFILES_OPTIONS();
 
         _optionsResult.MediaFilesOptionsResult = await _httpDataManager!.GetSerializedDataAsync<MediaFilesOptions>(endpoint, usePublicHttpClient: true);
+    }
+
+
+    private async Task SetEkzaktFileManagerOptionsAsync()
+    {
+        var endpoint = EndPoints.GET_FILEMANAGER_OPTIONS();
+
+        _optionsResult.FileManagerOptionsResult = await _httpDataManager!.GetSerializedDataAsync<FileManagerOptions>(endpoint, usePublicHttpClient: true);
     }
 
 

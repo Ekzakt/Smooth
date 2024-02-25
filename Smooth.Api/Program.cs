@@ -55,5 +55,4 @@ app.MapHub<NotificationsHub>(Hubs.NOTIFICATIONS_HUB);
 app.MapHub<ProgressHub>(Hubs.PROGRESS_HUB);
 
 
-
 app.Run();

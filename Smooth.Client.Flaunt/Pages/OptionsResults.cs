@@ -13,4 +13,6 @@ internal class OptionsResults
     public string? AzureOptionsResult { get; set; } =string.Empty;
 
     public string? CorsOptionsResult  { get; set; } = string.Empty;
+
+    public string? FileManagerOptionsResult { get; set; } = string.Empty;
 }

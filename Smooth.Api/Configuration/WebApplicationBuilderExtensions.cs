@@ -55,19 +55,17 @@ public static class WebApplicationBuilderExtensions
         var credentialOptions = GetDefaultAzureCredentialOptions(builder);
 
         builder.Services
-                .AddAzureClients(clientBuilder => {
-                    clientBuilder
-                        .UseCredential(new DefaultAzureCredential(credentialOptions));
-                    clientBuilder
-                        .AddBlobServiceClient(builder.Configuration.GetSection(AzureStorageOptions.SectionName));
-                    clientBuilder
-                        .ConfigureDefaults(builder.Configuration.GetSection(AzureDefaultsOptions.SectionName));
-                });
-
+            .AddAzureClients(clientBuilder => {
+                clientBuilder
+                    .UseCredential(new DefaultAzureCredential(credentialOptions));
+                clientBuilder
+                    .AddBlobServiceClient(builder.Configuration.GetSection(AzureStorageOptions.SectionName));
+                clientBuilder
+                    .ConfigureDefaults(builder.Configuration.GetSection(AzureDefaultsOptions.SectionName));
+            });
 
         return builder;
     }
-
 
 
     public static WebApplicationBuilder AddAzureKeyVault(this WebApplicationBuilder builder)
@@ -241,6 +239,7 @@ public static class WebApplicationBuilderExtensions
             ExcludeManagedIdentityCredential = builder.Environment.IsDevelopment()
         };
     }
+
 
     #endregion Helpers
 }

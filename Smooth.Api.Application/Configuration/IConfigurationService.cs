@@ -1,4 +1,5 @@
-﻿using Smooth.Shared.Configurations;
+﻿using Ekzakt.FileManager.Core.Options;
+using Smooth.Shared.Configurations;
 using Smooth.Shared.Configurations.Options;
 using Smooth.Shared.Configurations.Options.Azure;
 using Smooth.Shared.Configurations.Options.MediaFiles;
@@ -16,4 +17,6 @@ public interface IConfigurationService
     Task<AzureOptions> GetAzureOptionsAsync();
 
     Task<CorsOptions> GetCorsOptionsAsync();
+
+    Task<Ekzakt.FileManager.Core.Options.FileManagerOptions> GetEkzaktFileManagerOptions();
 }

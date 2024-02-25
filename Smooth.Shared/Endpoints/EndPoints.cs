@@ -30,5 +30,6 @@ public static class EndPoints
     // Files
     public static string GET_FILES_LIST() => $"{Ctrls.FILES}/{Routes.GET_FILES_LIST}";
     public static string DELETE_FILE(DeleteFileRequest request) => $"{Ctrls.FILES}/{Routes.DELETE_FILE}?filename={HttpUtility.UrlEncode(request.FileName)}";
-    public static string POST_FILE() => $"{Ctrls.FILES}/{Routes.POST_FILE}";
+    public static string POST_FILE(string id) => $"{Ctrls.FILES}/{Routes.POST_FILE}?id={id}";
+    public static string POST_FILE_STREAM() => $"{Ctrls.FILES}/{Routes.POST_FILE_STREAM}";
 }

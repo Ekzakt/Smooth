@@ -54,7 +54,7 @@ public abstract class AbstractHubService
 
     private HubConnection GetHubConnection()
     {
-        return new HubConnectionBuilder()
+        var hubConnection = new HubConnectionBuilder()
            .WithUrl(GetHubConnectionUrl(), options =>
            {
                options.Transports = HttpTransportType.WebSockets;
@@ -63,6 +63,8 @@ public abstract class AbstractHubService
            .Build();
 
         _isDisposed = false;
+
+        return hubConnection;
     }
 
     private string GetHubConnectionUrl()

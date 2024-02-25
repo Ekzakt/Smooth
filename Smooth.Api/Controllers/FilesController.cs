@@ -1,40 +1,41 @@
 ﻿using AutoMapper;
 using Ekzakt.FileManager.Core.Contracts;
-using Ekzakt.FileManager.Core.Models.Requests;
 using Ekzakt.FileManager.Core.Models;
-using Ekzakt.Utilities.Results;
-using Microsoft.AspNetCore.Authorization;
+using Ekzakt.FileManager.Core.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Net.Http.Headers;
+using Smooth.Api.Hubs;
+using Smooth.Api.Utilities;
 using Smooth.Shared.Endpoints;
 using Smooth.Shared.Models;
-using Smooth.Shared.Models.Responses;
-using System.Web;
-using Smooth.Api.Hubs;
-using Ekzakt.Utilities.Helpers;
 using Smooth.Shared.Models.HubMessages;
+using Smooth.Shared.Models.Responses;
+using System.Net;
+using System.Text.Json;
+using System.Web;
 
 namespace Smooth.Api.Controllers;
 
 [Route(Ctrls.FILES)]
 [ApiController]
+
 public class FilesController(
+    ILogger<FilesController> _logger,
     IMapper _mapper,
     IHubContext<NotificationsHub> _notificationsHub,
     IHubContext<ProgressHub> _progressHub,
     IFileManager _fileMananager)
     : ControllerBase
 {
-
     [HttpGet]
     [Route(Routes.GET_FILES_LIST)]
-    public async Task<IActionResult> GetFilesList(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetFilesListAsync(CancellationToken cancellationToken)
     {
         var request = new ListFilesRequest
         {
-            // TODO: Fix CorrelationId thing!
-            ContainerName = "demo-blazor8",
-            CorrelationId = Guid.NewGuid()  
+            ContainerName = "demo-blazor8"
         };
 
         var result = await _fileMananager.ListFilesAsync(request, cancellationToken);
@@ -52,17 +53,14 @@ public class FilesController(
 
     [HttpDelete]
     [Route(Routes.DELETE_FILE)]
-    public async Task<IActionResult> DeleteFile(string fileName, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteFileAsync(string fileName, CancellationToken cancellationToken)
     {
         fileName = HttpUtility.UrlDecode(fileName);
 
-        var request = new DeleteFileRequest
-        { 
+        var request = new Ekzakt.FileManager.Core.Models.Requests.DeleteFileRequest
+        {
             ContainerName = "demo-blazor8",
-            FileName = fileName,
-            // TODO: Fix CorrelationId thing!
-            CorrelationId = Guid.NewGuid()
-            
+            FileName = fileName
         };
 
         var result = await _fileMananager.DeleteFileAsync(request, cancellationToken);
@@ -74,17 +72,8 @@ public class FilesController(
 
     [HttpPost]
     [Route(Routes.POST_FILE)]
-    public async Task<IActionResult> SaveFile([FromForm] IFormFile file)
+    public async Task<IActionResult> SaveFileAsync([FromForm] IFormFile file, Guid id, CancellationToken cancellationToken)
     {
-        var progressHandler = new Progress<ProgressEventArgs>(async progress =>
-        {
-            await _progressHub.Clients.All.SendAsync("ProgressUpdated", new ProgressHubMessage
-            {
-                PercentageDone = progress.PercentageDone,
-                ProgressId = Guid.NewGuid()
-            });
-        });
-
         var fileGuid = Guid.NewGuid();
 
         using var fileStream = file.OpenReadStream();
@@ -92,15 +81,13 @@ public class FilesController(
         var request = new SaveFileRequest
         {
             ContainerName = "demo-blazor8",
-            FileName = $"{fileGuid}.jpg",
+            OriginalFilename = $"{fileGuid}.jpg",
             FileStream = fileStream,
-            CorrelationId = Guid.NewGuid(),
-            ProgressHandler = progressHandler
+            ProgressHandler = GetSaveFileProgressHandler(id),
+            InitialFileSize = fileStream.Length
         };
 
-        var result = await _fileMananager.SaveFileAsync(request);
-
-        await _notificationsHub.Clients.All.SendAsync("MessageReceived", IntHelpers.GetRandomInt());
+        var result = await _fileMananager.SaveFileAsync(request, cancellationToken);
 
         if (result.IsSuccess())
         {
@@ -111,4 +98,92 @@ public class FilesController(
             return BadRequest(result.Message);
         }
     }
+
+
+    [HttpPost]
+    [Route(Routes.POST_FILE_STREAM)]
+    [DisableRequestSizeLimit, RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue, ValueLengthLimit = int.MaxValue)]
+    [MultipartFormData]
+    [DisableFormValueModelBinding]
+    public async Task<ActionResult<HttpResponseMessage>> SaveFileStreamAsync(CancellationToken cancellationToken)
+    {
+        var httpRequest = HttpContext.Request;
+        var contentType = httpRequest?.ContentType;
+
+        if (httpRequest is null || contentType is null)
+        {
+            throw new InvalidDataException($"{nameof(httpRequest.ContentType)} is null.");
+        }
+
+        var boundary = GetMultipartBoundary(MediaTypeHeaderValue.Parse(contentType));
+        var multipartReader = new MultipartReader(boundary, httpRequest.Body);
+        var fileGuid = Guid.NewGuid();
+        var saveFileRequest = new SaveFileRequest();
+
+        var section = await multipartReader.ReadNextSectionAsync();
+
+        while (section != null)
+        {
+            var contentDisposition = section.GetContentDispositionHeader();
+
+            if (contentDisposition!.IsFormDisposition())
+            {
+                var jsonString = section.ReadAsStringAsync(cancellationToken);
+                var jsonContent = JsonSerializer.Deserialize<SaveFileFormDisposition>(jsonString.Result, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                });
+
+                saveFileRequest.ContainerName = "demo-blazor8";
+                saveFileRequest.ContentType = jsonContent.FileContentType;
+                saveFileRequest.InitialFileSize = jsonContent.InitialFileSize;
+            }
+            else if (contentDisposition!.IsFileDisposition())
+            {
+                saveFileRequest.OriginalFilename = contentDisposition!.FileName.Value ?? string.Empty;
+                saveFileRequest.FileStream = section.Body;
+                saveFileRequest.ProgressHandler = GetSaveFileProgressHandler(Guid.NewGuid());
+
+                var result = await _fileMananager.SaveFileAsync(saveFileRequest, cancellationToken);
+            }
+
+            section = await multipartReader.ReadNextSectionAsync();
+        }
+
+        return new HttpResponseMessage(HttpStatusCode.OK);
+    }
+
+
+
+
+    #region Helpers
+
+    internal Progress<ProgressEventArgs> GetSaveFileProgressHandler(Guid progressId)
+    {
+        var progressHandler = new Progress<ProgressEventArgs>(async progress =>
+        {
+            await _progressHub.Clients.All.SendAsync("ProgressUpdated", new ProgressHubMessage
+            {
+                PercentageDone = progress.PercentageDone,
+                ProgressId = progressId
+            });
+        });
+
+        return progressHandler;
+    }
+
+
+    private string GetMultipartBoundary(MediaTypeHeaderValue contentType)
+    {
+        var boundary = HeaderUtilities.RemoveQuotes(contentType.Boundary).Value;
+
+        if (string.IsNullOrWhiteSpace(boundary))
+        {
+            throw new InvalidDataException("Missing content-type boundary.");
+        }
+
+        return boundary;
+    }
+
+    #endregion Helpers
 }

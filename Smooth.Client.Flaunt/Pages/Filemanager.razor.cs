@@ -7,7 +7,6 @@ using Smooth.Shared.Models;
 using Smooth.Shared.Models.HubMessages;
 using Smooth.Shared.Models.Requests;
 using Smooth.Shared.Models.Responses;
-using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace Smooth.Client.Flaunt.Pages;
@@ -51,12 +50,11 @@ public partial class Filemanager : IAsyncDisposable
     }
 
 
-
     private async Task SaveFilesAsync(InputFileChangeEventArgs e)
     {
         foreach (var file in e.GetMultipleFiles())
         {
-            await fileManager.SaveFileAsync(file);
+            await fileManager.SaveFileStreamAsync(file, Guid.NewGuid());
 
             await ListFilesAsync();
         }

@@ -9,6 +9,7 @@ using Smooth.Shared.Models.Requests;
 using Smooth.Shared.Models.Responses;
 using System.Text.Json;
 
+
 namespace Smooth.Client.Flaunt.Pages;
 
 public partial class Filemanager : IAsyncDisposable
@@ -25,6 +26,9 @@ public partial class Filemanager : IAsyncDisposable
 
     private List<FileInformationDto>? filesList = null;
     private string saveFilesResult = string.Empty;
+    private bool cancelDisabled = true;
+
+    private CancellationTokenSource? cancellationTokenSource;
 
 
     protected override async Task OnInitializedAsync()
@@ -33,7 +37,6 @@ public partial class Filemanager : IAsyncDisposable
 
         _progressHubService.ProgressChanged += HandleProgressChanged;
     }
-
 
 
 
@@ -52,12 +55,33 @@ public partial class Filemanager : IAsyncDisposable
 
     private async Task SaveFilesAsync(InputFileChangeEventArgs e)
     {
+        using var cts = cancellationTokenSource = new();
+
+        cancelDisabled = false;
+
+        cts.Token.Register(() =>
+        {
+            saveFilesResult = "Operation cancelled.";
+            cancelDisabled = true;
+            StateHasChanged();
+        });
+
+
         foreach (var file in e.GetMultipleFiles())
         {
-            await fileManager.SaveFileStreamAsync(file, Guid.NewGuid());
+            await fileManager.SaveFileStreamAsync(file, Guid.NewGuid(), cancellationTokenSource.Token);
 
             await ListFilesAsync();
         }
+
+        cancelDisabled = true;
+        StateHasChanged();
+    }
+
+
+    private void CancelSaveFile()
+    {
+        cancellationTokenSource?.Cancel();
     }
 
 

@@ -2,15 +2,20 @@
 
 @using Smooth.Shared.Models
 @using Ekzakt.Utilities.Extentions
+@using Smooth.Client.Flaunt.Components.ProgressCircle
 
 
 <PageHeader Title="Filemanager"></PageHeader>
 
 
 <Article Title="Upload Files" Value="@saveFilesResult">
-    <div class="d-flex dropzone rounded-3">
+    <div class="d-flex dropzone rounded-3 mb-3">
         <InputFile OnChange="SaveFilesAsync" multiple />
     </div>
+    <div>
+        <button type="button" class="btn btn-info @(cancelDisabled ? "disabled" : string.Empty)" @onclick="CancelSaveFile">Cancel upload</button>
+    </div>
+    <ProgressCircle></ProgressCircle>
 </Article>
 
 
@@ -25,7 +30,7 @@
             <tr>
                 <th>Name</th>
                 <th>Size</th>
-                <th>Created On</th>
+                <th>Uploaded</th>
                 <th>Delete</th>
             </tr>
         </thead>
@@ -35,7 +40,7 @@
                 <tr>
                     <td>@file.Name</td>
                     <td>@file.Size.FormatFileSize(2)</td>
-                    <td>@file.CreatedOn</td>
+                    <td>@file.CreatedOn?.TimeAgo()</td>
                     <td><button type="button" class="btn btn-outline-danger" @onclick="() => DeleteFileAsync(file.Name)">Delete</button></td>
                 </tr>
             }

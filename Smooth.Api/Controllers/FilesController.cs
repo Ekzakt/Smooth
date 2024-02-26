@@ -2,6 +2,7 @@
 using Ekzakt.FileManager.Core.Contracts;
 using Ekzakt.FileManager.Core.Models;
 using Ekzakt.FileManager.Core.Models.Requests;
+using Ekzakt.FileManager.Core.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.WebUtilities;
@@ -109,6 +110,7 @@ public class FilesController(
     {
         var httpRequest = HttpContext.Request;
         var contentType = httpRequest?.ContentType;
+        var result = new FileResponse<string?>();
 
         if (httpRequest is null || contentType is null)
         {
@@ -142,18 +144,20 @@ public class FilesController(
                 saveFileRequest.FileStream = section.Body;
                 saveFileRequest.ProgressHandler = GetSaveFileProgressHandler(Guid.NewGuid());
 
-                var result = await _fileMananager.SaveFileAsync(saveFileRequest, cancellationToken);
+                result = await _fileMananager.SaveFileAsync(saveFileRequest, cancellationToken);
             }
 
             section = await multipartReader.ReadNextSectionAsync();
         }
-        return new HttpResponseMessage(HttpStatusCode.OK);
+
+        return new HttpResponseMessage(result.Status);
     }
 
 
 
 
     #region Helpers
+
 
     internal Progress<ProgressEventArgs> GetSaveFileProgressHandler(Guid progressId)
     {
@@ -181,6 +185,7 @@ public class FilesController(
 
         return boundary;
     }
+
 
     #endregion Helpers
 }

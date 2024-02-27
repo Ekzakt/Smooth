@@ -32,7 +32,7 @@ builder.AddCors();
 builder.AddAzureSignalR();
 builder.AddApplicationInsights();
 
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
+//builder.Services.AddOpenTelemetry().UseAzureMonitor();
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddEndpointsApiExplorer();
@@ -41,10 +41,10 @@ builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
 builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 builder.Services.AddAzureBlobFileManager();
 
-//builder.Services.AddApplicationInsightsTelemetry(new Microsoft.ApplicationInsights.AspNetCore.Extensions.ApplicationInsightsServiceOptions
-//{
-//    ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]
-//});
+builder.Services.AddApplicationInsightsTelemetry(new Microsoft.ApplicationInsights.AspNetCore.Extensions.ApplicationInsightsServiceOptions
+{
+    ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]
+});
 
 
 var app = builder.Build();

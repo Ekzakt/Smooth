@@ -15,12 +15,12 @@ using Azure.Monitor.OpenTelemetry.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Host.UseSerilog((context, configuration) =>
-    configuration.ReadFrom.Configuration(context.Configuration));
+//builder.Host.UseSerilog((context, configuration) =>
+//    configuration.ReadFrom.Configuration(context.Configuration));
 
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
-    .CreateBootstrapLogger();
+//Log.Logger = new LoggerConfiguration()
+//    .WriteTo.Console()
+//    .CreateBootstrapLogger();
 
 
 builder.AddResponseSizeCompression();
@@ -50,7 +50,7 @@ builder.Services.AddAzureBlobFileManager();
 var app = builder.Build();
 
 app.UseMiddleware<CorrelationIdMiddleware>();
-app.UseSerilogRequestLogging();
+//app.UseSerilogRequestLogging();
 app.UseCors(CorsOptions.POLICY_NAME);
 app.UseHttpsRedirection();
 app.UseRouting();

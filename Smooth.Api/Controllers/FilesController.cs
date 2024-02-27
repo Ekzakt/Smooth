@@ -13,7 +13,6 @@ using Smooth.Shared.Endpoints;
 using Smooth.Shared.Models;
 using Smooth.Shared.Models.HubMessages;
 using Smooth.Shared.Models.Responses;
-using System.Net;
 using System.Text.Json;
 using System.Web;
 
@@ -23,9 +22,7 @@ namespace Smooth.Api.Controllers;
 [ApiController]
 
 public class FilesController(
-    ILogger<FilesController> _logger,
     IMapper _mapper,
-    IHubContext<NotificationsHub> _notificationsHub,
     IHubContext<ProgressHub> _progressHub,
     IFileManager _fileMananager)
     : ControllerBase

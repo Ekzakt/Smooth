@@ -26,7 +26,6 @@ public abstract class AbstractHubService
     }
 
 
-
     public async Task StartAsync()
     {
         if (_isDisposed)
@@ -50,6 +49,8 @@ public abstract class AbstractHubService
     }
 
 
+
+
     #region Helpers
 
     private HubConnection GetHubConnection()
@@ -67,6 +68,7 @@ public abstract class AbstractHubService
         return hubConnection;
     }
 
+
     private string GetHubConnectionUrl()
     {
         var output = _configuration?
@@ -78,6 +80,7 @@ public abstract class AbstractHubService
 
         return output;
     }
+
 
     #endregion Helpers
 }

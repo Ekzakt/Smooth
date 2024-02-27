@@ -75,7 +75,8 @@ public partial class Filemanager : IAsyncDisposable
         }
 
         cancelDisabled = true;
-        StateHasChanged();
+
+        await InvokeAsync(StateHasChanged);
     }
 
 

@@ -6,10 +6,10 @@ namespace Smooth.Client.Flaunt.Components.Authentication;
 public partial class RedirectToLogin
 {
     [Inject]
-    private NavigationManager _navigationMananger { get; set; }
+    private NavigationManager? _navigationMananger { get; set; }
 
     protected override void OnInitialized()
     {
-        _navigationMananger.NavigateToLogin("authentication/login");
+        _navigationMananger?.NavigateToLogin("authentication/login");
     }
 }

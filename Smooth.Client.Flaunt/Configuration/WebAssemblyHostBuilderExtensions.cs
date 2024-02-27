@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Polly;
 using Smooth.Client.Application;
 using Smooth.Client.Application.HttpClients;
 
@@ -11,8 +12,15 @@ public static class WebAssemblyHostBuilderExtensions
         var apiBaseAddress = builder.Configuration
             .GetValue<string>(Constants.API_BASE_ADDRESS_CONFIG_NAME);
 
+
         apiBaseAddress ??= builder.HostEnvironment.BaseAddress;
 
+        var retryTimeSpans = new[]
+        {
+            TimeSpan.FromSeconds(1),
+            TimeSpan.FromSeconds(2.5),
+            TimeSpan.FromSeconds(5)
+        };   
 
         builder.Services
             .AddHttpClient<SecureHttpClient>(config =>
@@ -21,6 +29,7 @@ public static class WebAssemblyHostBuilderExtensions
                     config.DefaultRequestHeaders.Add("X-Correlation-Id", Guid.NewGuid().ToString());
                     config.Timeout = TimeSpan.FromSeconds(300);
                 })
+            .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.WaitAndRetryAsync(retryTimeSpans))
             .AddHttpMessageHandler<ApiAuthorizationMessageHandler>();
 
 
@@ -30,7 +39,8 @@ public static class WebAssemblyHostBuilderExtensions
                 config.BaseAddress = new Uri(apiBaseAddress);
                 config.DefaultRequestHeaders.Add("X-Correlation-Id", Guid.NewGuid().ToString());
                 config.Timeout = TimeSpan.FromSeconds(300);
-            });
+            })
+            .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.WaitAndRetryAsync(retryTimeSpans));
 
         return builder;
     }

@@ -9,6 +9,8 @@ public class NotificationsHub : Hub
         await base.OnConnectedAsync();
     }
 
+    public string ConnectionId => Context?.ConnectionId ?? string.Empty;
+
 
     public async Task SendMessage(int id)
     {

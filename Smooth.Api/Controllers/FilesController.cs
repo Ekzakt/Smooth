@@ -36,7 +36,7 @@ public class FilesController(
     {
         var request = new ListFilesRequest
         {
-            ContainerName = "demo-blazor8"
+            BlobContainerName = "demo-blazor8"
         };
 
         var result = await _fileMananager.ListFilesAsync(request, cancellationToken);
@@ -60,7 +60,7 @@ public class FilesController(
 
         var request = new Ekzakt.FileManager.Core.Models.Requests.DeleteFileRequest
         {
-            ContainerName = "demo-blazor8",
+            BlobContainerName = "demo-blazor8",
             FileName = fileName
         };
 
@@ -81,8 +81,8 @@ public class FilesController(
 
         var request = new SaveFileRequest
         {
-            ContainerName = "demo-blazor8",
-            OriginalFilename = $"{fileGuid}.jpg",
+            BlobContainerName = "demo-blazor8",
+            FileName = $"{fileGuid}.jpg",
             FileStream = fileStream,
             ProgressHandler = GetSaveFileProgressHandler(id),
             InitialFileSize = fileStream.Length
@@ -134,13 +134,13 @@ public class FilesController(
                 var jsonString = await section.ReadAsStringAsync(cancellationToken);
                 var jsonContent = JsonSerializer.Deserialize<SaveFileFormDisposition>(jsonString, jsonOptions);
 
-                saveFileRequest.ContainerName = "demo-blazor8";
+                saveFileRequest.BlobContainerName = "demo-blazor8";
                 saveFileRequest.ContentType = jsonContent.FileContentType;
                 saveFileRequest.InitialFileSize = jsonContent.InitialFileSize;
             }
             else if (contentDisposition!.IsFileDisposition())
             {
-                saveFileRequest.OriginalFilename = contentDisposition!.FileName.Value ?? string.Empty;
+                saveFileRequest.FileName = contentDisposition!.FileName.Value ?? string.Empty;
                 saveFileRequest.FileStream = section.Body;
                 saveFileRequest.ProgressHandler = GetSaveFileProgressHandler(Guid.NewGuid());
 

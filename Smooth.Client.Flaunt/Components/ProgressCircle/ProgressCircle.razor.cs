@@ -4,27 +4,22 @@ namespace Smooth.Client.Flaunt.Components.ProgressCircle;
 
 public partial class ProgressCircle
 {
-    private float _progress = 30;
-    private float _circumference = 251.2f;
-    private string _dasharray = "0";
-    private float _offset;
+    private int progressPercent = 0;
+    private double dashOffset;
 
-    [Parameter]
-    public float Progress
+    protected override async Task OnInitializedAsync()
     {
-        get => _progress;
-        set
-        {
-            _progress = value;
-            UpdateProgress();
-        }
+        // Example: Start updating progress every second
+        var timer = new System.Timers.Timer(25);
+        timer.Elapsed += async (sender, e) => await UpdateProgress();
+        timer.Start();
     }
 
-
-
-    private void UpdateProgress()
+    private async Task UpdateProgress()
     {
-        _offset = _circumference - (_progress / 100) * _circumference;
-        _dasharray = $"{_progress} {_circumference}";
+        // Simulate progress update
+        progressPercent = (progressPercent + 1) % 101;
+        dashOffset = 50 - (50 * progressPercent / 100); // Adjusted dash offset
+        await InvokeAsync(StateHasChanged);
     }
 }

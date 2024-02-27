@@ -4,10 +4,10 @@ using Smooth.Client.Application.Hubs;
 using Smooth.Client.Application.Managers;
 using Smooth.Client.Flaunt;
 using Smooth.Client.Flaunt.Configuration;
-using Smooth.Client.Flaunt.Pages;
 
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
 
 
 builder.RootComponents.Add<App>("#app");

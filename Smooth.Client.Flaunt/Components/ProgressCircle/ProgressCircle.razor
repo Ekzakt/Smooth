@@ -1,3 +1,11 @@
 ﻿<svg width="100" height="100">
-    <circle cx="50" cy="50" r="40" stroke="blue" stroke-width="5" fill="none" stroke-dasharray="@($"{_dasharray}, {_circumference}")" stroke-dashoffset="@_offset"></circle>
+    <!-- Outer circle with a larger stroke -->
+    <circle id="outerCircle" cx="50" cy="50" r="40" stroke="lightgray" stroke-width="5" fill="none" />
+
+    <!-- Inner circle representing progress -->
+    @* <circle id="progress" cx="50" cy="50" r="30" stroke="blue" stroke-width="10" fill="none"
+            stroke-dasharray="219.9114857512851" stroke-dashoffset="@dashOffset" /> *@
+
+    <circle id="progress" cx="50" cy="50" r="30" stroke="blue" stroke-width="100" fill="none"
+            stroke-dasharray="50" stroke-dashoffset="@dashOffset" />
 </svg>

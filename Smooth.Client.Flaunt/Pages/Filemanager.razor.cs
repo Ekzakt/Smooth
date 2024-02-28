@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Smooth.Client.Application.Hubs;
 using Smooth.Client.Application.Managers;
+using Smooth.Client.Flaunt.Components.ProgressBar;
+using Smooth.Client.Flaunt.Configuration;
 using Smooth.Shared.Endpoints;
 using Smooth.Shared.Models;
 using Smooth.Shared.Models.HubMessages;
 using Smooth.Shared.Models.Requests;
 using Smooth.Shared.Models.Responses;
+using System.Globalization;
 using System.Text.Json;
 
 
@@ -27,6 +31,7 @@ public partial class Filemanager : IAsyncDisposable
     private List<FileInformationDto>? filesList = null;
     private string saveFilesResult = string.Empty;
     private bool cancelDisabled = true;
+    private double percentageDone;
 
     private CancellationTokenSource? cancellationTokenSource;
 
@@ -40,10 +45,13 @@ public partial class Filemanager : IAsyncDisposable
 
 
 
+
     #region Helpers
 
     private void HandleProgressChanged(ProgressHubMessage message)
     {
+        percentageDone = message.PercentageDone;
+
         saveFilesResult = JsonSerializer.Serialize(message, new JsonSerializerOptions
         {
             WriteIndented = true
@@ -58,7 +66,7 @@ public partial class Filemanager : IAsyncDisposable
         using var cts = cancellationTokenSource = new();
 
         cancelDisabled = false;
-
+        
         cts.Token.Register(() =>
         {
             saveFilesResult = "Operation cancelled.";
@@ -103,10 +111,7 @@ public partial class Filemanager : IAsyncDisposable
     {
         var result = await dataManager!.GetDataAsync<GetFilesListResponse>(EndPoints.GET_FILES_LIST(), true);
 
-        if (result!.Files.Count > 0)
-        {
-            filesList = result.Files ?? new List<FileInformationDto>();
-        }
+        filesList = result?.Files ?? new List<FileInformationDto>();
     }
 
 

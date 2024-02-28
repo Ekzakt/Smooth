@@ -10,10 +10,8 @@ using Smooth.Shared.Configurations.Options;
 using Smooth.Shared.Endpoints;
 using System.Reflection;
 using Ekzakt.FileManager.AzureBlob.Configuration;
-using Azure.Monitor.OpenTelemetry.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 //builder.Host.UseSerilog((context, configuration) =>
 //    configuration.ReadFrom.Configuration(context.Configuration));
@@ -21,7 +19,6 @@ var builder = WebApplication.CreateBuilder(args);
 //Log.Logger = new LoggerConfiguration()
 //    .WriteTo.Console()
 //    .CreateBootstrapLogger();
-
 
 builder.AddResponseSizeCompression();
 builder.AddConfigurationOptions();

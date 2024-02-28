@@ -2,7 +2,7 @@
 
 @using Smooth.Shared.Models
 @using Ekzakt.Utilities.Extentions
-@using Smooth.Client.Flaunt.Components.ProgressCircle
+@using Smooth.Client.Flaunt.Components.ProgressBar
 
 
 <PageHeader Title="Filemanager"></PageHeader>
@@ -12,8 +12,11 @@
     <div class="d-flex dropzone rounded-3 mb-3">
         <InputFile OnChange="SaveFilesAsync" multiple />
     </div>
+    <div class="mb-3">
+        <ProgressBar Value="@percentageDone"></ProgressBar>
+    </div>
     <div>
-        <button type="button" class="btn btn-info @(cancelDisabled ? "disabled" : string.Empty)" @onclick="CancelSaveFile">Cancel upload</button>
+        <button type="button" class="btn btn-primary @(cancelDisabled ? "disabled" : string.Empty)" @onclick="CancelSaveFile">Cancel upload</button>
     </div>
 </Article>
 
@@ -21,7 +24,7 @@
 <Article Title=@($"Files ({@filesList?.Count ?? 0})")>
 
     <div class="mb-2">
-        <button type="button" class="btn btn-info" @onclick="ListFilesAsync">Get fileslist</button>
+        <button type="button" class="btn btn-primary" @onclick="ListFilesAsync">Get fileslist</button>
     </div>
 
     <table class="table">

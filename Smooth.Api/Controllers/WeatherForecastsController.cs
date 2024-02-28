@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Smooth.Api.Application.WeatherForecasts;
 using Smooth.Shared.Endpoints;
+using System.Diagnostics;
 
 namespace Smooth.Api.Controllers
 {
@@ -16,8 +17,6 @@ namespace Smooth.Api.Controllers
         [Route(Routes.GET_WEATERFORECASTS)]
         public async Task<IActionResult> GetByRowcount(int? r, CancellationToken cancellationToken)
         {
-            _logger.LogWarning("**** CorrelationId Warning ***");
-
             var result = await _weatherForecastService.GetAllAsync(r, cancellationToken);
 
             return result is not null

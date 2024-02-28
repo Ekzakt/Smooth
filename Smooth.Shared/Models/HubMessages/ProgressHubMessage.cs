@@ -4,5 +4,5 @@ public class ProgressHubMessage
 {
     public Guid ProgressId { get; set; }
 
-    public double PercentageDone { get; set; } = default;
+    public double PercentageDone { get; set; } = 0;
 }
